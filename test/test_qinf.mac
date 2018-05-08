@@ -35,7 +35,8 @@ qtest (
   true
   );
 
-/* temporarily disabled. because it needs itensor.
+/* temporarily disabled. because it needs itensor,
+   which prints a bunch of garbage.
 
 qtest (
   mapapply(lambda([i,j,k],zeromatrixp(commutator(pauli[i],pauli[j]) - 2*%i*levi_civita([i,j,k])*pauli[k])),
@@ -72,32 +73,31 @@ qtest(
   );
 
 qtest(
-  identitymatrixp(apply("+",map(lambda([i],toproj(belln[i])),[0,1,2,3]))),
+  identitymatrixp(apply("+",map(lambda([i],proj(belln[i])),[0,1,2,3]))),
   true
   );
   
 
 qtest(
-  is ( spinor_rotation_op_trig(%pi/2,%pi/2,%pi/2) . ketz(0) = ketx(0)),
+  is ( spinor_rotation_trig(%pi/2,%pi/2,%pi/2) . ketz(0) = ketx(0)),
   true
   );
 
-/* this one is broken, becuase CRE is not done uniformly */
 qtest(
-  is ( spinor_rotation_op_trig(%pi/2,%pi/2,-%pi/2) . ketz(0) = ketx(1)),
+  is ( spinor_rotation(%pi/2,%pi/2,-%pi/2) . ketz(0) = ketx(1)),
   false
   );
 
 
 qtest (
-  is ( tovect( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha)),
+  is ( tovect( proj(schmidt_ket(alpha))) = schmidt_ket(alpha)),
   true
   );
 
 kill(alpha);
 forget(alpha>0, 1-alpha>0);
 
-pr1 : toproj(schmidt_ket(alpha));
+pr1 : proj(schmidt_ket(alpha));
 
 
 /* this returns a mess because the ket is normalized only with conditions on alpha */
@@ -142,6 +142,25 @@ block([c0,c1,c2,c3],
     true
     )
   );
+
+block( [Ughz : cnot(3,2,1) . cnot(3,3,1) . insert_operator(3,[hadamard,1])],
+       qtest(
+         member(false,map( lambda( [x], is ( Ughz . apply(ketz,x) = arrayapply(ghz,x))),
+           create_list([i,j,k],i,0,1,j,0,1,k,0,1))),
+       false));
+
+qtest(
+  member(false,mapapply(lambda([i,j,k,l], is(ptrace(proj(ghz[i,j,k]),l[1],l[2])=ident(2)/2)),create_list([i,j,k,l],i,0,1,j,0,1,k,0,1,l,[[1,2],[1,3],[2,3]]))),
+  false);
+
+qtest (
+  member(false,mapapply(lambda([i,j,k,l], is(entropy(ptrace(proj(ghz[i,j,k]),l))=1)),create_list([i,j,k,l],i,0,1,j,0,1,k,0,1,l,1,3))),
+  false);
+
+block( [Ubell : cnot(2,2,1) . hadamard(2,1)],
+  qtest(member(false,map( lambda( [x], is ( Ubell . apply(ketz,x) = arrayapply(bell,x))),
+      create_list([i,j],i,0,1,j,0,1))),
+  false));
 
 /* it is often useful, eg for debugging to retract the assumptions */
 /*

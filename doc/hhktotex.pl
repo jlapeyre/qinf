@@ -6,19 +6,23 @@
 
   eg
   hhktotex.pl < index.hhk > man_index.tex
+  hhktotex.pl < contents.hhc > man_contents.tex
 
 =cut
 1;
 
 
 while(<>) {
-    if(/name=\"Local\"\s+value=\"([^\"]+)/){
+    # Link
+    if(/name=\"Local\"\s+value=\"([^\"]+)/){ 
 	$link = $1;
         $link =~ s/\#/\\#/g; # latex to ps needs this
 #	print "$link\n";
     }
+    # name of section
     if(/name=\"Name\"\s+value=\"([^\"]+)/){
 	$entry = $1;
+	$entry =~ s/\s//g; # remove whitespace
 	$entry =~ s/\%/\\%/g;
 	$entry =~ s/\!/\\!/g;
 	$entry =~ s/\*/\\*/g;

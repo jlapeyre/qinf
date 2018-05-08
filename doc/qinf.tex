@@ -25,6 +25,7 @@
 
 %\def\man_abasep{maxima_29.html\#IDX1037}
 \input{man_index.tex}
+\input{man_contents.tex}
 
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -73,6 +74,7 @@
 
 % refer to a function and add an index entry
 \newcommand{\ifs}[1]{{{\bf #1}}\index{#1@{\bf #1}}} % bold index entry plus bold in text
+\newcommand{\ient}[1]{{#1}\index{#1}} % index entry plus text
 \newcommand{\ibd}[1]{\index{#1@{\bf #1}}} % bold index entry
 \newcommand{\iit}[1]{\index{#1@{\it #1}}} % italic index entry
 % package or software proper name, with an index entry
@@ -94,11 +96,14 @@
 
 
 \title{User's Manual for \qinf Quantum Information and Entanglement Package
- v. 0.07 For The \pname{Maxima} Computer
+ v. 0.08 For The \pname{Maxima} Computer
   Algebra System}
+
 \author{G. John Lapeyre, Jr.}
 
 \maketitle
+
+
 
 \begin{verbatim}
          Copyright (c)  2008  Gerald John Lapeyre Jr.
@@ -157,26 +162,27 @@ This document begins with a very brief introduction to
 \qinfp. The remainder of the manual is a series of small
 sections introducing functions with examples. The examples
 mostly consist of testing equations. First identities and
-textbook exercises are presented, in part becuase they are
+textbook exercises are presented, in part because they are
 the natural calculations to include in the test suite from
 which they are taken. Then more complicated calculations are
 tested, as that is the initial application of the author--- to
-check hand calculations and claims found in other documents.
+check manual calculations and results found in other documents.
 In this restricted sense, the package can give results on
 simple abstract statements: If 1) generic instances of objects are
 generated, and 2) a representation-invariant statement is
-formulated, and 3) the subexpressions are succesfully coerced
+formulated, and 3) the subexpressions are successfully coerced
 into some canonical form, then defects in the statement can
 sometimes be detected if the statement is not true.
 
 Some suggestions and things to be aware of in the following sections.
 \begin{itemize}
-   \item
-    You probably need to read at least a ten minute tutorial before or in conjunction
-    with reading this document. There are several listed at the \maximalink website, and
-    others that a search engine can find. If you are too impatient there is a very
-    brief introduction to \maximalink below. The best source for most questions is
-    the \maxman{\pname{Maxima manual}}{maxima.html}.
+\item You probably need to read at least a ten minute
+  \pname{Maxima} tutorial before or in conjunction with
+  reading this document. There are several listed at the
+  \maximalink website, and others that a search engine can
+  find. If you are too impatient there is a very brief
+  introduction to \maximalink below. The best source for
+  most questions is the \maxman{\pname{Maxima} manual}{maxima.html}.
 \begin{comment}
   \begin{item}
     Functions and features that are part of the standard \maximalink distribution,
@@ -187,10 +193,12 @@ Some suggestions and things to be aware of in the following sections.
    \item
     There are several user interfaces to \maximalink. All the
     examples here are generated using the 
-    \htmladdnormallink{\ipname{imaxima}}{http://members3.jcom.home.ne.jp/imaxima/Site/Welcome.html} package
+    \htmladdnormallink{\pname{imaxima}}{http://members3.jcom.home.ne.jp/imaxima/Site/Welcome.html}
+    \iit{imaxima} package
     for the \ipname{emacs} editor/environment, but the results are
-    similar to other graphical frontends to \maximalink. Another popular graphical
-    frontend is \hlink{\ipname{wxmaxima}}{http://wxmaxima.sourceforge.net}.
+    similar to other graphical frontends to \maximalink. Other popular graphical
+    frontends are \hlink{\pname{wxmaxima}}{http://wxmaxima.sourceforge.net}\iit{wxmaxima},
+    and \hlink{\pname{texmacs}}{http://www.texmacs.org/}.\iit{texmacs}
    \item
     Most functions currently work only with qubits, others for variable number of
     states.
@@ -203,14 +211,17 @@ Some of the ideas used in \pname{qinf} are inspired by the package
 \begin{latexonly}
 \ipname{qdensity} at \url{http://www.pitt.edu/~tabakin/QDENSITY/}
 \end{latexonly}
-written for a proprietary symbolic algebra system. None of the code in qdensity
- has been borrowed for this project, however.
+written for a proprietary symbolic algebra system. None of
+the code in qdensity has been borrowed for this project,
+however. Advice on \pname{Maxima} and \pname{lisp}
+programming was provided by, among others, Robert Dodier,
+Stavros Macrakis, and Barton Willis.
 
 \htmlrule
 
 \section{Using \pname{Maxima}. features important for \qinf}
 The package is loaded \index{loading \qinf}
-using \pname{Maxima}'s \maxman{load}{maxima_9.html#IDX313} function like this
+using the \maxman{load}{\maximaload}\maxcom function like this
 \bbm\index{\ifs{load}}
 \begin{verbatim}
 (%i1) load("qinf.mac");
@@ -224,13 +235,14 @@ There are several tutorials and manuals available for
 \pname{Maxima}. Here is a very brief one focused on aiding the
 introduction to the \qinf package.  We will not give examples
 of matrices until later, but point out that the notation for
-\index{matrix multiplication} matrix multiplication in
+\index{matrix!multiplication} matrix multiplication in
 \pname{Maxima} is a \maxman{dot}{maxima_25.html#SEC83}\index{dot product},
  eg. \verb|A . B|.  If
 $A$ is a $m\times n$ and $B$ a $p\times q$ matrix, then the
 result is a $n\times p$ matrix.  The inner
 product\index{inner product} of quantum state vectors, the
-outer product \index{outer product} of quantum state vectors, the composition of
+outer product \index{outer product} (dyad\index{dyad})
+ of quantum state vectors, the composition of
 operators, and the mapping of one vector to another by an
 operator are all special cases of matrix multiplication and
 are all represented by the dot (along with conjugation in the case
@@ -370,12 +382,16 @@ Kets are represented by $n \times 1$ matrices, bras by $1
 \times n$ matrices.\index{kets!representation} The objects
 are represented in the computational basis.  Bras and kets
 representing the same states are related by \pname{Maxima}'s conjugate
-transpose function \maxman{\ifs{ctranspose}}{\maximactranspose}.
+transpose \index{conjugate transpose}
+\index{hermitian conjugate}
+ function \maxman{\ifs{ctranspose}}{\maximactranspose}\maxcom.
 Density operators and other operators
-are represented by matrices.  The tensor product is
-represented by the Kronecker product.  There is no strong
+are represented by matrices.  The tensor product \index{tensor product!matrix representation}
+is represented by the Kronecker product.  There is no strong
 typing. You are responsible for knowing that a particular
 vector represents a state vector in a particular space.
+Below, we often substitute ``the operator'' for
+``the matrix representing the operator''.
 % That is, there is no facility to 
 %distinguish between a vector in the product space of 
 %two qubits ${\cal H}_1 \otimes {\cal H}_2 $ and the space of
@@ -460,23 +476,24 @@ $i=1$ selecting the state with eigenvalue $-1$.
  \pmatrix{\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{i}{2\*\isqrt{2}}&\linebreak[0]-\ifracd{i}{2\*\isqrt{2}}&\linebreak[0]\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{i}{2\*\isqrt{2}}&\linebreak[0]-\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{i}{2\*\isqrt{2}}\cr }\end{dmath}
 \ebm
 
-
 \subsection{\ifs{ket\_n}, \ifs{bra\_n} ---  alternate form of \ifs{ketz}, etc.}
 \func{ket\_n}{j,i_1,\ldots,i_m} and \func{bra\_n}{j,i_1,\ldots,i_m}
  are an alternate way to call \fs{ketx}, \fs{kety}, etc. The index $j\in(1,2,3)$
 is mapped to $(x,y,z)$ and the appropriate function, eg. \fs{ketx} is called with
 the remaining arguments.
 
-\subsection{\ifs{toproj} --- Density matrix representation of a pure state (projection operator)}
+\subsection{\ifs{proj} --- Density matrix representation of a pure state (projection operator)}
 The projection operator \index{projection operator}
 \index{density operator!of a pure state} (or equivalently, the density
 matrix) corresponding to a state vector is generated via the
 outer product, which is represented by the dot operator.  A
-convenience function \func{toproj}{ket} is also provided to
-form a projection operator (\ifs{toproj} does not check that
+convenience function \func{proj}{ket} is also provided to
+form a projection operator. The argument \farg{ket} can be either a bra
+or a ket (ie column or row vector). (\ifs{proj} does not check that
 \farg{ket} is normalized.) Below, we use the \pname{Maxima} function
 \ifs{ctranspose} for the complex transpose.
-Here is $\ket{0}\bra{0}$.
+Here is the outer product, or dyad\index{outer product!of state vectors}\index{dyad}
+$\ket{0}\bra{0}$.
 \bbm
 \begin{verbatim}
 (%i19) ketx(1) . brax(1);
@@ -484,7 +501,7 @@ Here is $\ket{0}\bra{0}$.
 \begin{dmath}[number={\%o19}]
  \pmatrix{\frac{1}{2}&\linebreak[0]-\frac{1}{2}\cr -\frac{1}{2}&\linebreak[0]\frac{1}{2}\cr }\end{dmath}
 \ebm
-Compare this to the inner product\index{inner product}
+Compare this to the inner product\index{inner product!of state vectors}
 \bbm
 \begin{verbatim}
 (%i20) brax(1) . ketx(1);
@@ -500,50 +517,57 @@ Here are different ways to make $\ket{000}\bra{000}$ and $\ket{101}\bra{101}$.
 \begin{dmath}[number={\%o21}]
  \mathbf{true}\end{dmath}
 \begin{verbatim}
-(%i22) is ( ketz(1,0,1) . braz(1,0,1) =  toproj(ketz(1,0,1)) );
+(%i22) is ( ketz(1,0,1) . braz(1,0,1) =  proj(ketz(1,0,1)) );
 \end{verbatim}
 \begin{dmath}[number={\%o22}]
  \mathbf{true}\end{dmath}
 \ebm
+This example used \pname{Maxima}'s 
+\maxman{\func{is}{expr}}{\maximais}\maxcom\index{equality!testing for}
+\ibd{is}  function which
+tries to determine whether the predicate \farg{expr} is true or false.
+
 
 There is also a function \ifs{tovect} that
-is the inverse (up to a phase) of \ifs{toproj}--- it returns the ket corresponding to a
+is the inverse (up to a phase) of \ifs{proj}--- it returns the ket corresponding to a
 projection operator. If the input matrix is not a projection operator,
 the result is undefined.
 \bbm
 \begin{verbatim}
-(%i17) is ( tovect( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha));
+(%i17) is ( tovect( proj(schmidt_ket(alpha))) = schmidt_ket(alpha));
 \end{verbatim}
 \begin{dmath}[number={\%o17}]
  \mathbf{true}\end{dmath}
 \ebm
 
-\subsection{\ifs{otimes} and \ifs{tensor\_product} \index{tensor product}
+\subsection{\ifs{otimes}, \ifs{tensor\_product}, \ifs{tensor\_power} \index{tensor product}
+  \index{tensor power}
 --- Creating state vectors with the tensor product.}
 The function \func{tensor\_product}{v_1,\ldots,v_n}, returns
 $v_1\otimes v_2\cdots\otimes v_n$, where $v_i$ are vectors
-or matrices. The \fs{otimes} operator
-is an `infix' operator that
-is equivalent to the function \fs{tensor\_product}. The following uses
-\pname{Maxima}'s 
-\maxman{\func{is}{expr}}{maxima_5.html#IDX97} function which tries to determine
-if the predicate \farg{expr} is true. Keep in mind that, in
-this example, the expressions are not analyzed abstractly,
-but rather vectors with integer elements are generated and
-compared elementwise.
-\bbm
+or matrices. The \fs{otimes} operator is an `infix' operator
+that is equivalent to the function \fs{tensor\_product}.
+The function \func{tensor\_power}{op,n}, returns the $n$th
+tensor power of the operator \verb|op|. 
+Once again, we will employ the 
+% here, we have to make a separate bold index entry with \ibd, otherwise the link is broken
+\maxman{\fs{is}\maxcom}{\maximais}\ibd{is}
+ function.
+Keep in mind that, in this example, the expressions are not
+analyzed abstractly, but rather vectors with integer
+elements are generated and compared elementwise.  \bbm
 \begin{verbatim}
-(%i12) is(ketz(0,1) = ketz(0) otimes ketz(1))
+(%i12) is (ketz(0,1) = ketz(0) otimes ketz(1))
 \end{verbatim}
 \begin{dmath}[number={\%o12}]
  \mathbf{true}\end{dmath}
 \begin{verbatim}
-(%i13) is(ketz(0,1) = tensor_product(ketz(0),ketz(1)))
+(%i13) is (ketz(0,1) = tensor_product(ketz(0),ketz(1)))
 \end{verbatim}
 \begin{dmath}[number={\%o13}]
  \mathbf{true}\end{dmath}
 \begin{verbatim}
-(%i14) is(ketx(0,1,0) otimes kety(1,0,1)
+(%i14) is (ketx(0,1,0) otimes kety(1,0,1)
             = tensor_product(ketx(0),ketx(1),ketx(0),kety(1),kety(0),kety(1)))
 \end{verbatim}
 \begin{dmath}[number={\%o14}]
@@ -554,7 +578,9 @@ compared elementwise.
 \func{schmidt\_ket}{a}creates a ket in the schmidt form. \index{Schmidt basis} This is
 equivalent to \verb|sqrt(a)*ket(0,0)+ sqrt(1-a)*ket(1,1)|. This
 only works for qubits ($d=2$). Note that you may need to
-enter \pname{Maxima}'s \verb|assume(a>0,1-a>0)| \ibd{assume} when manipulating this state.
+enter \verb|assume(a>0,1-a>0)|\ibd{assume} when manipulating this state
+The \maxman{\fs{assume}}{\maximaassume}\maxcom command is used to build
+a database of facts used, for instance, by the \ifs{is} command.
 
 \subsection{\ifs{bell} and  \ifs{belln} --- Bell vectors in computational basis }
 \index{Bell states}
@@ -565,9 +591,11 @@ create vector bell states. \fs{bell[a,b]} creates the state
 where $a,b\in\{0,1\}$. The array \fs{belln[i]} creates the same states
 where $i$ is the decimal representation of the binary numeration
 $(a,b)$. That is, $(0,1,2,3)$ corresponds to $( (0,0), (0,1), (1,0), (1,1) )$.
+Note that \fs{belln[i]} is a \pname{Maxima} array as indicated by the square
+brackets.
 
 As an exercise, we will check our definitions of the Bell
-states by testing for orthonormality. \index{orthonormality} We first define an array
+states by testing for orthonormality. \index{orthonormality!of Bell states} We first define an array
 function \index{arrays!array functions} that returns the inner product of two Bell states.
 An array function \fs{f[x,y]} is like an ordinary function
 \fs{f(x,y)} except that it can be used where an array is
@@ -579,8 +607,8 @@ expected.
 \begin{dmath}[number={\%o2}]
  f_{x,\linebreak[0]y}:=\mathrm{belln}_{x}\cdot \mathrm{belln}_{y}\end{dmath}
 \ebm
-Create a $4 \times 4$ matrix with \pname{Maxima}'s \ifs{genmatrix} which maps the two
-dimension array \fs{f} over the indices of the matrix with the given range.
+Create a $4 \times 4$ matrix with \maxman{\fs{genmatrix}}{\maximagenmatrix}\maxcom\ibd{genmatrix}
+ which maps the two dimension array \fs{f} over the indices of the matrix with the given range.
 \bbm
 \begin{verbatim}
 (%i3) genmatrix( f , 3,3,0,0);
@@ -593,7 +621,8 @@ dimension array \fs{f} over the indices of the matrix with the given range.
   }\end{dmath}
 \ebm
 But instead of the named function \fs{f} we could have used
-just a function body with \pname{Maxima}'s \ifs{lambda} function,
+just a function body with the 
+\maxman{\fs{lambda}}{\maximalambda}\maxcom \ibd{lambda} function,
 which returns a function that is not bound to a symbol.
 \bbm
 \begin{verbatim}
@@ -603,7 +632,8 @@ which returns a function that is not bound to a symbol.
  \pmatrix{1&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr 0&\linebreak[0]1&\linebreak[0]0&\linebreak[0]0\cr 0&\linebreak[0]0&\linebreak[0]1&\linebreak[0]0\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]1\cr }\end{dmath}
 \ebm
 It is obviously the $4 \times 4$ identity matrix.  The
-function \ifunc{identitymatrixp}{mat} is a predicate defined in the
+function \ifunc{identitymatrixp}{mat} \index{identity matrix!testing for}
+ is a predicate defined in the
 quantum information package in analogy to the \pname{Maxima}
 function \ifs{zeromatrixp}.  It returns \fs{true} only if its
 argument is an identity matrix. (The symbol 
@@ -634,15 +664,46 @@ We can also check that
 \end{equation}
 \bbm
 \begin{verbatim}
-(%i2) identitymatrixp(apply("+",map(lambda([i],toproj(belln[i])),[0,1,2,3])));
+(%i2) identitymatrixp(apply("+",map(lambda([i],proj(belln[i])),[0,1,2,3])));
 \end{verbatim}
 \begin{dmath}[number={\%o2}]
  \mathbf{true}\end{dmath}
 \ebm
 
+\subsection{\ifs{ghz} and  \ifs{ghzn} --- GHZ vectors}
+The array \marray{ghz}{i,j,k} contains the GHZ kets defined by
+\begin{equation}
+ \ket{\Psi_{\mbox{GHZ}}(a,b,c)} 
+ = \frac{1}{\sqrt{2}} \ket{0,b,c} + (-1)^a  \ket{1,\bar b,\bar c},
+\end{equation}
+where the bar denotes the logical not operation.
+The array \marray{ghzn}{n} is the same array indexed by a single
+decimal number equivalent to the binary numeration given by $a,b,c$.
+
+\subsection{\ifs{werner} --- Werner state}
+The Werner state is defined by 
+$$
+ \ket{\Psi(\lambda,i,j)}_{\mbox{Werner}} =
+  \lambda \ket{\Psi(i,j)}_{\mbox{Bell}}\bra{\Psi(i,j)}_{\mbox{Bell}}
+   + (1-\lambda) \rho_u,
+$$
+where $\rho_u=\mathbb{1}_4/4$. The \pname{qinf} function
+is \verb|werner(a,i,j)|.
+ The entropy \index{entropy!of Werner state} depends on neither $i$ nor $j$ and varies with $\lambda$ between
+a value of $0$ and $1$ per bit, as the state is tuned from a pure state to 
+the uniform mixed state.
+\bbm
+\begin{verbatim}
+(%i2) wxplot2d(entropy(werner(a,1,0)), [a,0,1]);
+\end{verbatim}
+\begin{dmath}[number={\%o2}]
+ \includegraphics[width=.5\linewidth]{figs/werner_entropy}
+\end{dmath}
+\ebm
+
 \htmlrule
 \section{Creating and using operators}
-\subsection{\ifs{pauli}}
+\subsection{\ifs{pauli} --- pauli matrices}
 \marray{pauli}{i}
 creates the pauli matrices $(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
 =(\mathbb{1}_2,\sigma_x,\sigma_y,\sigma_z).$
@@ -665,7 +726,7 @@ Here are we check that all our definitions of the pauli matrices and kets are
 consistent in this sense.
 \bbm
 \begin{verbatim}
-(%i9) mapapply( lambda([i,j], is(pauli[i] . ket_n(i,j) = (-1)^j * ket_n(i,j))),
+(%i9) mapapply( lambda([i,j], is (pauli[i] . ket_n(i,j) = (-1)^j * ket_n(i,j))),
          [[1,0],[1,1],[2,0],[2,1],[3,0],[3,1]  ]);
 \end{verbatim}
 \begin{dmath}[number={\%o9}]
@@ -703,19 +764,21 @@ blocks in the above expression, so we can write \bbm
          anticommutator(pauli[i],pauli[j])/2 ), 3,3,1,1)));
 \end{verbatim}
 \begin{dmath}[number={\%o4}]
- \mathbf{true}\end{dmath}
-\ebm
-Now we load the \ifs{itensor} package, which provides the 
-\index{levi-civita tensor} levi-civita tensor, and make use of
-the \pname{Maxima} functions \ifs{permutations} (which returns the
-set of all permutations of a list) and \ifs{listify} (which turns a set into an ordered list).
-The \qinf package provides \ibd{mapapply} \func{mapapply}{func,[list1, list2,\ldots]}, which \ifs{apply}s
-\farg{func} to each of the \farg{list}s and returns a list of the results.
-(see the \pname{Maxima} documentation for \fs{apply}.)  With all these,
-we can test the commutation relations \index{commutator} of the pauli matrices. (In reality, the matrix definitions
-are not complicated, we are actually testing the other functions.):
-$[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$.
-\bbm
+  \mathbf{true}\end{dmath} \ebm Now we load the
+\ifs{itensor} package, which provides the \index{levi-civita
+  tensor} levi-civita tensor, and make use of the
+\pname{Maxima} functions \ifs{permutations} (which returns
+the \maxman{set}{\maximaSets} of all permutations of a list)
+and \ifs{listify} (which converts the set data type into the (ordered) list data type).
+The \qinf package provides \ibd{mapapply}
+\func{mapapply}{func,[list1, list2,\ldots]}, which
+\ifs{apply}s \farg{func} to each of the \farg{list}s and
+returns a list of the results.  (see the \pname{Maxima}
+documentation for \fs{apply}.)  With all these, we can test
+the commutation relations \index{commutator} of the pauli
+matrices. (In reality, the matrix definitions are not
+complicated, we are actually testing the other functions.):
+$[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$.  \bbm
 \begin{verbatim}
 (%i5) load("itensor");
 \end{verbatim}
@@ -729,6 +792,99 @@ $[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$.
  \left[ \mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}
 \ebm
 
+\subsection{\ifs{pauli\_product} ---  tensor product of pauli matrices }
+\func{pauli\_product}{i_1,\ldots,i_n} returns the tensor product
+$\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$, where the indices
+$i_j$ are in $\{0,1,2,3\}$. As elsewhere in this document, $\sigma_0$ is
+the $2\times 2$ identity matrix.
+
+\subsection{\ifs{insert\_operator} --- insert single qubit operators in $n$-qubit operator}
+\func{insert\_operator}{nbits,[op1,i1,i2,..],[op2,j2,j2,...],...} returns
+the operator $\mathbb{1}_2^{\otimes \mbox{nbits}}$, with some of the identity operators
+$\mathbb{1}_2$ substituted by the operators \farg{op1,op2,\ldots} at the indices specified
+by the indices $i1,i2,\ldots,j1,j2,\ldots$. Each replacement operator replaces a single
+qubit identity operator $\mathbb{1}_2$, even if the replacement operator has dimension
+other than $2$. 
+ For example
+
+\begin{center} 
+\verb|insert_operator(8,[pauli[1],1,3],[pauli[2],2,5],[pauli[3],8])|
+\end{center}
+returns
+$$
+\sigma_x \otimes \sigma_y \otimes \sigma_x \otimes \mathbb{1}_2 
+  \otimes \sigma_y \otimes  \mathbb{1}_2 \otimes  \mathbb{1}_2   \otimes \sigma_z.
+$$
+\fs{insert\_operator} is used to build the operators and gates listed below.
+
+\subsection{\ient{Gates}}
+\subsubsection{\ifs{hadamard}}
+\pname{qinf} defines both a variable and a function named \fs{hadamard}.
+The value of the  variable \fs{hadamard} is as follows,
+\bbm
+\begin{verbatim}
+(%i2) hadamard;
+\end{verbatim}
+\begin{dmath}[number={\%o2}]
+ \pmatrix{\ifracd{1}{\isqrt{2}}&\linebreak[0]\ifracd{1}{\isqrt{2}}\cr \ifracd{1}{\isqrt{2}}&\linebreak[0]-\ifracd{1}{\isqrt{2}}\cr }\end{dmath}
+\ebm
+The function \func{hadamard}{nbits,i1,i2,\ldots}  returns the tensor product
+of \farg{nbits} one-qubit operators each of which is $\mathbb{1}_2$ except
+for the operators in positions \farg{i1,i2,\ldots} which are the hadamard
+operator given by the variable \fs{hadamard}. The function is defined
+by \verb|hadamard(nbits,[t]) := insert_operator(nbits,cons(hadamard,t))|,
+which is an idiom that will work for similar user defined functions as well.
+The dummy argument \verb|[t]| causes all arguments after \verb|nbits| to
+be collected in a single list. The \pname{Maxima} function \func{cons}{expr,list}
+returns the list given by  prepending 
+ \verb|expr| to the list \verb|list|. 
+
+\subsubsection{\ifs{controlled\_gate} --- gate with $n$ control qubits}
+A controlled gate applies an operator $m$ to a single qubit (the target) in a register only if
+each of a set of control qubits is set. Otherwise the operator is equivalent to
+the identity operator. In any case, the operator is the identity on every
+qubit other than the target.
+The function \func{controlled\_gate}{nbits,qop,t,clst}
+creates a controlled gate with one or more control qubits embedded in
+a \verb|nbits|-qubit operator. The target qubit is at the index \verb|t|,
+while the control qubits are at the indices listed in the list \verb|clst|.
+In the returned operator, the $\mathbb{1}_2$ operator is at the remaining positions.
+The controlled gate operator applies \verb|qop| at qubit \verb|t| if all of
+the control qubits are set (ie are $1$) and is equivalent to the identity operator
+otherwise.
+For instance a \fs{cnot}\index{cnot} operator on $H_2\otimes H_2$ is given by
+\verb|controlled_gate(2,pauli[1],2,[1])|.
+The controlled gate in an $n$-qubit space with $n-1$ control bits and
+the $1$-qubit target operator $m$ is implemented in \pname{qinf} as
+$$
+ \mathbb{1}_{2^n} + \left(\ket{1}\bra{1}\right)^{\otimes{n-1}}
+    \otimes (m-\mathbb{1}_2).
+$$
+In the case that this  controlled gate operator is embedded in an operator in a larger space,
+the same formula is used, with additional factors of $\mathbb{1}_2$ inserted at the 
+appropriate places. Also the target qubit may occupy any index. This is implemented
+via the \fs{insert\_operator} function described above.
+
+\subsubsection{\ifs{cnot}, \ifs{cphase}, \ifs{crot}}
+ \func{cnot}{nbits,t,c1,c2,\ldots} returns a cnot gate on an \verb|nbits|-qubit
+register with the target at index \verb|t| and control qubits at indices
+\verb|c1,c2,...|. The definition of this function is
+\verb|cnot(nbits,t,[c]) := controlled_gate(nbits,pauli[1],t,c)|.
+The functions \fs{cphase} and \fs{crot} are defined in the same way except
+that operators \verb|pauli[3]| and  \verb|%i*pauli[2]| respectively are
+substituted for \verb|pauli[1]|. For example, the elementary cnot gate
+is given by \verb|cnot(2,2,1)|.
+\subsubsection{\ifs{swap}}
+\func{swap}{nbits,t1,t2} returns the operator that swaps qubits \verb|t1|
+and \verb|t2| in an  \verb|nbits|-qubit register. It is defined by
+\verb|swap(nbits,t1,t2) := cnot(nbits,t1,t2) . cnot(nbits,t2,t1) . cnot(nbits,t1,t2)|.
+\subsubsection{\ifs{toffoli}}
+This function is provided for convenience. It is defined by
+\verb|toffoli(nbits,t,c1,c2) := cnot(nbits,t,c1,c2)|. Note that there
+are exactly two control qubits.
+\subsubsection{\ifs{fredkin}}
+\func{fredkin}{nbits,t1,t2,c} is controlled swap operator. The qubits at indices
+\verb|t1| and \verb|t2| are swapped if the control qubit at index \verb|c| is set.
 \htmlrule
 %\section{Entanglement-- \func{ptrace}{\rho,i_1,\ldots}, \func{entropy}{\rho}, \func{purity}{\rho}}
 \section{Entanglement}
@@ -740,10 +896,12 @@ partial trace \fs{ptrace}, the von Neumann entropy
 
 
 \subsection{\fs{ptrace}, \fs{ptracen} --- partial trace }
+\index{trace!partial trace of matrix}
 compute the partial trace of the  density 
 operator $\rho$ over the component spaces given by the indices.
-For \ifunc{ptrace}{\rho,i_1,\ldots} the density matrix $\rho$ is assumed to be in
-$(\mathbb{C}^n)^{\otimes m}$, with $n=2$, that is
+For \ifunc{ptrace}{\rho,i_1,\ldots} the density matrix $\rho$ is assumed to represent
+an operator in
+$(H_2)^{\otimes m}$, with $n=2$, that is
 a tensor product of qubit spaces. For \ifunc{ptracen}{n,\rho,i_1,\ldots} the component
 spaces are all $n$-state qudits.
 
@@ -759,8 +917,9 @@ $$
 equation in the same form because \ifs{=} checks only that two expressions are lexically
 identical (well, modulo some details of the 
 \maxman{simplification}{maxima_7.html#SEC29} process.) We also make
-use of \pname{Maxima}'s \ifs{mat\_trace} function ( so named to avoid conflicting
-with the code-execution trace function.)
+use of \pname{Maxima}'s \ifs{mat\_trace}\index{trace!of matrix} function ( so named to avoid conflicting
+with the code-execution trace function) and \pname{Maxima}'s \ifs{matrix} command, which creates a matrix
+from a list of rows. \index{matrix!trace} \index{matrix!creating}
 \bbm
 \begin{verbatim}
 (%i1) m1 : matrix([a1,b1,c1],[d1,e1,f1],[g1,h1,i1])$
@@ -791,7 +950,8 @@ first component.
  \pmatrix{\left(\mathrm{i1}+\mathrm{e1}+\mathrm{a1}\right)\*\left(\mathrm{i2}+\mathrm{e2}+\mathrm{a2}\right)\*\left(\mathrm{i3}+\mathrm{e3}+\mathrm{a3}\right)\cr }\end{dmath}
 \ebm
 
-\subsection{\ifs{entropy}}
+\subsection{\ifs{entropy} --- von Neumann entropy}
+\index{entropy!von Neumann}
 \func{entropy}{\rho} returns the von Neumann \fs{entropy} of
 the density matrix $\rho$  defined by
 \begin{equation}
@@ -799,12 +959,8 @@ the density matrix $\rho$  defined by
 \end{equation}
 \ifs{entropyf} is the floating point version of \fs{entropy}.
 
-\subsection{\ifs{purity}}
- \func{purity}{\rho} returns the purity of the 
-density matrix $\rho$ defined by $\mbox{Tr}(\rho^2)$. The purity
-is $1$ for a pure state and is less than $1$ for a mixed state.
-
 \subsection{\ifs{renyi\_entropy}}
+\index{entropy!R\'enyi}
  \func{renyi\_entropy}{alpha,rho} gives the R\'enyi entropy, defined by
 \begin{equation}
  S_{\mbox{renyi}}(\alpha,\rho) = \frac{1}{1-\alpha}\log_2\left(\mbox{Tr}(\rho^\alpha)\right).
@@ -812,12 +968,24 @@ is $1$ for a pure state and is less than $1$ for a mixed state.
 \ifs{renyi\_entropyf} is the floating point version of \fs{renyi\_entropy}.
 
 \subsection{\ifs{tsallis\_entropy}}
+\index{entropy!Tsallis}
  \func{tsallis\_entropy}{q,rho} gives the Tsallis entropy, defined by
 \begin{equation}
  S_{\mbox{tsallis}}(q,\rho) = \frac{1}{q-1}\left(1-\mbox{Tr}(\rho^q)\right).
 \end{equation}
 \ifs{tsallis\_entropyf} is the floating point version of \fs{tsallis\_entropy}.
 
+\subsection{\ifs{purity}}
+ \func{purity}{\rho} returns the purity of the 
+density matrix $\rho$ defined by $\mbox{Tr}(\rho^2)$. The purity
+is $1$ for a pure state and is less than $1$ for a mixed state.
+
+\subsection{\ifs{fidelity}}
+\func{fidelity}{\rho_1,\rho_2} returns the scalar valued fidelity
+of the density matrices $\rho_1$ and $\rho_2$ defined by
+$$
+ \mbox{Tr}\left(\sqrt{\sqrt{\rho_2}\rho_1\sqrt{\rho_2}}\right).
+$$
 
 \subsection{An entangled pure global state has mixed reduced states}
 We examine a textbook example of entanglement--- the joint
@@ -831,7 +999,7 @@ state as a density operator (or equivalently as a projection
 operator.) Let's try to make $\ket{\alpha}\bra{\alpha}$.
 \bbm
 \begin{verbatim}
-(%i2)  pr : toproj(schmidt_ket(alpha));
+(%i2)  pr : proj(schmidt_ket(alpha));
 \end{verbatim}
 \begin{dmath}[number={\%o2}]
  \pmatrix{\isqrt{\alpha}^{\star}\*\isqrt{\alpha}&\linebreak[0]0&\linebreak[0]0&\linebreak[0]\isqrt{1-\alpha}^{\star}\*\isqrt{\alpha}\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr \isqrt{\alpha}^{\star}\*\isqrt{1-\alpha}&\linebreak[0]0&\linebreak[0]0&\linebreak[0]\isqrt{1-\alpha}^{\star}\*\isqrt{1-\alpha}\cr }
@@ -846,12 +1014,13 @@ we set some rules, and try again. \ibd{assume}
 \begin{dmath}[number={\%o4}]
  \left[ \alpha>0,\linebreak[0]\alpha<1 \right] \end{dmath}
 \begin{verbatim}
-(%i5)  pr : toproj(schmidt_ket(alpha));
+(%i5)  pr : proj(schmidt_ket(alpha));
 \end{verbatim}
 \begin{dmath}[number={\%o5}]
  \pmatrix{\alpha&\linebreak[0]0&\linebreak[0]0&\linebreak[0]\isqrt{1-\alpha}\*\isqrt{\alpha}\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr \isqrt{1-\alpha}\*\isqrt{\alpha}&\linebreak[0]0&\linebreak[0]0&\linebreak[0]1-\alpha\cr }\end{dmath}
 \ebm
-The entropy vanishes for a pure state, so that $S(\ket{\alpha}\bra{\alpha})$ is
+The entropy \index{entropy!of a pure state}
+ vanishes for a pure state, so that $S(\ket{\alpha}\bra{\alpha})$ is
 \bbm
 \begin{verbatim}
 (%i6)  entropy(pr);
@@ -890,10 +1059,10 @@ Tracing over the second qubit instead gives the same result
 (%i11) ptrace(pr,2);
 \end{verbatim}
 \begin{dmath}[number={\%o11}]
- \pmatrix{\alpha&\linebreak[0]0\cr 0&\linebreak[0]1-\alpha\cr }\end{dmath}
-\ebm
-Computing the entropy of a local state shows that this state is, in general, mixed
-\bbm
+  \pmatrix{\alpha&\linebreak[0]0\cr
+    0&\linebreak[0]1-\alpha\cr }\end{dmath} \ebm Computing
+the entropy\index{entropy!of a reduced state} of a local state
+shows that this state is, in general, mixed \bbm
 \ibd{entropy}
 \begin{verbatim}
 (%i12) entropy(pr2);
@@ -919,27 +1088,23 @@ $\alpha=0,1$ giving pure joint states.  \bbm
 (%i14)  wxplot2d([entropy(pr2), purity(pr2)],[alpha,0,1]);
 \end{verbatim}
 \begin{dmath}[number={\%o14}]
-\includegraphics[width=.5\linewidth]{figs/maxout_1}
+\includegraphics[width=.5\linewidth]{figs/entropy_purity}
 \end{dmath}
 \ebm
 
 \htmlrule
 \section{More operators and functions}
 
-The next four functions \func{pauli\_product}{i_1,\ldots,i_n},
+The next three functions 
 \func{pauliexp}{\rho}, \func{invpauliexp}{c}, and \func{correlation\_tensor}{c,i_1,\ldots,i_n}
 are related. An example using them follows their definitions.
 
-\subsection{\ifs{pauli\_product} ---  tensor product of pauli matrices }
-\func{pauli\_product}{i_1,\ldots,i_n} returns the tensor product
-$\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$, where the indices
-$i_j$ are in $\{0,1,2,3\}$. 
-
 \subsection{\ifs{pauliexp} --- expansion in terms of tensor products of pauli matrices  }
-\func{pauliexp}{\rho} returns the correlation tensor, that
-is, the coefficients in the expansion of the matrix $\rho$
+\func{pauliexp}{\rho} returns the correlation tensor,
+\index{correlation tensor}
+ that is, the coefficients in the expansion of the matrix $\rho$
 in tensor products of pauli matrices. Explicitly, \fs{pauliexp}
-returns the coefficents $c_{i_1,\ldots,i_n}$ in
+returns the coefficients $c_{i_1,\ldots,i_n}$ in
 \begin{equation}\label{pauliexp}
  \rho = \sum_{i_1,\ldots,i_n=0}^3 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
 \end{equation}
@@ -957,7 +1122,7 @@ the correlation tensor ({\it i.e.} expansion coefficients),
 \func{correlation\_tensor}{c,i_1,\ldots,i_n} returns the expansion coefficient for
 the term $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$ in the expansion of
 $\rho$, where $c$ is the list of coefficients in the expansion of $\rho$ as given,
-for intance, by \fs{pauliexp}.
+for instance, by \fs{pauliexp}.
 
 \subsection{Using \fs{pauliexp} and \fs{invpauliexp}; an example}
 Here is an example using the four functions defined above.
@@ -1020,27 +1185,21 @@ Here is the convenience function to return an element of the correlation tensor 
  \ifracn{i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
 \ebm
 
-\subsection{\ifs{fidelity}}
-\func{fidelity}{\rho_1,\rho_2} returns the scalar valued fidelity
-of the density matrices $\rho_1$ and $\rho_2$ defined by
-$$
- \mbox{Tr}\left(\sqrt{\sqrt{\rho_2}\rho_1\sqrt{\rho_2}}\right).
-$$
-
-\subsection{\ifs{spinor\_rotation\_op}, \ifs{spinor\_rotation\_op\_trig}}
-
-\func{spinor\_rotation\_op}{phi,theta,gamma} retuns the matrix that represents
-rotation through an angle \farg{gamma} about the axis specified by 
-\farg{phi} and \farg{theta}. The function \func{spinor\_rotation\_op\_trig}{phi,theta,gamma}
-returns the same matrix expressed only with cosines and sines. Explicitly the matrices are
+\subsection{\ifs{spinor\_rotation}, \ifs{spinor\_rotation\_trig}}
+\index{rotation!spinor}
+\func{spinor\_rotation}{phi,theta,gamma} returns the matrix that represents
+the operator that rotates a spinor through an angle \farg{gamma} about the axis specified by 
+\farg{phi} (angle about the $z$-axis) and \farg{theta} (inclination from the $z$-axis). The function \func{spinor\_rotation\_trig}{phi,theta,gamma}
+returns the same matrix expressed only with cosines and sines. This is the standard
+axis-angle parameterization.  Explicitly the matrices are
 \bbm
 \begin{verbatim}
-(%i2) spinor_rotation_op(phi,theta,gamma);
+(%i2) spinor_rotation(phi,theta,gamma);
 \end{verbatim}
 \begin{dmath}[number={\%o2}]
  \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]-i\*\iexpt{e}{- i\*\varphi }\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)\cr -i\*\iexpt{e}{i\*\varphi}\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}
 \begin{verbatim}
-(%i3) spinor_rotation_op_trig(phi,theta,gamma);
+(%i3) spinor_rotation_trig(phi,theta,gamma);
 \end{verbatim}
 \begin{dmath}[number={\%o3}]
  \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]\left(-\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)\cr \left(\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}.
@@ -1052,7 +1211,7 @@ returns the same matrix expressed only with cosines and sines. Explicitly the ma
 \subsection{Entanglement swapping\index{entanglement swapping}}
 
 In this subsection, we check a calculation that would
-be relativley difficult to check by hand
+be relatively difficult to check by hand
 Consider a pair of entangled qubits $A$ and $B$, and another
 entangled pair $C$ and $D$. By performing a joint
 measurement on, say $B$ and $C$, we can put $A$ and $B$ in
@@ -1064,7 +1223,7 @@ example we calculate these quantities two ways--- one,
 directly from the density matrix formalism, and two, via
 formulas taking advantage of the particulars of this
 problem. To do the first calculation by hand would be
-extremely upleasant, as it involves multiplying $16\times16$
+extremely unpleasant, as it involves multiplying $16\times16$
 matrices with several factors in a single element. Carrying
 it out below with \pname{Maxima} is a concise exercise.
  At present this example does not continue by discussing
@@ -1119,10 +1278,12 @@ The state $\ket{u_m}$ is normalized, but we don't need to impose that condition 
 \begin{dmath}[number={\%o6}]
  \pmatrix{\mathrm{u00}\cr \mathrm{u01}\cr \mathrm{u10}\cr \mathrm{u11}\cr }\end{dmath}
 \ebm
-The inital joint state $\ket{\alpha\beta}\bra{\alpha\beta}$ is pure and remains
-so after the measurment applying $\ket{u_m}\bra{u_m}$ to qubits $B$ and $C$.
+The initial joint state $\ket{\alpha\beta}\bra{\alpha\beta}$ is pure and remains
+so after the measurement applying $\ket{u_m}\bra{u_m}$ to qubits $B$ and $C$.
 But we write the density operator
-because we will examine the reduced states, which are mixed. We compute
+because we will examine the reduced states, which are mixed.
+In the case that $B$ and $C$ are projected onto $\ket{u_m}$, the state
+of the entire system of four qubits after the measurement is given by
 \begin{equation}
   \rho = \left( (\mathbb{1}_2 \otimes \ket{u_m}\bra{u_m} \otimes \mathbb{1}_2 )
      \ket{\alpha\beta}\bra{\alpha\beta}\right),   
@@ -1130,11 +1291,12 @@ because we will examine the reduced states, which are mixed. We compute
 with
 \bbm
 \begin{verbatim}
-(%i7) rho : conjsimp((ident(2) otimes toproj(u) otimes ident(2)) . toproj(a otimes b))$,
+(%i7) rho : conjsimp((ident(2) otimes proj(u) otimes ident(2)) . proj(a otimes b))$,
 \end{verbatim}
 \ebm
 where \ifs{conjsimp} 
-(supplied via the \pname{Maxima} listserv by Barton Willis) replaces $xx^*$ with $|x|^2$.
+(supplied via the \pname{Maxima} listserv by Barton Willis) replaces $xx^*$ with $|x|^2$,
+and $\ifunc{ident}{n}$ \index{identity matrix!creating} is the $n\times n$ identity matrix.
 The output was suppressed with the trailing dollar sign because the $\rho$ is
 a $16\times16$ matrix with large expressions for entries.
 %\everymath{\scriptscriptstyle}
@@ -1241,6 +1403,8 @@ and see that they give the same result.
 
 %\section*{Index}
 \htmlrule
+\newpage
+\addcontentsline{toc}{section}{Index}
 \printindex
 \htmlrule
 

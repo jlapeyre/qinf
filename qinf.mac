@@ -10,7 +10,7 @@
 
 */
 
-/* qinf Version 0.07 */
+/* qinf Version 0.08 */
 
 /*
   currently prints a bunch of garbage
@@ -182,7 +182,7 @@ tensor_product([a]) := block( [n,c,i],
 infix("otimes");
 "otimes"(a,b) := kronecker_product(a,b);
 
-
+tensor_power(mat,n) := apply(tensor_product,create_list(mat,i,1,n));
 
 /*******************************************
 * End of Linear Algebra routines.
@@ -272,7 +272,7 @@ tomatrix(v) := block(
    v -- state vector
    return: density matrix
 */
-toproj(v) := block( [],
+proj(v) := block( [],
   v : tomatrix(v),
   if length(v) = 1 then
     return( ctranspose(v) . v )
@@ -357,21 +357,100 @@ correlation_tensor(t,[v]) :=  block([n:length(t)],
   else
    error("tensor data requires ",radcan(log(n)/log(4)), " indices"));
 
+/* Rotate through angle gamma about direction
+   (theta,phi) w.r.t z-axis.
+ */
+spinor_rotation_trig(phi,theta,gamma) := block ( [sg],
+    sg: sin(gamma/2),
+    cg: cos(gamma/2),
+    st: sin(theta),
+    ct: cos(theta),
+    sp: sin(phi),
+    cp: cos(phi),
+    matrix(
+     [ cg -%i*ct*sg,            (-%i*st*cp-st*sp)*sg],
+     [ (-%i*st*cp + st*sp)*sg,  cg +%i*ct*sg        ]));
+
+/* this one uses exp instead of cos and sin */
+spinor_rotation(phi,theta,gamma) := block ( [sg],
+    sg: sin(gamma/2),
+    cg: cos(gamma/2),
+    st: sin(theta),
+    ct: cos(theta),
+    sp: sin(phi),
+    cp: cos(phi),
+    matrix(
+     [ cg -%i*ct*sg,            -%i*st*exp(-%i*phi)*sg],
+     [ -%i*st*exp(%i*phi)*sg,   cg +%i*ct*sg          ]));
+
+/* some more operators */
+
+
+/* * insert_operator -- construct an operator that operate on a register of 'nbits' qubits,
+ * ie, an operator on the tensor product space of nbits qubits.
+ * the operator for each qubit is the identity, except for those specified by
+ * the list 'insargs'.  Each member of insargs is a list 'arg'. The first member
+ * of arg is a one-qubit operator (2x2 matrix) 'mop'. The remaining elements in 'arg'
+ * are the positions to substitute 'mop' in place of one of the identity operators.
+ * Eg, register_op_insert(10,[pauli[1],2,3],[pauli[2],4,5]) creates a 10-qubit operator,
+ * with pauli[1] operating on qubits  2 and 3, and pauli[2] operating on qubits 4 and 5,
+ * and the identity operating on the remaining qubits.
+ *
+ * * controlled_gate -- n-control gate.  qop is the one-qubit operator. clst is list
+ * of control indices and t is the target index
+ *
+ * * cnot,etc . -- some gates with a single control qubit indexed with c and target with index t.
+ * they operate on a register of nbits qubits.
+ * Thus, a 2 qubit cnot gate is given by cnot(2,1,2).
+ */
+
+insert_operator(nbits, [insargs]) := block ( [oplist : create_list(ident(2),i,1,nbits)],
+  map( lambda([arg], block( [mop:first(arg),posns:rest(arg,1)],
+        map(lambda([i],oplist[i]:mop), posns))),insargs),
+  apply(tensor_product,oplist));
+
+controlled_gate(nbits,qop,t,clst) := ident(2^nbits) +
+          + insert_operator(nbits,cons(proj(ketz(1)),clst),[qop-ident(2),t]);
+
+cnot(nbits,t,[c]) := controlled_gate(nbits,pauli[1],t,c);
+cphase(nbits,t,[c]) := controlled_gate(nbits,pauli[3],t,c);
+crot(nbits,t,[c]) := controlled_gate(nbits,%i*pauli[2],t,c);
+swap(nbits,t1,t2) := cnot(nbits,t1,t2) . cnot(nbits,t2,t1) . cnot(nbits,t1,t2);
+toffoli(nbits,t,c1,c2) := cnot(nbits,t,c1,c2);
+/*toffoli(nbits,t,c1,c2) := controlled_gate(nbits,pauli[1],t,[c1,c2]);*/
+
+fredkin(nbits,t1,t2,c) := controlled_gate(nbits,pauli[1],t2,[c,t1]).
+                          controlled_gate(nbits,pauli[1],t1,[c,t2]).
+                          controlled_gate(nbits,pauli[1],t2,[c,t1]);
+
+hadamard : (1/sqrt(2) * matrix([1,1],[1,-1]));
+/* following inserts one or more hadamard operators in the identiy operator on nbits qubits */
+hadamard(nbits,[t]) := insert_operator(nbits,cons(hadamard,t));
+
+
+
+/*************************/
+
 
 /* flip the bit */
 /* flip(x) := ( mod(x+1,2)); */
 
 /* bell states */
 bell[i,j] := (ketz(0,j) + (-1)^i * ketz(1,flip(j)))/sqrt(2);
-
 /* bell states with 'decimal' index. */
-belln[0] : bell[0,0];
-belln[1] : bell[0,1];
-belln[2] : bell[1,0];
-belln[3] : bell[1,1];
+array(belln,3); /* indices from 0 to 3 */
+fillarray(belln, map( lambda( [x],  bell[x[1],x[2]]),create_list( [i,j], i,0,1,j,0,1)));
+
+/* gzh states */
+ghz[i,j,k] := (ketz(0,j,k) + (-1)^i * ketz(1,flip(j),flip(k)))/sqrt(2);
+array(ghzn,7); /* indices from 0 to 7 */
+fillarray(ghzn, map( lambda( [x],  ghz[x[1],x[2],x[3]]),create_list( [i,j,k], i,0,1,j,0,1,k,0,1)));
+
+/* this one is a function, not an array function */
+werner(a,i,j) := a*(proj(bell[i,j])) + (1-a)*ident(4)/4;
 
 /* two bit schmidt ket */
-/* schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1); */
+/* to lisp schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1); */
 
 
 /* von Neumann entropy */
@@ -442,30 +521,4 @@ fidelity(rho1,rho2) := block( [sr2],
 commutator(A,B):= A . B - B . A;
 anticommutator(A,B):= A . B + B . A;
 */
-
-/* Rotate through angle gamma about direction
-   (theta,phi) w.r.t z-axis.
- */
-spinor_rotation_op_trig(phi,theta,gamma) := block ( [sg],
-    sg: sin(gamma/2),
-    cg: cos(gamma/2),
-    st: sin(theta),
-    ct: cos(theta),
-    sp: sin(phi),
-    cp: cos(phi),
-    matrix(
-     [ cg -%i*ct*sg,            (-%i*st*cp-st*sp)*sg],
-     [ (-%i*st*cp + st*sp)*sg,  cg +%i*ct*sg        ]));
-
-/* this one uses exp instead of cos and sin */
-spinor_rotation_op(phi,theta,gamma) := block ( [sg],
-    sg: sin(gamma/2),
-    cg: cos(gamma/2),
-    st: sin(theta),
-    ct: cos(theta),
-    sp: sin(phi),
-    cp: cos(phi),
-    matrix(
-     [ cg -%i*ct*sg,            -%i*st*exp(-%i*phi)*sg],
-     [ -%i*st*exp(%i*phi)*sg,   cg +%i*ct*sg          ]));
 

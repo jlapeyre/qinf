@@ -1,9 +1,20 @@
+Version 0.08
+2008-08-27  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* fixed bugs in gates. added some documentation for them.
+
+Version 0.07
+2008-08-27  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* added quantum gates, insert_operator, etc.
+
 Version 0.07
 2008-08-25  John Lapeyre  <lapeyre@physics.arizona.edu>
 
 	* corrected errors in manual and cleaned up entanglement
 	  swapping section.
-	* automated packaging more
+	* automated packaging more. Almost everything is built
+	  and packaged automatically.
 
 Version 0.06
 2008-08-25  John Lapeyre  <lapeyre@physics.arizona.edu>

@@ -53,7 +53,7 @@ true;
 identitymatrixp( genmatrix(lambda([i,j], belln[i] . belln[j]  ), 3,3,0,0));
 true;
 
-identitymatrixp(apply("+",map(lambda([i],toproj(belln[i])),[0,1,2,3])));
+identitymatrixp(apply("+",map(lambda([i],proj(belln[i])),[0,1,2,3])));
 true;
 
 is ( spinor_rotation_op_trig(%pi/2,%pi/2,%pi/2) . ketz(0) = ketx(0));
@@ -63,13 +63,13 @@ true;
 is ( spinor_rotation_op_trig(%pi/2,%pi/2,-%pi/2) . ketz(0) = ketx(1));
 false;
 
-is ( tovect( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha));
+is ( tovect( proj(schmidt_ket(alpha))) = schmidt_ket(alpha));
 true;
 
 (
 kill(alpha),
 forget(alpha>0, 1-alpha>0),
-pr1 : toproj(schmidt_ket(alpha)),
+pr1 : proj(schmidt_ket(alpha)),
 /* require these conditions (implies that alpha is real) */
 assume(alpha>0, 1-alpha>0),
 /* now this returns zero as it should for a pure state */

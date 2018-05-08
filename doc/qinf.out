@@ -5,26 +5,37 @@
 \BOOKMARK [1][-]{section.4}{Creating instances of states}{}
 \BOOKMARK [2][-]{subsection.4.1}{ketz, braz,ketx, brax, kety, bray --- multipartite eigenstates of "711B x,"711B y,"711B z}{section.4}
 \BOOKMARK [2][-]{subsection.4.2}{ket\137n, bra\137n --- alternate form of ketz, etc.}{section.4}
-\BOOKMARK [2][-]{subsection.4.3}{toproj --- Density matrix representation of a pure state \(projection operator\)}{section.4}
-\BOOKMARK [2][-]{subsection.4.4}{otimes and tensor\137product \040--- Creating state vectors with the tensor product.}{section.4}
+\BOOKMARK [2][-]{subsection.4.3}{proj --- Density matrix representation of a pure state \(projection operator\)}{section.4}
+\BOOKMARK [2][-]{subsection.4.4}{otimes, tensor\137product, tensor\137power \040 --- Creating state vectors with the tensor product.}{section.4}
 \BOOKMARK [2][-]{subsection.4.5}{schmidt\137ket --- bipartite state in Schmidt basis}{section.4}
 \BOOKMARK [2][-]{subsection.4.6}{bell and belln --- Bell vectors in computational basis }{section.4}
+\BOOKMARK [2][-]{subsection.4.7}{ghz and ghzn --- GHZ vectors}{section.4}
+\BOOKMARK [2][-]{subsection.4.8}{werner --- Werner state}{section.4}
 \BOOKMARK [1][-]{section.5}{Creating and using operators}{}
-\BOOKMARK [2][-]{subsection.5.1}{pauli}{section.5}
+\BOOKMARK [2][-]{subsection.5.1}{pauli --- pauli matrices}{section.5}
+\BOOKMARK [2][-]{subsection.5.2}{pauli\137product --- tensor product of pauli matrices }{section.5}
+\BOOKMARK [2][-]{subsection.5.3}{insert\137operator --- insert single qubit operators in n-qubit operator}{section.5}
+\BOOKMARK [2][-]{subsection.5.4}{Gates}{section.5}
+\BOOKMARK [3][-]{subsubsection.5.4.1}{hadamard}{subsection.5.4}
+\BOOKMARK [3][-]{subsubsection.5.4.2}{controlled\137gate --- gate with n control qubits}{subsection.5.4}
+\BOOKMARK [3][-]{subsubsection.5.4.3}{cnot, cphase, crot}{subsection.5.4}
+\BOOKMARK [3][-]{subsubsection.5.4.4}{swap}{subsection.5.4}
+\BOOKMARK [3][-]{subsubsection.5.4.5}{toffoli}{subsection.5.4}
+\BOOKMARK [3][-]{subsubsection.5.4.6}{fredkin}{subsection.5.4}
 \BOOKMARK [1][-]{section.6}{Entanglement}{}
 \BOOKMARK [2][-]{subsection.6.1}{ptrace, ptracen --- partial trace }{section.6}
-\BOOKMARK [2][-]{subsection.6.2}{entropy}{section.6}
-\BOOKMARK [2][-]{subsection.6.3}{purity}{section.6}
-\BOOKMARK [2][-]{subsection.6.4}{renyi\137entropy}{section.6}
-\BOOKMARK [2][-]{subsection.6.5}{tsallis\137entropy}{section.6}
-\BOOKMARK [2][-]{subsection.6.6}{An entangled pure global state has mixed reduced states}{section.6}
+\BOOKMARK [2][-]{subsection.6.2}{entropy --- von Neumann entropy}{section.6}
+\BOOKMARK [2][-]{subsection.6.3}{renyi\137entropy}{section.6}
+\BOOKMARK [2][-]{subsection.6.4}{tsallis\137entropy}{section.6}
+\BOOKMARK [2][-]{subsection.6.5}{purity}{section.6}
+\BOOKMARK [2][-]{subsection.6.6}{fidelity}{section.6}
+\BOOKMARK [2][-]{subsection.6.7}{An entangled pure global state has mixed reduced states}{section.6}
 \BOOKMARK [1][-]{section.7}{More operators and functions}{}
-\BOOKMARK [2][-]{subsection.7.1}{pauli\137product --- tensor product of pauli matrices }{section.7}
-\BOOKMARK [2][-]{subsection.7.2}{pauliexp --- expansion in terms of tensor products of pauli matrices }{section.7}
-\BOOKMARK [2][-]{subsection.7.3}{invpauliexp --- inverse of expansion in terms of tensor products of pauli matrices}{section.7}
-\BOOKMARK [2][-]{subsection.7.4}{correlation\137tensor --- retrieve component of correlation tensor by index}{section.7}
-\BOOKMARK [2][-]{subsection.7.5}{Using pauliexp and invpauliexp; an example}{section.7}
-\BOOKMARK [2][-]{subsection.7.6}{fidelity}{section.7}
-\BOOKMARK [2][-]{subsection.7.7}{spinor\137rotation\137op, spinor\137rotation\137op\137trig}{section.7}
+\BOOKMARK [2][-]{subsection.7.1}{pauliexp --- expansion in terms of tensor products of pauli matrices }{section.7}
+\BOOKMARK [2][-]{subsection.7.2}{invpauliexp --- inverse of expansion in terms of tensor products of pauli matrices}{section.7}
+\BOOKMARK [2][-]{subsection.7.3}{correlation\137tensor --- retrieve component of correlation tensor by index}{section.7}
+\BOOKMARK [2][-]{subsection.7.4}{Using pauliexp and invpauliexp; an example}{section.7}
+\BOOKMARK [2][-]{subsection.7.5}{spinor\137rotation, spinor\137rotation\137trig}{section.7}
 \BOOKMARK [1][-]{section.8}{Entanglement. longer examples}{}
 \BOOKMARK [2][-]{subsection.8.1}{Entanglement swapping}{section.8}
+\BOOKMARK [1][-]{equation.10}{Index}{}

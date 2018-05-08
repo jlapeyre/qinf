@@ -98,7 +98,7 @@ b : schmidt_ket(beta);
 
 ab : a otimes b;
 
-abm : toproj(ab);
+abm : proj(ab);
 
 qtest(
   is ( tovect( ptrace(abm,1,2)) = b ),
