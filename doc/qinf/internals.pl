@@ -1,0 +1,10 @@
+# LaTeX2HTML 2002-2-1 (1.71)
+# Associate internals original text with physical files.
+
+
+$key = q/ket_to_mat/;
+$ref_files{$key} = "$dir".q|qinf.html|; 
+$noresave{$key} = "$nosave";
+
+1;
+

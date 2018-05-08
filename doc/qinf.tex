@@ -1,4 +1,12 @@
 \documentclass[leqno,10pt]{article}
+\usepackage{boxedminipage}
+
+\usepackage{html}
+
+\html{ \renewcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}} }
+\latex{  \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}} }
+
+
 \usepackage{graphicx}
 \usepackage{hyperref}
 %\usepackage{pdftex} % not there
@@ -7,13 +15,10 @@
 \usepackage{verbatim}
 \usepackage[cmbase]{flexisym}
 \usepackage{bbold}
-\usepackage{boxedminipage}
+
 %bbold above conflicts with amssymb \usepackage{amssymb}
 \usepackage{breqn}
 \setkeys{breqn}{compact}
-
-% bullshit
-%\newcommand{\supertiny}{\fontsize{10}{4}\selectfont}
 
 \def\supertiny{ \font\supertinyfont = cmr6 at 4pt \relax
 \supertinyfont}
@@ -24,11 +29,9 @@
 %\usepackage{amssymb} this breaks bbold numeral
 %\usepackage{amsmath}
 
-\newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}}
 \newcommand{\ebm}{\end{boxedminipage}\vspace{5pt}\par\noindent}
 \setlength{\fboxrule}{0.1pt} 
 \setlength{\fboxsep}{10pt}
-
 
 
 \setlength{\textwidth}{180mm}
@@ -110,21 +113,23 @@ found in introductory texts on quantum information.  The
 package is intended for research and teaching in the theory
 of entanglement and quantum information and related fields.
 
+
 Examples of the facilities of the
 package are
 \begin{itemize}
-  \begin{item}
-    Methods for constructing pure and mixed states and operators.
-  \end{item}
-  \begin{item}
-    Methods for executing standard operations found in
+%  \begin{item}
+  \item    Methods for constructing pure and mixed states and operators.
+%  \end{item}
+%  \begin{item}
+   \item  Methods for executing standard operations found in
     computational linear algebra as well as the tensor
     product, partial trace, etc.
-  \end{item}
-  \begin{item}
-    Functions to compute commonly appearing quantities such as entropy and purity.
-  \end{item}
+%  \end{item}
+%  \begin{item}
+   \item Functions to compute commonly appearing quantities such as entropy and purity.
+%  \end{item}
 \end{itemize}
+
 This document begins with a very brief introduction to
 \pname{Maxima} emphasizing features that are important for
 \qinfp. The remainder of the manual is a series of small
@@ -144,12 +149,11 @@ sometimes be detected if the statement is not true.
 
 Some suggestions and things to be aware of in the following sections.
 \begin{itemize}
-  \begin{item}
+   \item
     You probably need to read at least a ten minute tutorial before or in conjunction
     with reading this document. There are several listed at the \pname{Maxima} website, and
     others that a search engine can find. If you are too impatient there is a very
     brief introduction to \pname{Maxima} below.
-  \end{item}
 \begin{comment}
   \begin{item}
     Functions and features that are part of the standard \pname{Maxima} distribution,
@@ -157,16 +161,14 @@ Some suggestions and things to be aware of in the following sections.
     package are marked, where not obvious, with the dagger superscript--- \maxcom.
   \end{item}
 \end{comment}
-  \begin{item}
+   \item
     There are several user interfaces to the \pname{Maxima}. All the
     examples here are generated using the \ipname{imaxima} package
     for the \ipname{emacs} editor/environment, but the results are
     similar to other graphical frontends to \pname{Maxima}.
-  \end{item}
-  \begin{item}
+   \item
     Most functions currently work only with qubits, others for variable number of
     states.
-  \end{item}
 \end{itemize}
 
 \subsection{Acknowledgments}
@@ -178,7 +180,7 @@ written for a proprietary symbolic algebra system. (put reference here)
 The package is loaded \index{loading \qinf} like this
 \bbm\index{\ifs{load}}
 \begin{verbatim}
-(%i1) load("qinf.mac")
+(%i1) load("qinf.mac");
 \end{verbatim}
 \begin{dmath}[number={\%o1}]
  \verb|qinf.mac|\end{dmath}
@@ -854,7 +856,7 @@ $\alpha=0,1$ giving pure joint states.  \bbm
 \subsection{\ifs{spinor\_rotation\_op}, \ifs{spinor\_rotation\_op\_trig}}
 
 
-\section{Entanglement. \  longer examples}
+\section{Entanglement.  longer examples}
 
 \subsection{Entanglement swapping\index{entanglement swapping}}
 
@@ -979,11 +981,14 @@ $\mathbb{C}^2\otimes\mathbb{C}^2$ to $M(\mathbb{C},2)$:
 one can show that $\rho_{D}$ is equal to $X_m^{}X_m^{\dagger}$, with
 $X_m = \widehat{\alpha}\,\widehat{u}_m\,\widehat{\beta}$.
 The \pname{Maxima} function implementing the mapping (\ref{ket_to_mat}) is
+\bbm
 \begin{verbatim}
 (%i10) ket_to_mat(iket) := matrix([iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]])$
 \end{verbatim}
+\ebm
 Then the second calculation of $\rho_D$, which we call \verb|rho_4a| is given by
 the following two lines.
+\bbm
 \begin{verbatim}
 (%i11)  X : ket_to_mat(a) . ket_to_mat(u) . ket_to_mat(b);
 \end{verbatim}
@@ -996,11 +1001,13 @@ the following two lines.
 \end{verbatim}
 \begin{dmath}[number={\%o12}]
  \pmatrix{\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}&\linebreak[0]\left(1-\alpha\right)\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u10}^{\star}\*\mathrm{u11}+\alpha\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u00}^{\star}\*\mathrm{u01}\cr \left(1-\alpha\right)\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u10}\*\mathrm{u11}^{\star}+\alpha\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u00}\*\mathrm{u01}^{\star}&\linebreak[0]\left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}\cr }\end{dmath}
+\ebm
 Comparing \verb|(%o9)| and  \verb|(%o12)|, we see that the two methods of calculating
 the reduced state for qubit $D$ after the measurement give the same result, showing that the second
 method is correct. Now we compute the probability 
 $p_m=\mbox{Tr}(\rho)=\mbox{Tr}(\rho_D)$
 that the state is in fact projected onto $\ket{u_m}$.
+\bbm
 \begin{verbatim}
 (%i13)  res1 : conjsimp(mat_trace(rho));
 \end{verbatim}
@@ -1011,11 +1018,13 @@ that the state is in fact projected onto $\ket{u_m}$.
 \end{verbatim}
 \begin{dmath}[number={\%o14}]
  \left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}
+\ebm
 Finally, we compare this to the trace computed by hand from the expression following (\ref{ket_to_mat}),
 which is given by
 \begin{equation}
  p_m=\sum^1_{i,j=0} \widehat{\alpha}_{i,j}^2 \widehat{\beta}_{i,j}^2 |\widehat{u}_m,ij|^2
 \end{equation}
+\bbm
 \begin{verbatim}
 (%i15) res3 : ratsimp(braz(0,0).a^2 * braz(0,0).b^2 *abs(u00)^2+ braz(0,0).a^2 * braz(1,1).b^2 * abs(u01)^2 
     +  braz(1,1).a^2 * braz(0,0).b^2 * abs(u10)^2 +  braz(1,1).a^2 * braz(1,1).b^2 * abs(u11)^2);
@@ -1023,6 +1032,7 @@ which is given by
 \begin{dmath}[number={\%o15}]
  \left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}
 and see that $p_m$ is the same as above--- verifying this last formula was well. 
+\ebm
 %\section*{Index}
 \printindex
 %\addcontentsline{toc}{section}{Index}

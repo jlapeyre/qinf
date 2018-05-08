@@ -1,0 +1,2501 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>User's Manual for qinf Quantum Information and Entanglement Package For The Maxima Computer Algebra System</TITLE>
+<META NAME="description" CONTENT="User's Manual for qinf Quantum Information and Entanglement Package For The Maxima Computer Algebra System">
+<META NAME="keywords" CONTENT="qinf">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="qinf.css">
+
+</HEAD>
+
+<BODY text="#000000" bgcolor="#FFFFFF">
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.gif"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.gif">   
+<BR>
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<P>
+
+<P>
+<H1 ALIGN="CENTER">User's Manual for  <I>qinf </I> Quantum Information and Entanglement Package For The <I>Maxima</I> Computer
+  Algebra System</H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>G. John Lapeyre, Jr.</STRONG></P>
+</DIV>
+
+<P>
+<PRE>
+         Copyright (c)  2008  Gerald John Lapeyre Jr.
+         Permission is granted to copy, distribute and/or modify this document
+         under the terms of the GNU Free Documentation License, Version 1.2
+         or any later version published by the Free Software Foundation;
+         with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+         A copy of the license is included in the distribution of the source
+         code of the software accompanying this manual in the file fdl.txt.
+</PRE>
+
+<P>
+<BR>
+
+<H2><A NAME="SECTION00010000000000000000">
+Contents</A>
+</H2>
+<!--Table of Contents-->
+
+<UL CLASS="TofC">
+<LI><A NAME="tex2html29"
+  HREF="qinf.html#SECTION00020000000000000000">1 Introduction</A>
+<UL>
+<LI><A NAME="tex2html30"
+  HREF="qinf.html#SECTION00021000000000000000">1.1 Acknowledgments</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html31"
+  HREF="qinf.html#SECTION00030000000000000000">2 Using Maxima. features important for qinf </A>
+<LI><A NAME="tex2html32"
+  HREF="qinf.html#SECTION00040000000000000000">3 Representation of states and operators</A>
+<LI><A NAME="tex2html33"
+  HREF="qinf.html#SECTION00050000000000000000">4 Creating instances of states</A>
+<UL>
+<LI><A NAME="tex2html34"
+  HREF="qinf.html#SECTION00051000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ketz</B>(<!-- MATH
+ $i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.gif"
+ ALT="$i_1,\ldots,i_n$"></SPAN>), <B>braz</B>(<!-- MATH
+ $i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.gif"
+ ALT="$i_1,\ldots,i_n$"></SPAN>),
+<B>ketx</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>), <B>brax</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>),
+  <B>kety</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>), <B>bray</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>), multipartite eigenstates of 
+  <!-- MATH
+ $\sigma_x,\sigma_y,\sigma_z$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="87" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img32.gif"
+ ALT="$\sigma_x,\sigma_y,\sigma_z$"></SPAN></A>
+<LI><A NAME="tex2html35"
+  HREF="qinf.html#SECTION00052000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>ket_n</B>(<!-- MATH
+ $j,i_1,\ldots,i_m$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="108" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.gif"
+ ALT="$j,i_1,\ldots,i_m$"></SPAN>), <B>bra_n</B>(<!-- MATH
+ $j,i_1,\ldots,i_m$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="108" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.gif"
+ ALT="$j,i_1,\ldots,i_m$"></SPAN>),
+ alternate form of <B>ketz</B>, etc.</A>
+<LI><A NAME="tex2html36"
+  HREF="qinf.html#SECTION00053000000000000000">4.3 Density matrix representation of a pure state (projection operator)</A>
+<LI><A NAME="tex2html37"
+  HREF="qinf.html#SECTION00054000000000000000">4.4 Creating state vectors with the tensor product. otimes and tensor_product </A>
+<LI><A NAME="tex2html38"
+  HREF="qinf.html#SECTION00055000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>schmidt_ket</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.gif"
+ ALT="$a$"></SPAN>). bipartite state in Schmidt basis</A>
+<LI><A NAME="tex2html39"
+  HREF="qinf.html#SECTION00056000000000000000">4.6 bell[a,b] and belln[i] Bell vectors in computational basis </A>
+</UL>
+<BR>
+<LI><A NAME="tex2html40"
+  HREF="qinf.html#SECTION00060000000000000000">5 Creating and using operators</A>
+<UL>
+<LI><A NAME="tex2html41"
+  HREF="qinf.html#SECTION00061000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>pauli</B>[<SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.gif"
+ ALT="$i$"></SPAN>]</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html42"
+  HREF="qinf.html#SECTION00070000000000000000"><SPAN CLASS="arabic">6</SPAN> Entanglement- <B>ptrace</B>(<!-- MATH
+ $\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="76" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img94.gif"
+ ALT="$\rho,i_1,\ldots$"></SPAN>), <B>entropy</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN>), <B>purity</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN>)</A>
+<UL>
+<LI><A NAME="tex2html43"
+  HREF="qinf.html#SECTION00071000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ptrace</B>(<!-- MATH
+ $\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="76" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img94.gif"
+ ALT="$\rho,i_1,\ldots$"></SPAN>), <B>ptracen</B>(<!-- MATH
+ $n,\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="98" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img96.gif"
+ ALT="$n,\rho,i_1,\ldots$"></SPAN>) partial trace </A>
+<LI><A NAME="tex2html44"
+  HREF="qinf.html#SECTION00072000000000000000">6.2 An entangled pure global state has mixed reduced states</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html45"
+  HREF="qinf.html#SECTION00080000000000000000">7 More operators and functions</A>
+<UL>
+<LI><A NAME="tex2html46"
+  HREF="qinf.html#SECTION00081000000000000000">7.1 pauli_product</A>
+<LI><A NAME="tex2html47"
+  HREF="qinf.html#SECTION00082000000000000000">7.2 pauliexp</A>
+<LI><A NAME="tex2html48"
+  HREF="qinf.html#SECTION00083000000000000000">7.3 invpauliexp</A>
+<LI><A NAME="tex2html49"
+  HREF="qinf.html#SECTION00084000000000000000">7.4 tpauliexp, linvpauliexp, correlation_tensor</A>
+<LI><A NAME="tex2html50"
+  HREF="qinf.html#SECTION00085000000000000000">7.5 fidelity</A>
+<LI><A NAME="tex2html51"
+  HREF="qinf.html#SECTION00086000000000000000">7.6 spinor_rotation_op, spinor_rotation_op_trig</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html52"
+  HREF="qinf.html#SECTION00090000000000000000">8 Entanglement. longer examples</A>
+<UL>
+<LI><A NAME="tex2html53"
+  HREF="qinf.html#SECTION00091000000000000000">8.1 Entanglement swapping</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html54"
+  HREF="qinf.html#SECTION000100000000000000000">Index</A>
+</UL>
+<!--End of Table of Contents-->
+<P>
+
+<H1><A NAME="SECTION00020000000000000000">
+<SPAN CLASS="arabic">1</SPAN> Introduction</A>
+</H1>
+
+<P>
+This quantum information package for the <I>Maxima</I> computer
+algebra system allows the manipulation of instances of
+objects-- operators, vectors, tensors, <I>etc.</I>  that
+appear in quantum information theory.  More precisely these
+objects are typically represented in this package in a
+particular basis as row and column vectors and matrices,
+whose entries may be explicit numbers (of various classes)
+or algebraic expressions. This software occupies a niche
+distinct from high performance numerical linear algebra
+software as well as software such as the <I>Maxima</I> tensor
+packages that manipulate abstract mathematical objects.
+This document describes the functions and data in the
+package and how to use them with <I>Maxima</I>, assuming that you
+do not know much about <I>Maxima</I>, but do know quantum
+information theory. However, most of the examples are also
+found in introductory texts on quantum information.  The
+package is intended for research and teaching in the theory
+of entanglement and quantum information and related fields.
+
+<P>
+Examples of the facilities of the
+package are
+
+<UL>
+<LI>Methods for constructing pure and mixed states and operators.
+</LI>
+<LI>Methods for executing standard operations found in
+    computational linear algebra as well as the tensor
+    product, partial trace, etc.
+</LI>
+<LI>Functions to compute commonly appearing quantities such as entropy and purity.
+</LI>
+</UL>
+
+<P>
+This document begins with a very brief introduction to
+<I>Maxima</I> emphasizing features that are important for
+<I>qinf</I>. The remainder of the manual is a series of small
+sections introducing functions with examples. The examples
+mostly consist of testing equations. First identities and
+textbook exercises are presented, in part becuase they are
+the natural calculations to include in the test suite from
+which they are taken. Then more complicated calculations are
+tested, as that is the initial application of the author-- to
+check hand calculations and claims found in other documents.
+In this restricted sense, the package can give results on
+simple abstract statements: If 1) generic instances of objects are
+generated, and 2) a representation-invariant statement is
+formulated, and 3) the subexpressions are succesfully coerced
+into some canonical form, then defects in the statement can
+sometimes be detected if the statement is not true.
+
+<P>
+Some suggestions and things to be aware of in the following sections.
+
+<UL>
+<LI>You probably need to read at least a ten minute tutorial before or in conjunction
+    with reading this document. There are several listed at the <I>Maxima</I> website, and
+    others that a search engine can find. If you are too impatient there is a very
+    brief introduction to <I>Maxima</I> below.
+</LI>
+<LI>There are several user interfaces to the <I>Maxima</I>. All the
+    examples here are generated using the <I>imaxima</I><A NAME="1195"></A> package
+    for the <I>emacs</I><A NAME="1198"></A> editor/environment, but the results are
+    similar to other graphical frontends to <I>Maxima</I>.
+</LI>
+<LI>Most functions currently work only with qubits, others for variable number of
+    states.
+</LI>
+</UL>
+
+<P>
+
+<H2><A NAME="SECTION00021000000000000000">
+<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Acknowledgments</A>
+</H2>
+
+<P>
+Some of the ideas used in this package are inspired by the package <I>qdens</I><A NAME="1202"></A>
+written for a proprietary symbolic algebra system. (put reference here)
+
+<P>
+
+<H1><A NAME="SECTION00030000000000000000">
+<SPAN CLASS="arabic">2</SPAN> Using <I>Maxima</I>. features important for  <I>qinf </I> </A>
+</H1>
+The package is loaded <A NAME="121"></A> like this
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="117" ALIGN="BOTTOM" BORDER="0"
+ SRC="img10.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}\index{{\bf load}\index{load@{\bf load}}}
+\b...
+...in{dmath}[number={\%o1}]
+\verb\vert qinf.mac\vert\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+There are several tutorials and manuals available for
+<I>Maxima</I>. Here is a very brief one focused on aiding the
+introduction to the  <I>qinf </I> package.  We will not give examples
+of matrices until later, but point out that the notation for
+<A NAME="129"></A> matrix multiplication in
+<I>Maxima</I> is a dot<A NAME="131"></A>, eg. <code>A . B</code>.  If
+<SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$A$"></SPAN> is a <SPAN CLASS="MATH"><IMG
+ WIDTH="63" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.gif"
+ ALT="$m\times n$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> a <SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img14.gif"
+ ALT="$p\times q$"></SPAN> matrix, then the
+result is a <SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img15.gif"
+ ALT="$n\times p$"></SPAN> matrix.  The inner
+product<A NAME="132"></A> of quantum state vectors, the
+outer product <A NAME="133"></A> of quantum state vectors, the composition of
+operators, and the mapping of one vector to another by an
+operator are all special cases of matrix multiplication and
+are all represented by the dot.  The remaining product, the
+tensor product<A NAME="134"></A>, becomes the Kronecker product in the matrix
+representation of a finite dimensional Hilbert space. To
+agree with standard terminology, we introduce the infix
+operator <B>otimes</B><A NAME="1219"></A> and the function <B>tensor_product</B><A NAME="1222"></A>
+that eventually call the <I>Maxima</I> function
+<B>kronecker_product</B><A NAME="1226"></A>.
+
+<P>
+<I>Maxima</I> can use exact real and complex numbers or the
+standard floating point approximations, or arbitrary
+precision floating point numbers.  Numerical expressions are
+simplified upon entry. Each input line must be terminated by
+a semicolon (some interfaces do this automatically) or by a
+dollar sign, which suppresses the output.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i1) 1 + 1;
+\end{verbatim}
+\begin{dmath}[number={\%o1}]
+2\end{dmath}
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Assignment is denoted by a colon <A NAME="145"></A> while
+function definitions are denoted by 
+:=
+<A NAME="146"></A>
+For example, <code> a : b+c ;</code> evaluates <code>b+c</code> and assigns the result to <code>a</code>.
+On the other hand <code> a(x,y) := x^y ;</code> defines the function <SPAN CLASS="MATH"><IMG
+ WIDTH="65" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.gif"
+ ALT="$a(x,y)$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="367" ALIGN="BOTTOM" BORDER="0"
+ SRC="img18.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) a : 2 * 2;
+\end{ver...
+...^{4}+4\*x\*y^{3}+6\*x^{2}\*y^{2}+4\*x^{3}\*y+x^{4}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<A NAME="168"></A>
+We suppress the output here with a dollar sign because it's big- <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img19.gif"
+ ALT="$51$"></SPAN> terms.
+<B>expand</B><A NAME="1240"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="138" ALIGN="BOTTOM" BORDER="0"
+ SRC="img20.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) b : expand( (x+y)^5...
+...);
+\end{verbatim}
+\begin{dmath}[number={\%o6}]
+51\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Some exact numbers and floating point approximations.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="263" ALIGN="BOTTOM" BORDER="0"
+ SRC="img21.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i7) 1 + sqrt(2);
+\end{v...
+...}
+\begin{dmath}[number={\%o8}]
+2.4142135623730949\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Defining and using a function.
+<A NAME="186"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="362" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) f(x) := 3 * cos(x);...
+...);
+\end{verbatim}
+\begin{dmath}[number={\%o11}]
+3\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<A NAME="202"></A>
+Complex numbers.
+%i
+ is the identifier for 
+<A NAME="203"></A> <SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img23.gif"
+ ALT="$i=\sqrt{-1}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="114" ALIGN="BOTTOM" BORDER="0"
+ SRC="img24.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i12) expand ( (1 + 2 * ...
+...nd{verbatim}
+\begin{dmath}[number={\%o12}]
+4\*i-3\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Some special numbers are defined, such as 
+%pi
+ <A NAME="210"></A>
+and <A NAME="211"></A>
+%e.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="237" ALIGN="BOTTOM" BORDER="0"
+ SRC="img27.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i13) cos(%pi/2);
+\end{v...
+...);
+\end{verbatim}
+\begin{dmath}[number={\%o14}]
+i\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00040000000000000000">
+<SPAN CLASS="arabic">3</SPAN> Representation of states and operators</A>
+</H1>
+Kets are represented by <SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img28.gif"
+ ALT="$n \times 1$"></SPAN> matrices, bras by <SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img29.gif"
+ ALT="$1
+\times n$"></SPAN> matrices.<A NAME="223"></A> The objects
+are represented in the <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img30.gif"
+ ALT="$z$"></SPAN> basis.  Bras and kets
+representing the same states are related by <I>Maxima</I>'s conjugate
+transpose function <B>ctranspose</B><A NAME="1270"></A>.
+Density operators and other operators
+are represented by matrices.  The tensor product is
+represented by the Kronecker product.  There is no strong
+typing. You are responsible for knowing that a particular
+vector represents a state vector in a particular space.
+
+<P>
+
+<H1><A NAME="SECTION00050000000000000000">
+<SPAN CLASS="arabic">4</SPAN> Creating instances of states</A>
+</H1>
+Here are some methods for creating instances of states, from scratch or
+from other states. Although all operators  `create' states in this
+sense, we omit most of them here, because they are better described as manipulating
+states.
+
+<P>
+
+<H2><A NAME="SECTION00051000000000000000"></A>  <A NAME="239"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ketz</B>(<!-- MATH
+ $i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.gif"
+ ALT="$i_1,\ldots,i_n$"></SPAN>), <B>braz</B>(<!-- MATH
+ $i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.gif"
+ ALT="$i_1,\ldots,i_n$"></SPAN>),
+<B>ketx</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>), <B>brax</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>),
+  <B>kety</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>), <B>bray</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img2.gif"
+ ALT="$.$"></SPAN>), multipartite eigenstates of 
+  <!-- MATH
+ $\sigma_x,\sigma_y,\sigma_z$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="87" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img32.gif"
+ ALT="$\sigma_x,\sigma_y,\sigma_z$"></SPAN>
+</H2>
+<A NAME="1114"></A>
+create normalized <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img33.gif"
+ ALT="$n$"></SPAN>-partite states in the z-basis. In all cases
+the indices are <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img34.gif"
+ ALT="$0$"></SPAN> or <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.gif"
+ ALT="$1$"></SPAN>. The pair <B>ketz</B><A NAME="1279"></A> and <B>braz</B><A NAME="1282"></A> produce
+eigenstates of <!-- MATH
+ $\sigma_z^{(1)} \otimes \cdots \otimes \sigma_z^{(n)}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="151" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img36.gif"
+ ALT="$\sigma_z^{(1)} \otimes \cdots \otimes \sigma_z^{(n)}$"></SPAN>,
+with the index <SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img37.gif"
+ ALT="$i=0$"></SPAN> selecting the state with eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.gif"
+ ALT="$1$"></SPAN> and
+<SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img38.gif"
+ ALT="$i=1$"></SPAN> selecting the state with eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="33" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img39.gif"
+ ALT="$-1$"></SPAN>.
+In other words the ket produced represents <!-- MATH
+ ${\lvert i_1,i_2,\ldots,i_n \rangle}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="131" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img40.gif"
+ ALT="${\lvert i_1,i_2,\ldots,i_n \rangle}.$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="137" ALIGN="BOTTOM" BORDER="0"
+ SRC="img41.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i3) ketz(1)
+\end{verbat...
+...\begin{dmath}[number={\%o3}]
+\pmatrix{0\cr 1\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img42.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i4) braz(1)
+\end{verbat...
+...th}[number={\%o4}]
+\pmatrix{0&amp;\linebreak[0]1\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img43.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) braz(0)
+\end{verbat...
+...th}[number={\%o5}]
+\pmatrix{1&amp;\linebreak[0]0\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="368" ALIGN="BOTTOM" BORDER="0"
+ SRC="img44.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i6) braz(0,0)
+\end{verb...
+...ak[0]0&amp;\linebreak[0]0&amp;\linebreak[0]\alpha_{1}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+The functions <B>ketx</B><A NAME="1306"></A>, <B>brax</B><A NAME="1309"></A>, <B>kety</B><A NAME="1312"></A>, <B>bray</B><A NAME="1315"></A> produce
+eigenstates of <!-- MATH
+ $\sigma_x^{(1)} \otimes \cdots \otimes \sigma_x^{(n)}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="151" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img45.gif"
+ ALT="$\sigma_x^{(1)} \otimes \cdots \otimes \sigma_x^{(n)}$"></SPAN>,
+or <!-- MATH
+ $\sigma_y^{(1)} \otimes \cdots \otimes \sigma_y^{(n)}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="151" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img46.gif"
+ ALT="$\sigma_y^{(1)} \otimes \cdots \otimes \sigma_y^{(n)}$"></SPAN>,
+with, as before, the index <SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img37.gif"
+ ALT="$i=0$"></SPAN> selecting the state with eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.gif"
+ ALT="$1$"></SPAN> and
+<SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img38.gif"
+ ALT="$i=1$"></SPAN> selecting the state with eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="33" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img39.gif"
+ ALT="$-1$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="250" ALIGN="BOTTOM" BORDER="0"
+ SRC="img47.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) brax(1)
+\end{verbat...
+...*\sqrt{2}}&amp;\linebreak[0]\frac{i}{2\*\sqrt{2}}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00052000000000000000">
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>ket_n</B>(<!-- MATH
+ $j,i_1,\ldots,i_m$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="108" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.gif"
+ ALT="$j,i_1,\ldots,i_m$"></SPAN>), <B>bra_n</B>(<!-- MATH
+ $j,i_1,\ldots,i_m$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="108" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.gif"
+ ALT="$j,i_1,\ldots,i_m$"></SPAN>),
+ alternate form of <B>ketz</B>, etc.</A>
+</H2><A NAME="1127"></A>
+These are an alternate way to call <B>ketx</B>, <B>kety</B>, etc. The index <SPAN CLASS="MATH"><IMG
+ WIDTH="109" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img49.gif"
+ ALT="$j\in(1,2,3)$"></SPAN>
+is mapped to <SPAN CLASS="MATH"><IMG
+ WIDTH="75" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.gif"
+ ALT="$(x,y,z)$"></SPAN> and the appropriate function, eg. <B>ketx</B> is called with
+the remaining arguments.
+
+<P>
+
+<H2><A NAME="SECTION00053000000000000000">
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Density matrix representation of a pure state (projection operator)</A>
+</H2>
+The projection operator <A NAME="331"></A>
+<A NAME="332"></A> (or equivalently, the density
+matrix) corresponding to a state vector is generated via the
+outer product, which is represented by the dot operator.  A
+convenience function <B>toproj</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="35" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img51.gif"
+ ALT="$ket$"></SPAN>) is also provided to
+form a projection operator (<B>toproj</B><A NAME="1370"></A> does not check that
+<I>ket</I> is normalized.) Below, we use the <I>Maxima</I> function
+<B>ctranspose</B><A NAME="1375"></A> for the complex transpose.
+Here is <!-- MATH
+ ${\lvert 0 \rangle}{\langle 0 \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img52.gif"
+ ALT="${\lvert 0 \rangle}{\langle 0 \rvert}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="139" ALIGN="BOTTOM" BORDER="0"
+ SRC="img53.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i19) ketx(1) . brax(1);...
+...}{2}\cr -\frac{1}{2}&amp;\linebreak[0]\frac{1}{2}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Compare this to the inner product<A NAME="354"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i20) brax(1) . ketx(1);
+\end{verbatim}
+\begin{dmath}[number={\%o20}]
+1\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here are different ways to make <!-- MATH
+ ${\lvert 000 \rangle}{\langle 000 \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="98" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img55.gif"
+ ALT="${\lvert 000 \rangle}{\langle 000 \rvert}$"></SPAN> and <!-- MATH
+ ${\lvert 101 \rangle}{\langle 101 \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="98" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img56.gif"
+ ALT="${\lvert 101 \rangle}{\langle 101 \rvert}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="237" ALIGN="BOTTOM" BORDER="0"
+ SRC="img57.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i21) is ( ketz(0,0,0) ....
+...atim}
+\begin{dmath}[number={\%o22}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+There is also a function <B>tostate</B><A NAME="1399"></A> (needs a better name) that
+is the inverse (up to a phase) of <B>toproj</B><A NAME="1402"></A>-- it returns the ket corresponding to a
+projection operator. If the input matrix is not a projection operator,
+the result is undefined.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img58.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i17) is ( tostate( topr...
+...atim}
+\begin{dmath}[number={\%o17}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00054000000000000000"></A><A NAME="1410"></A><A NAME="1413"></A><A NAME="386"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating state vectors with the tensor product.
+ <B>otimes</B> and <B>tensor_product</B> 
+</H2>
+The function <B>tensor_product</B>(<!-- MATH
+ $v_1,\ldots,v_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="92" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img59.gif"
+ ALT="$v_1,\ldots,v_n$"></SPAN>), returns
+<!-- MATH
+ $v_1\otimes v_2\cdots\otimes v_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="145" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img60.gif"
+ ALT="$v_1\otimes v_2\cdots\otimes v_n$"></SPAN>, where <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img61.gif"
+ ALT="$v_i$"></SPAN> are vectors
+or matrices. The <B>otimes</B> operator
+is an `infix' operator that
+is equivalent to the function <B>tensor_product</B>. The following uses
+<I>Maxima</I>'s <B>is</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="48" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.gif"
+ ALT="$expr$"></SPAN>) function which tries to determine
+if the predicate <I>expr</I> is true. Keep in mind that, in
+this example, the expressions are not analyzed abstractly,
+but rather vectors with integer elements are generated and
+compared elementwise.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="388" ALIGN="BOTTOM" BORDER="0"
+ SRC="img63.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i12) is(ketz(0,1) = ket...
+...atim}
+\begin{dmath}[number={\%o14}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00055000000000000000"></A><A NAME="1427"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>schmidt_ket</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.gif"
+ ALT="$a$"></SPAN>). bipartite state in Schmidt basis
+</H2>
+creates a ket in the schmidt form. <A NAME="415"></A> This is
+equivalent to <code>sqrt(a)*ket(0,0)+ sqrt(1-a)*ket(1,1)</code>. This
+only works for qubits (<SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img64.gif"
+ ALT="$d=2$"></SPAN>). Note that you may need to
+enter <I>Maxima</I>'s <code>assume(a&gt;0,1-a&gt;0)</code> <A NAME="1430"></A> when manipulating this state.
+
+<P>
+
+<H2><A NAME="SECTION00056000000000000000"></A><A NAME="1433"></A><A NAME="1436"></A>
+<A NAME="420"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>bell[a,b]</B> and  <B>belln[i]</B> Bell vectors in computational basis 
+</H2>
+create vector bell states. <B>bell[a,b]</B> creates the state
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+{\lvert\Psi_{a,b} \rangle} = \frac{1}{\sqrt{2}} {\lvert 0,b \rangle} + (-1)^a  {\lvert 1,\bar b \rangle},
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">1</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="286" HEIGHT="56" BORDER="0"
+ SRC="img65.gif"
+ ALT="\begin{displaymath}
+{\lvert\Psi_{a,b} \rangle} = \frac{1}{\sqrt{2}} {\lvert 0,b \rangle} + (-1)^a {\lvert 1,\bar b \rangle},
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+where <SPAN CLASS="MATH"><IMG
+ WIDTH="113" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img66.gif"
+ ALT="$a,b\in\{0,1\}$"></SPAN>. The array <B>belln[i]</B> creates the same states
+where <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.gif"
+ ALT="$i$"></SPAN> is the decimal representation of the binary numeration
+<SPAN CLASS="MATH"><IMG
+ WIDTH="51" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img67.gif"
+ ALT="$(a,b)$"></SPAN>. That is, <SPAN CLASS="MATH"><IMG
+ WIDTH="92" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img68.gif"
+ ALT="$(0,1,2,3)$"></SPAN> corresponds to <!-- MATH
+ $( (0,0), (0,1), (1,0), (1,1) )$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="238" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img69.gif"
+ ALT="$( (0,0), (0,1), (1,0), (1,1) )$"></SPAN>.
+
+<P>
+As an exercise, we will check our definitions of the Bell
+states by testing for orthonormality. <A NAME="430"></A> We first define an array
+function <A NAME="431"></A> that returns the inner product of two Bell states.
+An array function <B>f[x,y]</B> is like an ordinary function
+<B>f(x,y)</B> except that it can be used where an array is
+expected.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img70.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) f[x,y] := belln[x] ...
+...k[0]y}:=\mathrm{belln}_{x}\cdot \mathrm{belln}_{y}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Create a <SPAN CLASS="MATH"><IMG
+ WIDTH="53" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img71.gif"
+ ALT="$4 \times 4$"></SPAN> matrix with <I>Maxima</I>'s <B>genmatrix</B><A NAME="1453"></A> which maps the two
+dimension array <B>f</B> over the indices of the matrix with the given range.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="193" ALIGN="BOTTOM" BORDER="0"
+ SRC="img72.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i3) genmatrix( f , 3,3,...
+...\linebreak[0]0&amp;\linebreak[0]0&amp;\linebreak[0]1\cr
+}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+But instead of the named function <B>f</B> we could have used
+just a function body with <I>Maxima</I>'s <B>lambda</B><A NAME="1464"></A> function,
+which returns a function that is not bound to a symbol.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="193" ALIGN="BOTTOM" BORDER="0"
+ SRC="img73.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i4) genmatrix( lambda( ...
+...&amp;\linebreak[0]0&amp;\linebreak[0]0&amp;\linebreak[0]1\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+It is obviously the <SPAN CLASS="MATH"><IMG
+ WIDTH="53" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img71.gif"
+ ALT="$4 \times 4$"></SPAN> identity matrix.  The
+function <B>identitymatrixp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="43" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img74.gif"
+ ALT="$mat$"></SPAN>)<A NAME="1472"></A> is a predicate defined in the
+quantum information package in analogy to the <I>Maxima</I>
+function <B>zeromatrixp</B><A NAME="1476"></A>.  It returns <B>true</B> only if its
+argument is an identity matrix. (The symbol 
+%
+refers to the previous output.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img75.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) identitymatrixp(%);...
+...batim}
+\begin{dmath}[number={\%o5}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+In the following sections, we often perform these comparisons in a single line. This
+is how the test appears in the regression test suite.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img76.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i6) identitymatrixp(gen...
+...batim}
+\begin{dmath}[number={\%o6}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We see that these four vectors are orthonormal and thus form a basis in <!-- MATH
+ $\mathbb{C}^2\otimes \mathbb{C}^2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="77" HEIGHT="44" ALIGN="MIDDLE" BORDER="0"
+ SRC="img77.gif"
+ ALT="$\mathbb{C}^2\otimes \mathbb{C}^2$"></SPAN>.
+We can also check that
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+{\lvert\Psi_{00} \rangle}{\langle\Psi_{00} \rvert} +  {\lvert\Psi_{01} \rangle}{\langle\Psi_{01} \rvert}
+  + {\lvert\Psi_{10} \rangle}{\langle\Psi_{10} \rvert} + {\lvert\Psi_{11} \rangle}{\langle\Psi_{11} \rvert} = \mathbb{1}_4.
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">2</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="510" HEIGHT="38" BORDER="0"
+ SRC="img78.gif"
+ ALT="\begin{displaymath}
+{\lvert\Psi_{00} \rangle}{\langle\Psi_{00} \rvert} + {\lver...
+...ert\Psi_{11} \rangle}{\langle\Psi_{11} \rvert} = \mathbb{1}_4.
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img79.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) identitymatrixp(app...
+...batim}
+\begin{dmath}[number={\%o2}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00060000000000000000">
+<SPAN CLASS="arabic">5</SPAN> Creating and using operators</A>
+</H1>
+
+<H2><A NAME="SECTION00061000000000000000"></A><A NAME="1511"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>pauli</B>[<SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.gif"
+ ALT="$i$"></SPAN>]
+</H2>
+creates the pauli matrices <!-- MATH
+ $(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
+=(\mathbb{1}_2,\sigma_x,\sigma_y,\sigma_z).$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="295" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img80.gif"
+ ALT="$(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
+=(\mathbb{1}_2,\sigma_x,\sigma_y,\sigma_z).$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img81.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i12) [ pauli[0], pauli[...
+...&amp;\linebreak[0]0\cr 0&amp;\linebreak[0]-1\cr } \right] \end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Show that the ket <!-- MATH
+ ${\lvert 1 \rangle}_x$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="40" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img82.gif"
+ ALT="${\lvert 1 \rangle}_x$"></SPAN> is an eigenvector of <SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img83.gif"
+ ALT="$\sigma_x$"></SPAN> with eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="33" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img39.gif"
+ ALT="$-1$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img84.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i8) is ( pauli[1] . ket...
+...batim}
+\begin{dmath}[number={\%o8}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here are we check that all our definitions of the pauli matrices and kets are
+consistent in this sense.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="144" ALIGN="BOTTOM" BORDER="0"
+ SRC="img85.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) mapapply( lambda([i...
+...]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+Here we use <B>anticommutator</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="73" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img86.gif"
+ ALT="$op_1,op_2$"></SPAN>) <A NAME="1531"></A> to test the anticommutation relations among
+the pauli matrices: <!-- MATH
+ $\{\sigma_i,\sigma_j\}= 2\delta_{i,j}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="140" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img87.gif"
+ ALT="$\{\sigma_i,\sigma_j\}= 2\delta_{i,j}$"></SPAN> for <!-- MATH
+ $i,j \in\{1,2,3\}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="136" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img88.gif"
+ ALT="$i,j \in\{1,2,3\}.$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="234" ALIGN="BOTTOM" BORDER="0"
+ SRC="img89.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\index{genmatrix@{\bf genmatrix}}
+\begin{ve...
+...ix{1&amp;\linebreak[0]0\cr
+0&amp;\linebreak[0]1\cr }\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The <I>Maxima</I> function <B>mat_unblocker</B><A NAME="1542"></A>, flattens the
+blocks in the above expression, so we can write <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="138" ALIGN="BOTTOM" BORDER="0"
+ SRC="img90.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i4) identitymatrixp( ma...
+...batim}
+\begin{dmath}[number={\%o4}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Now we load the <B>itensor</B><A NAME="1550"></A> package, which provides the 
+<A NAME="557"></A> levi-civita tensor, and make use of
+the <I>Maxima</I> functions <B>permutations</B><A NAME="1554"></A> (which returns the
+set of all permutations of a list) and <B>listify</B><A NAME="1557"></A> (which turns a set into an ordered list).
+The  <I>qinf </I> package provides <A NAME="1560"></A> <B>mapapply</B>(<!-- MATH
+ $func,[list1, list2,\ldots]$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="201" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img91.gif"
+ ALT="$func,[list1, list2,\ldots]$"></SPAN>), which <B>apply</B><A NAME="1564"></A>s
+<I>func</I> to each of the <I>list</I>s and returns a list of the results.
+(see the <I>Maxima</I> documentation for <B>apply</B>.)  With all these,
+we can test the commutation relations <A NAME="569"></A> of the pauli matrices. (In reality, the matrix definitions
+are not complicated, we are actually testing the other functions.):
+<!-- MATH
+ $[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="170" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img92.gif"
+ ALT="$[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="269" ALIGN="BOTTOM" BORDER="0"
+ SRC="img93.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) load(''itensor'');
+...
+...]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00070000000000000000">
+<SPAN CLASS="arabic">6</SPAN> Entanglement- <B>ptrace</B>(<!-- MATH
+ $\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="76" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img94.gif"
+ ALT="$\rho,i_1,\ldots$"></SPAN>), <B>entropy</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN>), <B>purity</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN>)</A>
+</H1>
+
+<P>
+Now we are ready to introduce features that are more
+specific to the study quantum entanglement, namely the
+partial trace <B>ptrace</B>, the von Neumann entropy
+<B>entropy</B> and <B>purity</B>.
+
+<P>
+
+<H2><A NAME="SECTION00071000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ptrace</B>(<!-- MATH
+ $\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="76" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img94.gif"
+ ALT="$\rho,i_1,\ldots$"></SPAN>), <B>ptracen</B>(<!-- MATH
+ $n,\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="98" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img96.gif"
+ ALT="$n,\rho,i_1,\ldots$"></SPAN>) partial trace </A>
+</H2>
+computes the partial trace of the  density 
+operator <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN> over the component spaces given by the indices.
+For <B>ptrace</B><A NAME="1584"></A> the density matrix <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN> is assumed to be in
+<!-- MATH
+ $(\mathbb{C}^n)^{\otimes m}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="72" HEIGHT="43" ALIGN="MIDDLE" BORDER="0"
+ SRC="img97.gif"
+ ALT="$(\mathbb{C}^n)^{\otimes m}$"></SPAN>, with <SPAN CLASS="MATH"><IMG
+ WIDTH="57" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img98.gif"
+ ALT="$n=2$"></SPAN>, that is
+a tensor product of qubit spaces. For <B>ptracen</B><A NAME="1587"></A> the component
+spaces are all <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img33.gif"
+ ALT="$n$"></SPAN>-state qudits.
+
+<P>
+In this example we create three arbitrary <SPAN CLASS="MATH"><IMG
+ WIDTH="53" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img99.gif"
+ ALT="$3\times3$"></SPAN> matrices, and check that
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\mbox{Tr}_{1,2}(m_1\otimes m_2\otimes m_3) = \left(\mbox{Tr}(m_1)\mbox{Tr}(m_2)\right) m_3
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="402" HEIGHT="38" BORDER="0"
+ SRC="img100.gif"
+ ALT="\begin{displaymath}
+\mbox{Tr}_{1,2}(m_1\otimes m_2\otimes m_3) = \left(\mbox{Tr}(m_1)\mbox{Tr}(m_2)\right) m_3
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+and that
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\mbox{Tr}_{3}(m_1\otimes m_2\otimes m_3) = \left(\mbox{Tr}(m_3\right)(m_1\otimes m_2).
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="393" HEIGHT="38" BORDER="0"
+ SRC="img101.gif"
+ ALT="\begin{displaymath}
+\mbox{Tr}_{3}(m_1\otimes m_2\otimes m_3) = \left(\mbox{Tr}(m_3\right)(m_1\otimes m_2).
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Notice that we use the <I>Maxima</I> function <B>ratsimp</B><A NAME="1591"></A> to put both sides of the
+equation in the same form because <B>=</B><A NAME="1594"></A> checks only that two expressions are lexically
+identical (well, modulo some details of the simplification process.) We also make
+use of <I>Maxima</I>'s <B>mat_trace</B><A NAME="1598"></A> function ( so named to avoid conflicting
+with the code-execution trace function.)
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="420" ALIGN="BOTTOM" BORDER="0"
+ SRC="img102.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i1) m1 : matrix([a1,b1,...
+...batim}
+\begin{dmath}[number={\%o5}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here we trace over one component repeatedly and check that the result is
+equal to the full trace. Note that, each time, we are tracing over the new
+first component.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img103.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) factor( ptracen(3,...
+...ft(\mathrm{i3}+\mathrm{e3}+\mathrm{a3}\right)\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00072000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> An entangled pure global state has mixed reduced states</A>
+</H2>
+We examine a textbook example of entanglement-- the joint
+state of two qubits. The state of the whole system is pure,
+but the local states are mixed.  We begin by creating a
+joint state of two qubits in Schmidt basis
+<!-- MATH
+ ${\lvert\alpha \rangle}=\sqrt{\alpha}{\lvert 00 \rangle}+
+\sqrt{1-\alpha}{\lvert 11 \rangle}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="265" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img104.gif"
+ ALT="${\lvert\alpha \rangle}=\sqrt{\alpha}{\lvert 00 \rangle}+
+\sqrt{1-\alpha}{\lvert 11 \rangle}.$"></SPAN> In order to see the mixed
+character of the local states, we need to express the full
+state as a density operator (or equivalently as a projection
+operator.) Let's try to make <!-- MATH
+ ${\lvert\alpha \rangle}{\langle\alpha \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="61" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img105.gif"
+ ALT="${\lvert\alpha \rangle}{\langle\alpha \rvert}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="193" ALIGN="BOTTOM" BORDER="0"
+ SRC="img106.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) pr : toproj(schmidt...
+...k[0]\sqrt{1-\alpha}^{\star}\*\sqrt{1-\alpha}\cr }
+\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We see that <I>Maxima</I> is allowing that the quantities under the radicals may be negative. So
+we set some rules, and try again. <A NAME="1629"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="318" ALIGN="BOTTOM" BORDER="0"
+ SRC="img107.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i3) assume(alpha&gt;0, 1-a...
+...reak[0]0&amp;\linebreak[0]0&amp;\linebreak[0]1-\alpha\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The von Neumann <B>entropy</B><A NAME="1641"></A> defined as
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+S(\rho) = -\mbox{Tr}\rho \log_2 \rho,
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">3</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="182" HEIGHT="38" BORDER="0"
+ SRC="img108.gif"
+ ALT="\begin{displaymath}
+S(\rho) = -\mbox{Tr}\rho \log_2 \rho,
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+vanishes for a pure state, so that <!-- MATH
+ $S({\lvert\alpha \rangle}{\langle\alpha \rvert})$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="92" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img109.gif"
+ ALT="$S({\lvert\alpha \rangle}{\langle\alpha \rvert})$"></SPAN> is
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img110.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i6) entropy(pr);
+\end{verbatim}
+\begin{dmath}[number={\%o7}]
+0\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The <B>purity</B><A NAME="1651"></A> <!-- MATH
+ $\mbox{Tr}(\rho^2)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="63" HEIGHT="44" ALIGN="MIDDLE" BORDER="0"
+ SRC="img111.gif"
+ ALT="$\mbox{Tr}(\rho^2)$"></SPAN> is equal to <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.gif"
+ ALT="$1$"></SPAN> if and only if <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN> is a pure state.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="263" ALIGN="BOTTOM" BORDER="0"
+ SRC="img112.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i8) purity(pr);
+\end{ve...
+...%);
+\end{verbatim}
+\begin{dmath}[number={\%o9}]
+1\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Now we compute the reduced density matrix of the second qubit by tracing over the first--
+<!-- MATH
+ $\rho_2=\mbox{Tr}_1 {\lvert\alpha \rangle}{\langle\alpha \rvert}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="145" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img113.gif"
+ ALT="$\rho_2=\mbox{Tr}_1 {\lvert\alpha \rangle}{\langle\alpha \rvert}.$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img114.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) pr2 : ptrace(pr,1)...
+...pha&amp;\linebreak[0]0\cr 0&amp;\linebreak[0]1-\alpha\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Tracing over the second qubit instead gives the same result
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img115.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i11) ptrace(pr,2);
+\end...
+...pha&amp;\linebreak[0]0\cr 0&amp;\linebreak[0]1-\alpha\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Computing the entropy of a local state shows that this state is, in general, mixed
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img116.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\index{entropy@{\bf entropy}}
+\begin{verbat...
+...{log2}\left(1-\alpha\right)\*\left(1-\alpha\right)\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Each eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img117.gif"
+ ALT="$\lambda$"></SPAN> satisfies <!-- MATH
+ $0\le \lambda <1$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="96" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img118.gif"
+ ALT="$0\le \lambda &lt;1$"></SPAN>, so that the sum of their squares is less than
+one 
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img119.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i13) purity(pr2);
+\end{...
+...er={\%o13}]
+\alpha^{2}+\left(1-\alpha\right)^{2}\end{dmath} \end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We
+can plot <A NAME="740"></A> the results (the plot command <B>plot2d</B><A NAME="1685"></A> is more
+common, depending on your user interface. <B>wxplot2d</B><A NAME="1688"></A> has
+the same calling syntax, but inlines the resulting plot.) We
+see that the maximum entanglement occurs at <SPAN CLASS="MATH"><IMG
+ WIDTH="79" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img120.gif"
+ ALT="$\alpha=1/2$"></SPAN> and
+decreases monotonically from there in both directions, with
+<SPAN CLASS="MATH"><IMG
+ WIDTH="78" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img121.gif"
+ ALT="$\alpha=0,1$"></SPAN> giving pure joint states.  <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="520" ALIGN="BOTTOM" BORDER="0"
+ SRC="img122.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i14) wxplot2d([entropy(...
+...ncludegraphics[width=.5\linewidth]{figs/maxout_1}
+\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H1><A NAME="SECTION00080000000000000000">
+<SPAN CLASS="arabic">7</SPAN> More operators and functions</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00081000000000000000"></A><A NAME="1696"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>pauli_product</B>
+</H2>
+
+<P>
+
+<H2><A NAME="SECTION00082000000000000000"></A><A NAME="1699"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>pauliexp</B>
+</H2>
+
+<P>
+
+<H2><A NAME="SECTION00083000000000000000"></A><A NAME="1702"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>invpauliexp</B>
+</H2>
+
+<P>
+
+<H2><A NAME="SECTION00084000000000000000"></A><A NAME="1705"></A><A NAME="1708"></A><A NAME="1711"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>tpauliexp</B>, <B>linvpauliexp</B>, <B>correlation_tensor</B>
+</H2>
+
+<P>
+
+<H2><A NAME="SECTION00085000000000000000"></A><A NAME="1714"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>fidelity</B>
+</H2>
+
+<P>
+
+<H2><A NAME="SECTION00086000000000000000"></A><A NAME="1717"></A><A NAME="1720"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>spinor_rotation_op</B>, <B>spinor_rotation_op_trig</B>
+</H2>
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
+<SPAN CLASS="arabic">8</SPAN> Entanglement.  longer examples</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00091000000000000000"></A><A NAME="760"></A>
+<BR>
+<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> Entanglement swapping
+</H2>
+
+<P>
+Consider a pair of entangled qubits <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$A$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN>, and another
+entangled pair <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.gif"
+ ALT="$C$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img124.gif"
+ ALT="$D$"></SPAN>. By performing a joint
+measurement on, say <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.gif"
+ ALT="$C$"></SPAN>, we can put <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$A$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> in
+an entangled state although they may be widely separated.
+We begin by considering the most general projective measure
+on <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.gif"
+ ALT="$C$"></SPAN>, and calculate the reduced density matrix for
+a single qubit and the probability of outcome. In this
+example we calculate these quantities two ways-- one,
+directly from the density matrix formalism, and two, via
+formulas taking advantage of the particulars of this
+problem. To do the first calculation by hand would be
+extremely upleasant, as it involves multiplying <SPAN CLASS="MATH"><IMG
+ WIDTH="74" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img125.gif"
+ ALT="$16\times16$"></SPAN>
+matrices with several factors in a single element. Carrying
+it out below with <I>Maxima</I> is a concise exercise. This
+may appear to be an empty exercise only because all the
+calculations agree. In fact, in taking this example from a
+journal article, the author easily found a typographical
+error leading to an inconsistent result in one of the
+formulas below that would have been difficult to track down
+by hand. At present this example does not continue by discussing
+the measurements that maximize the resulting entanglement
+of <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$A$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img124.gif"
+ ALT="$D$"></SPAN>.
+
+<P>
+Qubits <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$A$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> are in the state
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+{\lvert\alpha \rangle}=\sqrt{\alpha}{\lvert 00 \rangle}+ \sqrt{1-\alpha}{\lvert 11 \rangle},
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="262" HEIGHT="38" BORDER="0"
+ SRC="img126.gif"
+ ALT="\begin{displaymath}
+{\lvert\alpha \rangle}=\sqrt{\alpha}{\lvert 00 \rangle}+ \sqrt{1-\alpha}{\lvert 11 \rangle},
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+<SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.gif"
+ ALT="$C$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img124.gif"
+ ALT="$D$"></SPAN> are in the state
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+{\lvert\beta \rangle}=\sqrt{\beta}{\lvert 00 \rangle}+ \sqrt{1-\beta}{\lvert 11 \rangle},
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="260" HEIGHT="41" BORDER="0"
+ SRC="img127.gif"
+ ALT="\begin{displaymath}
+{\lvert\beta \rangle}=\sqrt{\beta}{\lvert 00 \rangle}+ \sqrt{1-\beta}{\lvert 11 \rangle},
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+with the Schmidt coefficients <A NAME="772"></A>
+satisfying <!-- MATH
+ $\alpha,\beta >1/2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="102" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img128.gif"
+ ALT="$\alpha,\beta &gt;1/2$"></SPAN>.
+For now, we only want to tell <I>Maxima</I> that the coefficients
+of the kets are real.<A NAME="1730"></A>
+ <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="497" ALIGN="BOTTOM" BORDER="0"
+ SRC="img129.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) assume(alpha&gt;0,1-al...
+...trix{\sqrt{\beta}\cr 0\cr 0\cr \sqrt{1-\beta}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We consider the projective measurement<A NAME="794"></A> <SPAN CLASS="MATH"><IMG
+ WIDTH="57" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img130.gif"
+ ALT="$\{E_m\}$"></SPAN>, that is <!-- MATH
+ $E_m={\lvert u_m \rangle}{\langle u_m \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="146" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img131.gif"
+ ALT="$E_m={\lvert u_m \rangle}{\langle u_m \rvert}$"></SPAN>
+and <!-- MATH
+ $\sum_m E_m=\mathbb{1}_4$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="121" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img132.gif"
+ ALT="$\sum_m E_m=\mathbb{1}_4$"></SPAN>. We consider only a single basis vector
+here, so we don't use the subscript <SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img133.gif"
+ ALT="$m$"></SPAN> for <I>Maxima</I> vector name.
+We need to use <I>Maxima</I>'s <B>declare</B><A NAME="1746"></A> to declare that 
+the components are complex. <A NAME="801"></A>
+The state <!-- MATH
+ ${\lvert u_m \rangle}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="46" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img134.gif"
+ ALT="${\lvert u_m \rangle}$"></SPAN> is normalized, but we don't need to impose that condition in
+<I>Maxima</I> at this point.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="316" ALIGN="BOTTOM" BORDER="0"
+ SRC="img135.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) declare([u00,u01,u1...
+... \mathrm{u01}\cr \mathrm{u10}\cr \mathrm{u11}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The inital joint state <!-- MATH
+ ${\lvert\alpha\beta \rangle}{\langle\alpha\beta \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="88" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img136.gif"
+ ALT="${\lvert\alpha\beta \rangle}{\langle\alpha\beta \rvert}$"></SPAN> is pure and remains
+so after the measurment applying <!-- MATH
+ ${\lvert u_m \rangle}{\langle u_m \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="87" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img137.gif"
+ ALT="${\lvert u_m \rangle}{\langle u_m \rvert}$"></SPAN> to qubits <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.gif"
+ ALT="$C$"></SPAN>.
+But we write the density operator
+because we will examine the reduced states, which are mixed.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="68" ALIGN="BOTTOM" BORDER="0"
+ SRC="img138.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i7) rho : conjsimp((ide...
+...j(u) otimes ident(2)) . toproj(a otimes b))$,
+\end{verbatim}
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+where <B>conjsimp</B><A NAME="1765"></A> 
+(supplied via the <I>Maxima</I> listserv by Barton Willis) replaces <SPAN CLASS="MATH"><IMG
+ WIDTH="38" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img139.gif"
+ ALT="$xx^*$"></SPAN> with <SPAN CLASS="MATH"><IMG
+ WIDTH="38" HEIGHT="44" ALIGN="MIDDLE" BORDER="0"
+ SRC="img140.gif"
+ ALT="$\vert x\vert^2$"></SPAN>.
+The output was suppressed with the trailing dollar sign because the <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img95.gif"
+ ALT="$\rho$"></SPAN> is
+a <SPAN CLASS="MATH"><IMG
+ WIDTH="74" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img125.gif"
+ ALT="$16\times16$"></SPAN> matrix with large expressions for entries.
+The reduced state of qubits <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$A$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img124.gif"
+ ALT="$D$"></SPAN> is obtained by tracing out components <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img141.gif"
+ ALT="$2$"></SPAN> and
+<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img142.gif"
+ ALT="$3$"></SPAN> corresponding to qubits <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.gif"
+ ALT="$B$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.gif"
+ ALT="$C$"></SPAN>, ie  <!-- MATH
+ $\rho_{AD} =\mbox{Tr}_{BC}\rho$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="128" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img143.gif"
+ ALT="$\rho_{AD} =\mbox{Tr}_{BC}\rho$"></SPAN>.
+<A NAME="1768"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="190" ALIGN="BOTTOM" BORDER="0"
+ SRC="img144.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i8) rho_14 : ptrace(rho...
+...ght)\*\left\vert \mathrm{u11}\right\vert ^{2}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Likewise, the reduced state of just qubit <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img124.gif"
+ ALT="$D$"></SPAN> is
+<!-- MATH
+ $\rho_{D} =\mbox{Tr}_{ABC}\rho$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="128" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img145.gif"
+ ALT="$\rho_{D} =\mbox{Tr}_{ABC}\rho$"></SPAN>.<A NAME="1811"></A><A NAME="921"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img146.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) rho_4 : ptrace(rho,...
+...ght)\*\left\vert \mathrm{u01}\right\vert ^{2}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The second method of calculating <SPAN CLASS="MATH"><IMG
+ WIDTH="30" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img147.gif"
+ ALT="$\rho_{D}$"></SPAN> is as follows.
+Considering the following map from
+<!-- MATH
+ $\mathbb{C}^2\otimes\mathbb{C}^2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="77" HEIGHT="44" ALIGN="MIDDLE" BORDER="0"
+ SRC="img77.gif"
+ ALT="$\mathbb{C}^2\otimes \mathbb{C}^2$"></SPAN> to <!-- MATH
+ $M(\mathbb{C},2)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="79" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img148.gif"
+ ALT="$M(\mathbb{C},2)$"></SPAN>:
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+{\lvert a \rangle}=\sum_{i,j=0}^1 a_{ij}{\lvert ij \rangle}\quad\mapsto\quad\widehat{a}=
+    \pmatrix{
+      a_{00} & a_{01} \cr
+      a_{10} & a_{11} \cr
+    },
+\end{equation}
+ -->
+<A NAME="ket_to_mat"></A>
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">4</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><A NAME="ket_to_mat"></A><IMG
+ WIDTH="386" HEIGHT="68" BORDER="0"
+ SRC="img149.gif"
+ ALT="\begin{displaymath}
+{\lvert a \rangle}=\sum_{i,j=0}^1 a_{ij}{\lvert ij \rangle}...
+...t{a}=
+\pmatrix{
+a_{00} &amp; a_{01} \cr
+a_{10} &amp; a_{11} \cr
+},
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+one can show that <SPAN CLASS="MATH"><IMG
+ WIDTH="30" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img147.gif"
+ ALT="$\rho_{D}$"></SPAN> is equal to <!-- MATH
+ $X_m^{}X_m^{\dagger}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="69" HEIGHT="45" ALIGN="MIDDLE" BORDER="0"
+ SRC="img150.gif"
+ ALT="$X_m^{}X_m^{\dagger}$"></SPAN>, with
+<!-- MATH
+ $X_m = \widehat{\alpha}\,\widehat{u}_m\,\widehat{\beta}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="126" HEIGHT="50" ALIGN="MIDDLE" BORDER="0"
+ SRC="img151.gif"
+ ALT="$X_m = \widehat{\alpha}\,\widehat{u}_m\,\widehat{\beta}$"></SPAN>.
+The <I>Maxima</I> function implementing the mapping (<A HREF="#ket_to_mat">4</A>) is
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="66" ALIGN="BOTTOM" BORDER="0"
+ SRC="img152.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) ket_to_mat(iket) :...
+...[iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]])$
+\end{verbatim}
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Then the second calculation of <SPAN CLASS="MATH"><IMG
+ WIDTH="30" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img153.gif"
+ ALT="$\rho_D$"></SPAN>, which we call <code>rho_4a</code> is given by
+the following two lines.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="273" ALIGN="BOTTOM" BORDER="0"
+ SRC="img154.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i11) X : ket_to_mat(a) ...
+...ght)\*\left\vert \mathrm{u01}\right\vert ^{2}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Comparing <code>(%o9)</code> and  <code>(%o12)</code>, we see that the two methods of calculating
+the reduced state for qubit <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img124.gif"
+ ALT="$D$"></SPAN> after the measurement give the same result, showing that the second
+method is correct. Now we compute the probability 
+<!-- MATH
+ $p_m=\mbox{Tr}(\rho)=\mbox{Tr}(\rho_D)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="199" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img155.gif"
+ ALT="$p_m=\mbox{Tr}(\rho)=\mbox{Tr}(\rho_D)$"></SPAN>
+that the state is in fact projected onto <!-- MATH
+ ${\lvert u_m \rangle}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="46" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img134.gif"
+ ALT="${\lvert u_m \rangle}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="243" ALIGN="BOTTOM" BORDER="0"
+ SRC="img156.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i13) res1 : conjsimp(ma...
+...ha\*\beta\*\left\vert \mathrm{u00}\right\vert ^{2}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Finally, we compare this to the trace computed by hand from the expression following (<A HREF="#ket_to_mat">4</A>),
+which is given by
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+p_m=\sum^1_{i,j=0} \widehat{\alpha}_{i,j}^2 \widehat{\beta}_{i,j}^2 |\widehat{u}_m,ij|^2
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">5</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="232" HEIGHT="68" BORDER="0"
+ SRC="img157.gif"
+ ALT="\begin{displaymath}
+p_m=\sum^1_{i,j=0} \widehat{\alpha}_{i,j}^2 \widehat{\beta}_{i,j}^2 \vert\widehat{u}_m,ij\vert^2
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="169" ALIGN="BOTTOM" BORDER="0"
+ SRC="img158.gif"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i15) res3 : ratsimp(bra...
+... the same as above--- verifying this last formula was well.
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<BR>
+
+<H2><A NAME="SECTION000100000000000000000">
+Index</A>
+</H2><DL COMPACT>
+<DT><STRONG><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img26.gif"
+ ALT="$e$"></SPAN> base of natural log</STRONG>
+<DD><A HREF="qinf.html#211"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>=</B></STRONG>
+<DD><A HREF="qinf.html#1594"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>anticommutator</B></STRONG>
+<DD><A HREF="qinf.html#1531"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>apply</B></STRONG>
+<DD><A HREF="qinf.html#1564"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>arrays</STRONG>
+<DD><DL COMPACT>
+<DT><STRONG>array functions</STRONG>
+<DD><A HREF="qinf.html#431"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+</DL>
+<DT><STRONG>assignment</STRONG>
+<DD><A HREF="qinf.html#145"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>assume</B></STRONG>
+<DD><A HREF="qinf.html#1430"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN></A>
+ | <A HREF="qinf.html#1629"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+ | <A HREF="qinf.html#1730"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>Bell states</STRONG>
+<DD><A HREF="qinf.html#420"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+<DT><STRONG><B>bell[a,b]</B></STRONG>
+<DD><A HREF="qinf.html#1433">no title</A>
+<DT><STRONG><B>belln[i]</B></STRONG>
+<DD><A HREF="qinf.html#1436">no title</A>
+<DT><STRONG><B>brax</B></STRONG>
+<DD><A HREF="qinf.html#1309"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>bray</B></STRONG>
+<DD><A HREF="qinf.html#1315"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>braz</B></STRONG>
+<DD><A HREF="qinf.html#1282"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>commutator</STRONG>
+<DD><A HREF="qinf.html#569"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>complex numbers</STRONG>
+<DD><A HREF="qinf.html#202"><SPAN CLASS="arabic">2</SPAN></A>
+<DL COMPACT>
+<DT><STRONG>declaring variable complex</STRONG>
+<DD><A HREF="qinf.html#801"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+</DL>
+<DT><STRONG><B>conjsimp</B></STRONG>
+<DD><A HREF="qinf.html#1765"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>correlation_tensor</B></STRONG>
+<DD><A HREF="qinf.html#1711">no title</A>
+<DT><STRONG><B>ctranspose</B></STRONG>
+<DD><A HREF="qinf.html#1270"><SPAN CLASS="arabic">3</SPAN></A>
+ | <A HREF="qinf.html#1375"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+<DT><STRONG><B>declare</B></STRONG>
+<DD><A HREF="qinf.html#1746"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>density operator</STRONG>
+<DD><DL COMPACT>
+<DT><STRONG>of a pure state</STRONG>
+<DD><A HREF="qinf.html#332"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+</DL>
+<DT><STRONG>dot product</STRONG>
+<DD><A HREF="qinf.html#131"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><I>emacs</I></STRONG>
+<DD><A HREF="qinf.html#1198"><SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>entanglement swapping</STRONG>
+<DD><A HREF="qinf.html#760">no title</A>
+<DT><STRONG><B>entropy</B></STRONG>
+<DD><A HREF="qinf.html#1641"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>expand</B></STRONG>
+<DD><A HREF="qinf.html#1240"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>fidelity</B></STRONG>
+<DD><A HREF="qinf.html#1714">no title</A>
+<DT><STRONG>functions</STRONG>
+<DD><DL COMPACT>
+<DT><STRONG>user defined</STRONG>
+<DD><A HREF="qinf.html#146"><SPAN CLASS="arabic">2</SPAN></A>
+ | <A HREF="qinf.html#186"><SPAN CLASS="arabic">2</SPAN></A>
+</DL>
+<DT><STRONG><B>genmatrix</B></STRONG>
+<DD><A HREF="qinf.html#1453"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+<DT><STRONG><B>identitymatrixp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="43" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img74.gif"
+ ALT="$mat$"></SPAN>)</STRONG>
+<DD><A HREF="qinf.html#1472"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+<DT><STRONG>imaginary unit <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.gif"
+ ALT="$i$"></SPAN></STRONG>
+<DD><A HREF="qinf.html#203"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><I>imaxima</I></STRONG>
+<DD><A HREF="qinf.html#1195"><SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>inner product</STRONG>
+<DD><A HREF="qinf.html#132"><SPAN CLASS="arabic">2</SPAN></A>
+ | <A HREF="qinf.html#354"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+<DT><STRONG><B>invpauliexp</B></STRONG>
+<DD><A HREF="qinf.html#1702">no title</A>
+<DT><STRONG><B>itensor</B></STRONG>
+<DD><A HREF="qinf.html#1550"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>ket_n</B></STRONG>
+<DD><A HREF="qinf.html#1127"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG>kets</STRONG>
+<DD><DL COMPACT>
+<DT><STRONG>creating a ket</STRONG>
+<DD><i>see </i> states
+<DT><STRONG>representation</STRONG>
+<DD><A HREF="qinf.html#223"><SPAN CLASS="arabic">3</SPAN></A>
+</DL>
+<DT><STRONG><B>ketx</B></STRONG>
+<DD><A HREF="qinf.html#1306"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>kety</B></STRONG>
+<DD><A HREF="qinf.html#1312"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>ketz</B></STRONG>
+<DD><A HREF="qinf.html#1279"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>kronecker_product</B></STRONG>
+<DD><A HREF="qinf.html#1226"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>lambda</B></STRONG>
+<DD><A HREF="qinf.html#1464"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+<DT><STRONG>levi-civita tensor</STRONG>
+<DD><A HREF="qinf.html#557"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>linvpauliexp</B></STRONG>
+<DD><A HREF="qinf.html#1708">no title</A>
+<DT><STRONG><B>listify</B></STRONG>
+<DD><A HREF="qinf.html#1557"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>loading  <I>qinf </I> </STRONG>
+<DD><A HREF="qinf.html#121"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>mapapply</B></STRONG>
+<DD><A HREF="qinf.html#1560"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>mat_trace</B></STRONG>
+<DD><A HREF="qinf.html#1598"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>mat_unblocker</B></STRONG>
+<DD><A HREF="qinf.html#1542"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>matrix multiplication</STRONG>
+<DD><A HREF="qinf.html#129"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG>orthonormality</STRONG>
+<DD><A HREF="qinf.html#430"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+<DT><STRONG><B>otimes</B></STRONG>
+<DD><A HREF="qinf.html#1219"><SPAN CLASS="arabic">2</SPAN></A>
+ | <A HREF="qinf.html#1410">no title</A>
+<DT><STRONG>outer product</STRONG>
+<DD><A HREF="qinf.html#133"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>pauli</B>[<SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.gif"
+ ALT="$i$"></SPAN>]</STRONG>
+<DD><A HREF="qinf.html#1511">no title</A>
+<DT><STRONG><B>pauli_product</B></STRONG>
+<DD><A HREF="qinf.html#1696">no title</A>
+<DT><STRONG><B>pauliexp</B></STRONG>
+<DD><A HREF="qinf.html#1699">no title</A>
+<DT><STRONG><B>permutations</B></STRONG>
+<DD><A HREF="qinf.html#1554"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>pi <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img25.gif"
+ ALT="$\pi$"></SPAN></STRONG>
+<DD><A HREF="qinf.html#210"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>plot2d</B></STRONG>
+<DD><A HREF="qinf.html#1685"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG>plotting</STRONG>
+<DD><A HREF="qinf.html#740"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG>projection operator</STRONG>
+<DD><A HREF="qinf.html#331"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+<DT><STRONG>projective measure</STRONG>
+<DD><A HREF="qinf.html#794"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>ptrace</B></STRONG>
+<DD><A HREF="qinf.html#1584"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+ | <A HREF="qinf.html#1768"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+ | <A HREF="qinf.html#1811"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>ptracen</B></STRONG>
+<DD><A HREF="qinf.html#1587"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>purity</B></STRONG>
+<DD><A HREF="qinf.html#1651"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><I>qdens</I></STRONG>
+<DD><A HREF="qinf.html#1202"><SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>ratsimp</B></STRONG>
+<DD><A HREF="qinf.html#1591"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>reduced state</STRONG>
+<DD><A HREF="qinf.html#921"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG>Schmidt basis</STRONG>
+<DD><A HREF="qinf.html#415"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN></A>
+<DT><STRONG>Schmidt coefficients</STRONG>
+<DD><A HREF="qinf.html#772"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+<DT><STRONG><B>schmidt_ket</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.gif"
+ ALT="$a$"></SPAN>)</STRONG>
+<DD><A HREF="qinf.html#1427">no title</A>
+<DT><STRONG><B>spinor_rotation_op</B></STRONG>
+<DD><A HREF="qinf.html#1717">no title</A>
+<DT><STRONG><B>spinor_rotation_op_trig</B></STRONG>
+<DD><A HREF="qinf.html#1720">no title</A>
+<DT><STRONG>states</STRONG>
+<DD><DL COMPACT>
+<DT><STRONG>creating a ket</STRONG>
+<DD><A HREF="qinf.html#239"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN></A>
+</DL>
+<DT><STRONG>suppressing output</STRONG>
+<DD><A HREF="qinf.html#168"><SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG>tensor product</STRONG>
+<DD><A HREF="qinf.html#134"><SPAN CLASS="arabic">2</SPAN></A>
+ | <A HREF="qinf.html#386">no title</A>
+<DT><STRONG><B>tensor_product</B></STRONG>
+<DD><A HREF="qinf.html#1222"><SPAN CLASS="arabic">2</SPAN></A>
+ | <A HREF="qinf.html#1413">no title</A>
+<DT><STRONG><B>toproj</B></STRONG>
+<DD><A HREF="qinf.html#1370"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+ | <A HREF="qinf.html#1402"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+<DT><STRONG><B>tostate</B></STRONG>
+<DD><A HREF="qinf.html#1399"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN></A>
+<DT><STRONG><B>tpauliexp</B></STRONG>
+<DD><A HREF="qinf.html#1705">no title</A>
+<DT><STRONG><B>wxplot2d</B></STRONG>
+<DD><A HREF="qinf.html#1688"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN></A>
+<DT><STRONG><B>zeromatrixp</B></STRONG>
+<DD><A HREF="qinf.html#1476"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN></A>
+
+</DL>
+
+<P>
+
+<H1><A NAME="SECTION000110000000000000000">
+About this document ...</A>
+</H1>
+ <STRONG>User's Manual for  <I>qinf </I> Quantum Information and Entanglement Package For The <I>Maxima</I> Computer
+  Algebra System</STRONG><P>
+This document was generated using the
+<A HREF="http://www.latex2html.org/"><STRONG>LaTeX</STRONG>2<tt>HTML</tt></A> translator Version 2002-2-1 (1.71)
+<P>
+Copyright &#169; 1993, 1994, 1995, 1996,
+Nikos Drakos, 
+Computer Based Learning Unit, University of Leeds.
+<BR>
+Copyright &#169; 1997, 1998, 1999,
+<A HREF="http://www.maths.mq.edu.au/~ross/">Ross Moore</A>, 
+Mathematics Department, Macquarie University, Sydney.
+<P>
+The command line arguments were: <BR>
+ <STRONG>latex2html</STRONG> <TT>-show_section_numbers -antialias -image_type gif -font_size 12pt -split 0 qinf.tex</TT>
+<P>
+The translation was initiated by John Lapeyre on 2008-08-18
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<IMG WIDTH="81" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next_inactive"
+ SRC="/usr/share/latex2html/icons/nx_grp_g.gif"> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up_g.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev_g.gif">   
+<BR></DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+John Lapeyre
+2008-08-18
+</ADDRESS>
+</BODY>
+</HTML>

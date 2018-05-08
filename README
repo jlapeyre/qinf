@@ -28,6 +28,11 @@ linux, mac OS X, MS Windows.
 This software is quite usable, but incomplete. For instance the manual
 probably ends mid-sentence.
 
+----------
+Documentation:
+doc/qinf.pdf         -- manual/tutorial
+doc/qinf/index.html  -- manual/tutorial in html
+
 -----------
 Installation
 
@@ -37,13 +42,15 @@ log2.mac   -- put these in the same directory as qinf.mac
 utils.mac
 
 To use this package put the three files above in some directory and run Maxima and
-give the command load("qinf.mac"). See the document in the doc subdirectory.
+give the command load("qinf.mac"). 
 
 -------
-application subdirectory
+Application subdirectory
+
 frompra.mac   -- some application. Some of this will be moved to qinf.mac
 
 -------
+Test subdirectory
 cd to the test subdirectory before doing the following
 rtest_qinf.mac -- run with batch("rtest_qinf.mac", test);
 

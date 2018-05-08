@@ -1,0 +1,74 @@
+latex2html -show_section_numbers -font_size 12pt -antialias -image_type gif -split 0 qinf.tex
+
+#  some options to try -white -antialias -image_type gif
+
+* the font_size above makes the math a little bigger
+
+* using \begin{item} \end{item} did not work.
+  had to use \item instead. so this works for
+  both latex and latex2html
+
+* if ifx then else
+  none are understood by latex2html, so they
+  wont work
+
+* \begin{htmlonly} etc.
+  not understood by latex. fails. adding
+  \usepackage{html} does this help??
+  in any case   \usepackage{html} breaks latex
+  understanding  \index
+
+* now o  \usepackage{html} seems necessary for latex to work.
+  however this is broken...
+  \begin{latexonly}
+   \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}}
+  \end{latexonly}
+  says bbm is undefined. must comment it out
+
+  instead use this...
+
+  \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}}
+  \begin{htmlonly}
+    \renewcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}}
+  \end{htmlonly}
+
+  No, the above is broken too. latex2html fails to renew the command properly. cant
+  understand linewidth. latex2html can handle this...
+
+  % \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}}
+  \begin{htmlonly}
+    \renewcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}}
+  \end{htmlonly}
+
+   but this breaks latex, of course
+
+  this is really fucked. it looks like i have to comment things out every time
+  i want to build something else.
+
+  OMFG it looks like the following works for both html and latex
+  \html{ \renewcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}} }
+  \latex{  \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}} }
+
+* ~/.latex2html-init file
+
+$MATH_SCALE_FACTOR = 1.8;
+$DISP_SCALE_FACTOR = 1.0;
+$FIGURE_SCALE_FACTOR = 1.6;
+$EXTRA_IMAGE_SCALE = 1.0; # seems to have no effect
+$DVIPSOPT = ' -Ppdf  -E'; # this is default
+#$DVIPSOPT = ''; # makes some images huge
+$WHITE_BACKGROUND = 1;
+#   $STYLESHEET = "../realsimple.css";
+1;
+
+# the following lines got rid of grey backgrounds on some equations
+
+# Force white background and black text
+$BODYTEXT = "text=\"\#000000\" bgcolor=\"\#FFFFFF\"";
+# This ensures that some figures do not end up with a grey background
+$WHITE_BACKGROUND = 1;
+# Tell LATEX:
+$LATEX_COLOR = "\\pagecolor{white}";
+
+* changed one character in /usr/bin/pstoimg , but it did not get rid of
+  grey background
