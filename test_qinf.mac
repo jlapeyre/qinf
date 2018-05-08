@@ -1,0 +1,153 @@
+/*
+  quantum_information package for the Maxima computer algebra system.
+
+  Copyright 2008, John Lapeyre  All rights reserved.
+
+  This program is free software; you can redistribute it
+  and/or modify it only under the terms of the GNU General
+  Public License version 2 as published by the Free Software
+  Foundation.
+
+*/
+
+load("qinf.mac");
+load("qtest.mac");
+qtest_count : 0;
+qtest_scount : 0;
+
+
+/*****************************************************/
+
+qtest( identitymatrixp(ident(5)), true);
+
+qtest (
+  is( flip(0) = 1 ),
+  true
+  );
+
+qtest (
+  is( flip(1) = 0 ),
+  true
+  );
+
+qtest (
+  identitymatrixp( mat_unblocker (genmatrix(lambda([i,j],  anticommutator(pauli[i],pauli[j])/2 ), 3,3,1,1))),
+  true
+  );
+
+/* temporarily disabled. because it needs itensor.
+
+qtest (
+  mapapply(lambda([i,j,k],zeromatrixp(commutator(pauli[i],pauli[j]) - 2*%i*levi_civita([i,j,k])*pauli[k])),
+    listify(permutations([1,2,3]))),
+  [true,true,true,true,true,true]
+);
+
+*/
+
+qtest (
+  mapapply( lambda([i,j], is(pauli[i] . ket_n(i,j) = (-1)^j * ket_n(i,j))),
+    [[1,0],[1,1],[2,0],[2,1],[3,0],[3,1]  ]),
+  [true,true,true,true,true,true]
+);
+
+qtest (
+  is(ketz(0) . braz(1) + ketz(1) . braz(0) = pauli[1]),
+  true
+);
+
+qtest (
+  is( -%i * ketz(0) . braz(1) + %i * ketz(1) . braz(0) = pauli[2]),
+  true
+);
+
+qtest (
+  is(ketz(0) . braz(0) - ketz(1) . braz(1) = pauli[3]),
+  true
+);
+
+qtest(
+  identitymatrixp( genmatrix(lambda([i,j], belln[i] . belln[j]  ), 3,3,0,0)),
+  true
+  );
+
+qtest(
+  identitymatrixp(apply("+",map(lambda([i],toproj(belln[i])),[0,1,2,3]))),
+  true
+  );
+  
+
+qtest(
+  is ( spinor_rotation_op_trig(%pi/2,%pi/2,%pi/2) . ketz(0) = ketx(0)),
+  true
+  );
+
+/* this one is broken, becuase CRE is not done uniformly */
+qtest(
+  is ( spinor_rotation_op_trig(%pi/2,%pi/2,-%pi/2) . ketz(0) = ketx(1)),
+  false
+  );
+
+
+qtest (
+  is ( tostate( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha)),
+  true
+  );
+
+kill(alpha);
+forget(alpha>0, 1-alpha>0);
+
+pr1 : toproj(schmidt_ket(alpha));
+
+
+/* this returns a mess because the ket is normalized only with conditions on alpha */
+
+entropy(pr1);
+ratsimp( purity(pr1) );
+
+/* require these conditions (implies that alpha is real */
+assume(alpha>0, 1-alpha>0);
+
+/* now this returns zero as it should for a pure state */
+qtest(
+  is (entropy(pr1) = 0),
+  true
+  );
+
+qtest(
+  is (ratsimp( purity(pr1) ) = 1 ),
+  true
+  );
+
+qtest(
+  is( ratsimp(ptrace(pr1,1,2)) = matrix([1]) ),
+  true
+  );
+
+pr1a : ptrace(pr1,1);
+
+qtest(
+  is ( entropy(pr1a) = -alpha*log2(alpha)-log2(1-alpha)*(1-alpha) ),
+  true
+  );
+
+qtest(
+  is ( ratsimp(purity(pr1a)) = 2*alpha^2-2*alpha+1 ),
+  true
+  );
+
+block([c0,c1,c2,c3],
+  qtest(
+    is (ratsimp(invpauliexp(pauliexp(c0,c1,c2,c3))) = [c0,c1,c2,c3]),
+    true
+    )
+  );
+
+/* it is often useful, eg for debugging to retract the assumptions */
+/*
+forget(alpha>0, 1-alpha>0);
+kill(pr1);
+*/
+
+qtest_result();
+

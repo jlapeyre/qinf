@@ -1,0 +1,52 @@
+/*
+  quantum_information package for the Maxima computer algebra system.
+
+  Copyright 2008, John Lapeyre  All rights reserved.
+
+  This program is free software; you can redistribute it
+  and/or modify it only under the terms of the GNU General
+  Public License version 2 as published by the Free Software
+  Foundation.
+
+  This code is based on log10.mac by Robert Dodier which is used here 
+  under the following license
+
+***
+  Copyright 2006 by Robert Dodier
+
+  Released under the terms of the GNU General Public License, version 2
+***
+
+*/
+
+load("log10");
+
+divisible_by2 (e) := integerp(e) and e # 0 and mod (e, 2) = 0;
+
+not2 (e) := e # 2;
+
+power_of (m, n) := if n = 0 then 0 else block ([p : 0], while mod (n, m) = 0 do (p : p + 1, n : n/m), p);
+
+block ([simp : false],
+    local (aa, bb, cc, dd, ee, ff, gg, hh),
+    matchdeclare (aa, multp, bb, exponp, cc, floatnump, dd, bfloatp, ee, divisible_by2, ff, all, gg, divp, hh, not2),
+    tellsimp (log2(cc), log(cc)/log(2.0)),
+    tellsimp (log2(dd), log(dd)/log(2b0)),
+    tellsimp (log2(gg), log2 (first (args (gg))) - log2 (second (args (gg)))),
+    tellsimp (log2(aa), apply ("+", map (log2, args (aa)))),
+    tellsimp (log2(bb), second (args (bb)) * log2 (first (args (bb)))),
+    tellsimp (log2(ee), block ([p : power_of (2, ee)], p + log2 (ee / 2^p))),
+    tellsimp (log2(2), 1),
+    tellsimp (log2(1), 0),
+
+    gradef (log2(x), (1/log(2))*(1/x)),
+
+    declare (log2, increasing),
+
+    defrule (expand_log2_rule, log2 (ff), log(ff)/log(2)),
+    expand_log2 (expr) := apply1 (expr, expand_log2_rule),
+
+    defrule (contract_log2_rule, log (hh), log2(hh) * log(2)),
+    contract_log2 (expr) := apply1 (expr, contract_log2_rule)
+);
+

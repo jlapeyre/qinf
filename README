@@ -1,0 +1,16 @@
+quantum_informaion package for Maxima copyright 2008 , John Lapeyre
+
+qinf.mac      -- the main file to be loaded.
+frompra.mac   -- some application. Some of this will be moved to qinf.mac
+
+rtest_qinf.mac -- run with batch("rtest_qinf.mac, test);
+
+-------
+following are original test scripts. These are to be converted to
+be used with batch(*,test). They are run via
+load("test_ptrace.mac"), etc.
+
+test_ptrace.mac 
+test_qinf.mac
+
+other files are loaded by the main files and will be described later

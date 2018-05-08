@@ -1,0 +1,396 @@
+/*
+  quantum_information package for the Maxima computer algebra system.
+
+  Copyright 2008, John Lapeyre  All rights reserved.
+
+  This program is free software; you can redistribute it
+  and/or modify it only under the terms of the GNU General
+  Public License version 2 as published by the Free Software
+  Foundation.
+
+*/
+
+qudit_states : 2;
+
+load("log2.mac");
+load("eigen");
+load("diag");
+load("utils.mac");
+
+/*
+  currently prints a bunch of garbage
+  load("itensor");
+*/
+
+/*
+ obsolete
+log2(x) := log(x)/log(2);
+*/
+
+
+/*******************************************
+* Linear Algebra routines.
+*****************************************/
+
+/* replaced with builtin ctranspose 
+ * qadjoint(m) := conjugate(transpose(m));
+ */
+
+/* Is this defined elsewhere ? */
+identitymatrixp(A) := zeromatrixp(A - ident(length(A)));
+
+
+/* this does not work on all matrices */
+diagonalize(A) := block( [uie],
+   uie : uniteigenvectors(A),
+   [transpose(apply(matrix,rest(uie,1))),part(uie,1)]);
+
+diagonalization_op(A) := part(diagonalize(A),1);
+
+/* call: eg  matrix_function(A,'exp) */
+/* Don't use this one. mat_function in package "diag" seems better */
+/* furthermore, we should use leftmatrix and rightmatrix here */
+matrix_function(A,'fun) := block([S,Si,D,domxexpt:true,i],
+      S:diagonalization_op(A),
+      iS:ctranspose(S),
+      D: iS . A . S,
+      for i:1 thru length(A) do
+         D[i,i]:fun(D[i,i]),
+      S . D . iS
+);
+
+
+
+/* the following use the mat_function defined in package 'diag' */
+matrix_exp(A) := mat_function(exp,A);
+matrix_cos(A) := mat_function(cos,A);
+matrix_sin(A) := mat_function(sin,A);
+matrix_exp_trig(A) := matrix_cos(%i*A)-%i*matrix_sin(%i*A);
+matrix_log(A) := mat_function(log,A);
+matrix_sqrt(A) := mat_function(sqrt,A);
+
+normalize_vector(v) := (
+  ratsimp(v/sqrt(v . v))
+  );
+
+
+/*********
+  Follwing routines are all for partial trace function ptrace */
+/*
+   Return integer value from vector (or list) of numeration.
+   vec -- vector of numerals. 
+   b   --  the base. 
+   bits are arranged here from least to most significant
+   left to right.
+   */
+
+ptrace_numeration_to_int( vec, b) := block( [i,res:0],
+  for i:0 thru length(vec)-1 do
+  ( res : res + vec[i+1]*b^i ), res);
+
+/* increment numeration given by vec base b. modulo
+   b^length(vec).
+   vec -- list of numeration numerals
+   b -- base
+*/
+ptrace_increment_numeration(vec, b) := block ( [i:1,j],
+  for i:1 thru length(vec) do
+  (vec[i] : vec[i] + 1,
+    if vec[i] = b then 
+    for j:1 thru i do vec[j] : 0
+    else i : length(vec) + 1),
+  vec
+  );
+
+
+
+/* Partial trace over one or more components.
+   computes partial trace one component at a time.
+   The partial trace implementation here assumes that each component space
+   is of the same dimension.
+   May be a performance penalty for this.
+*/
+ptrace(A,[qs]) := block ( [i,B,b,nA],
+  qs : sort(qs,"<"),
+  B : A,
+  for i:1 thru length(qs) do (
+    B : ptrace_one_dimension(qudit_states,B,qs[i]),
+    qs : qs - 1
+    ),
+  B
+  );
+
+/* partial trace over one component */
+ptrace_one_dimension(b,A,q) := block ( [nA,nbitsA,nbitsB, B,x,y,x1,x2,y1,y2,
+  i1,i2,j,k,j1,j2,k1,k2,sum,qm,ind1,ind2],
+  nA : length(A),
+  nbitsA : radcan(log(nA)/log(b)),
+  nbitsB : nbitsA -1,
+  nB : b^nbitsB,
+  B : zeromatrix(nB,nB),
+  x : create_list(0,i,1,nbitsB),
+  y : create_list(0,i,1,nbitsB),
+  q : nbitsA +1 - q,
+  for i1:1 thru nB do (
+    for i2:1 thru nB do (
+      sum : 0,
+      qm : q-1,
+      x1 : rest(x,-(nbitsB-qm)),
+      x2 : rest(x,qm),
+      y1 : rest(y,-(nbitsB-qm)),
+      y2 : rest(y,qm),
+      j1 : ptrace_numeration_to_int(x1,b),
+      j2 : b^q*ptrace_numeration_to_int(x2,b),
+      k1 : ptrace_numeration_to_int(y1,b),
+      k2 : b^q*ptrace_numeration_to_int(y2,b),
+      for j:0 thru b-1 do (
+        ind1 : j1+j*b^qm+j2+1,
+        ind2 : k1+j*b^qm+k2+1,
+        sum : sum + A[ind1,ind2]
+        ),
+      B[i1,i2] : sum,
+      ptrace_increment_numeration(y,b)
+      ),
+    ptrace_increment_numeration(x,b)
+    ),
+  B
+  );
+
+
+
+/* a is a list of things to take kronecker product of. 
+Takes advantage of associative prop. of kron. prod. */
+tensor_product([a]) := block( [n,c,i],
+  n : length(a),
+  c : a[1],
+  for i:2 thru n do (
+    c : kronecker_product(c,a[i])
+    ),
+  c
+  );
+
+
+infix("otimes");
+"otimes"(a,b) := kronecker_product(a,b);
+
+
+
+/*******************************************
+* End of Linear Algebra routines.
+*****************************************/
+
+/*******************************************
+* Quantum information routines
+*****************************************/
+
+
+/* a is list. return correct 'matrix' objects */
+ket([a]) := transpose(matrix(a));
+bra([a]) := matrix(a);
+
+
+/* return product state of qubits in eigenstates
+  of sigma_z, represented in given basis 
+  eg. ket(plusx,minusx,0,1,1,0) returns product of
+  x eigenkets 0,1,1,0, expressed in z basis.
+
+  zero,one -- two basis kets (expressed in z-basis)
+  a -- list of up, down states of each qubit.
+*/
+_ket(zero,one,a) := block ( [v,i],
+  if a[1] = 0 then v:transpose(zero)
+  else v:transpose(one),
+  for i:2 thru length(a) do (
+    if a[i] = 0 then v: tensor_product( v,transpose(zero))
+    else v: tensor_product(v,transpose(one))
+    ),
+  v
+  );
+
+/* product state kets of multiple qubits. In several bases. */
+ketz([a]) := _ket([1,0],[0,1],a);
+ketx([a]) := _ket([1,1]/sqrt(2),[1,-1]/sqrt(2),a);
+kety([a]) := _ket([1,%i]/sqrt(2),[1,-%i]/sqrt(2),a);
+
+braz([a]) := transpose(apply(ketz,a));
+brax([a]) := transpose(apply(ketx,a));
+bray([a]) := conjugate(transpose(apply(kety,a)));
+
+ket_n(i,[a]) := block( [],
+  if i = 1 then return(apply(ketx,a)),
+  if i = 2 then return(apply(kety,a)),
+  if i = 3 then return(apply(ketz,a)),
+  false
+  );
+
+bra_n([a]) := conjugate(transpose(apply(ket_n,a)));
+
+
+
+/* Projection operators along z axis */
+Prz[0] : matrix([1,0],[0,0]);
+Prz[1] : matrix([0,0],[0,1]);
+
+/* general projection operator pair for one qubit. This uses a
+  particular parametrization */
+Pr_n(a,phi) := block ( [p1,p2],
+  declare(a,real),
+  declare(phi,real),
+  p1 : matrix([      a ,                sqrt(a*(1-a))*exp(-%i*phi)],
+              [sqrt(a*(1-a))*exp(%i*phi),          1-a            ]),
+  [ratsimp(p1),ratsimp(ident(2)-p1)]
+  );
+
+/* convert list v to a matrix (vector) or pass through,
+   if v is already a matrix.
+*/
+tomatrix(v) := block(
+  if listp(v) then
+  v : matrix(v)
+  else if not matrixp(v) then (
+    print("error, arg neither matrix nor list"),
+    return(0)
+    ),
+  v
+  );
+
+
+
+/* compute projection operator (or density matrix) from a vector, both
+   representing the same pure state. The vector can be
+   either a column or row vector or a list.
+   v -- state vector
+   return: density matrix
+*/
+toproj(v) := block( [],
+  v : tomatrix(v),
+  if length(v) = 1 then
+    return( ctranspose(v) . v )
+  else
+    return( v . ctranspose(v) )
+  );
+
+/* compute ket corresponding to projection operator.
+ does not check if matrix is actually a projection operator.
+ Sometimes the zero eigenvalues are listed first, sometimes second.
+ It can change because phases are lost in computing the projection operator */
+tostate(A) :=  block ( [t,pos],
+  t : simtran(A),
+  if  sublist_indices(part(t,1,1), lambda([x],x=0)) = [2] then (
+    return(transpose(second(t))) )
+  else
+   return(transpose(last(t)))
+  );
+    
+
+pauli_0 : ident(2);
+pauli_z : matrix( [1,0], [0,-1]);
+pauli_y : matrix( [0,-%i], [%i,0]);
+pauli_x : matrix( [0,1], [1,0]);
+
+_pauli : [
+    ident(2),
+    matrix( [0,1], [1,0]),
+    matrix( [0,-%i], [%i,0]),
+    matrix( [1,0], [0,-1])
+];
+
+pauli[i] := _pauli[i+1];
+
+/* expansion of C(2) matrix in pauli matrices.
+   there is a function for converting both ways.
+*/
+pauliexp([c]) :=
+      matrix([c[4]+c[1],c[2]-%i*c[3]],[%i*c[3]+c[2],c[1]-c[4]]);
+
+invpauliexp(m) :=
+    [m[2,2]+m[1,1],m[2,1]+m[1,2],%i*m[1,2]-%i*m[2,1],m[1,1]-m[2,2]]/2;
+
+lpauliexp(m) := apply(tensor_product,mapapply(pauliexp,m));
+
+_inv_one_pauli_coeff(m,v) :=  mat_trace(apply(tensor_product,map( lambda([i],pauli[i]), v)) . m)/(2^length(v));
+
+/* return linear list of coefficients in pauli expansion of matrix m,
+   which represents an operator in a  tensor product space.
+   So m is a 2^n by 2^n matrix, in the product space of n qubits.
+*/
+linvpauliexp(m) := block([nbits,v,i, c:[] ],
+  nbits : log2(length(m)),
+  v : create_list(0,i,1,nbits),
+  for i thru length(m)^2 do (
+    c : append(c, [ _inv_one_pauli_coeff(m,v) ] ),
+    v : ptrace_increment_numeration(v,4)
+    ),
+    c
+  );
+
+
+
+/* flip the bit */
+flip(x) := ( mod(x+1,2));
+
+/* bell states */
+bell[i,j] := (ketz(0,j) + (-1)^i * ketz(1,flip(j)))/sqrt(2);
+
+/* bell states with 'decimal' index. */
+belln[0] : bell[0,0];
+belln[1] : bell[0,1];
+belln[2] : bell[1,0];
+belln[3] : bell[1,1];
+/* two bit schmidt ket */
+schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1);
+
+
+entropy(rho) :=  block( [x,evs,sum:0],
+  evs : eivals(rho),
+  /* following is kludged transpose */
+  evs : map( lambda([i,j], [i,j]), evs[1], evs[2]),
+  for x in evs do (
+    if not(x[1] = 0) then (
+      sum : sum - x[2]*x[1]*log2(x[1])
+      )
+    ),
+  sum);
+
+purity(rho) :=  mat_trace(rho . rho);
+
+fidelity(rho1,rho2) := block( [sr2],
+  sr2 : mat_function(sqrt,rho2),
+  mat_trace(mat_function(sqrt, sr2 . rho1 .sr2))
+  );
+
+commutator(A,B):= A . B - B . A;
+anticommutator(A,B):= A . B + B . A;
+
+/* Rotate through angle 2*gamma about direction
+   (theta,phi) w.r.t z-axis. Note we use 2*gamma rather
+   than gamma, to avoid appearance of gamma/2 in big expressions.
+   Change this for distribution.
+ */
+spinor_rotation_op_trig(phi,theta,gamma) := block ( [sg],
+    sg: sin(gamma/2),
+    cg: cos(gamma/2),
+    st: sin(theta),
+    ct: cos(theta),
+    sp: sin(phi),
+    cp: cos(phi),
+    matrix(
+     [ cg -%i*ct*sg,            (-%i*st*cp-st*sp)*sg],
+     [ (-%i*st*cp + st*sp)*sg,  cg +%i*ct*sg        ]
+    )
+);
+
+/* this one uses exp instead of cos and sin */
+spinor_rotation_op(phi,theta,gamma) := block ( [sg],
+    sg: sin(gamma/2),
+    cg: cos(gamma/2),
+    st: sin(theta),
+    ct: cos(theta),
+    sp: sin(phi),
+    cp: cos(phi),
+    matrix(
+     [ cg -%i*ct*sg,            -%i*st*exp(-%i*phi)*sg],
+     [ -%i*st*exp(%i*phi)*sg,   cg +%i*ct*sg          ]
+    )
+);
+
