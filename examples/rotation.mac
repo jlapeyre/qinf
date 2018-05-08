@@ -1,0 +1,12 @@
+/* rotation about x-axis */
+spinor_rotation(0,%pi/2,gamma);
+
+/* rotation about y-axis */
+spinor_rotation(%pi/2,%pi/2,gamma);
+
+/* rotation about z-axis */
+spinor_rotation(0,0,gamma);
+
+/* phase change of %pi after rotation through 2*%pi */
+/* Looks like phi and theta are replaced with zero somehow. */
+spinor_rotation(phi,theta,2*%pi);

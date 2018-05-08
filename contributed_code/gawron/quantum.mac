@@ -1,0 +1,518 @@
+/* Quantum Compuatation Package for GNU/Maxima
+*  Author: Piotr Gawron
+*  Licence GPLv2 or later
+*  */
+load(linearalgebra)$
+load(nchrpl)$
+load(eigen)$
+load(diag)$
+
+/* Well known matrices */
+/* One qubit matrices */
+/* Pauli matrices */
+Id:matrix([1,0],[0,1])$
+Sx:matrix([0,1],[1,0])$
+Sy:matrix([0,-%i],[%i,0])$
+Sz:matrix([1,0],[0,-1])$
+Not:Sx$
+H:matrix([1,1],[1,-1]).(1/sqrt(2))$
+
+/* Projection operators */
+P[0]:matrix([1,0],[0,0])$
+P[1]:matrix([0,0],[0,1])$
+
+k[0]:matrix([1],[0])$
+k[1]:matrix([0],[1])$
+
+/* Kraus operators for well known quanum channels */
+/* ref: Nielsen Chuang "Quantum Information and Compuation", Cambridge Press 2000, p. 397 */ 
+/* Depolarizing channel */
+D[1]:sqrt(1-(3*p/4))*Id$
+D[2]:sqrt(p/4)*Sx$
+D[3]:sqrt(p/4)*Sy$
+D[4]:sqrt(p/4)*Sz$
+
+/* Amplitude damping */
+AD[1]:matrix([1,0],[0,sqrt(1-p)])$
+AD[2]:matrix([0,sqrt(p)],[0,0])$
+
+/* Phase damping */
+PD[1]:matrix([1,0],[0,sqrt(1-p)])$
+PD[2]:matrix([0,0],[0,sqrt(p)])$
+
+/* Phase flip */
+PF[1]:sqrt(1-p)*Id$
+PF[2]:sqrt(p)*Sz$
+
+/* Bit flip */
+BF[1]:sqrt(1-p)*Id$
+BF[2]:sqrt(p)*Sx$
+
+/* Bit-phase flip */
+BPF[1]:sqrt(1-p)*Id$
+BPF[2]:sqrt(p)*Sy$
+
+/* Rotation matrices */ 
+RotX(th):=matrix([cos(th/2),-%i*sin(th/2)],[-%i*sin(th/2),cos(th/2)])$
+RotY(th):=matrix([cos(th/2),-sin(th/2)],[sin(th/2),cos(th/2)])$
+RotZ(th):=matrix([exp(-%i*th/2),0],[0,exp(%i*th/2)])$
+
+Toffoli:matrix(
+[1,0,0,0,0,0,0,0],
+[0,1,0,0,0,0,0,0],
+[0,0,1,0,0,0,0,0],
+[0,0,0,1,0,0,0,0],
+[0,0,0,0,1,0,0,0],
+[0,0,0,0,0,1,0,0],
+[0,0,0,0,0,0,0,1],
+[0,0,0,0,0,0,1,0])$
+
+idmatrix(n):=diagmatrix(n,1)$
+Id2:kronecker_product(Id,Id)$
+
+/************************************************************************************************/
+/* One qutrit matrices */
+/* Gell-Mann matrices */
+lambda_1 : matrix([ 0 , 1 , 0 ],[ 1 , 0 , 0 ],[ 0 , 0 , 0 ])$
+lambda_2 : matrix([ 0 , -%i , 0 ],[ %i , 0 , 0 ],[ 0 , 0 , 0 ])$
+lambda_3 : matrix([ 1 , 0 , 0 ],[ 0 , -1 , 0 ],[ 0 , 0 , 0 ])$
+lambda_4 : matrix([ 0 , 0 , 1 ],[ 0 , 0 , 0 ],[ 1 , 0 , 0 ])$
+lambda_5 : matrix([ 0 , 0 , -%i ],[ 0 , 0 , 0 ],[ %i , 0 , 0 ])$
+lambda_6 : matrix([ 0 , 0 , 0 ],[ 0 , 0 , 1 ],[ 0 , 1 , 0 ])$
+lambda_7 : matrix([ 0 , 0 , 0 ],[ 0 , 0 , -%i ],[ 0 , %i , 0 ])$
+lambda_8 : sqrt(1/3)*matrix([ 1 , 0 , 0 ],[ 0 , 1 , 0 ],[ 0 , 0 , -2 ])$
+
+
+/*
+Quantum qutrit permutation gates
+ref: "Quantum ternary parallel adder/subtractor with partially-look-ahead carry"
+Mozammel H.A. Khana and Marek A. Perkowski
+doi:10.1016/j.physletb.2003.10.071
+ */
+Z3p1:matrix([0,0,1],[1,0,0],[0,1,0])$
+Z3p2:matrix([0,1,0],[0,0,1],[1,0,0])$
+Z312:matrix([1,0,0],[0,0,1],[0,1,0])$
+Z301:matrix([0,1,0],[1,0,0],[0,0,1])$
+Z302:matrix([0,0,1],[0,1,0],[1,0,0])$
+Z3Id:matrix([1,0,0],[0,1,0],[0,0,1])$
+unitary3(al, be, ga, th, a, b, c, ph):=expm(%i*lambda_3*al).expm(%i*lambda_2*be).expm(%i*lambda_3*ga).expm(%i*lambda_5*th). expm(%i*lambda_3*a).expm(%i*lambda_2*b).expm(%i*lambda_3*c).expm(%i*lambda_8*ph)$
+/************************************************************************************************/
+
+
+/* Input: list of matrix diagonal ellements
+*  Output: diagonal matrix
+*/
+gendiagmatrix(vec):=genmatrix(lambda([i,j],if (i=j) then vec[i] else 0),length(vec),length(vec))$
+
+
+/* Input: hermitian matrix
+*  Output: square root of the matrix
+*/
+sqrtm(M):=block(
+	return(mat_function(sqrt,M))
+)$
+
+/* Input: hermitian matrix
+*  Output: natural logarithm of the matrix
+*/
+logm(M):=block(
+	return(mat_function(loge_safe,M))
+)$
+
+/* Input: matrix
+*  Output: exp of the matrix
+*/
+expm(m):=mat_function(exp,m)$
+
+/* Input: two states
+*  Output: fidelity between states
+*  ref: Bergson, Zyczkowski "Geometry of quantum states", Cambridge Press, p. 333, eq. 13.40
+*/
+fidelity(s1,s2):=block(
+	[sqrtms1],
+	sqrtms1:sqrtm(s1),
+	return(mattrace(sqrtm(sqrtms1.s2.sqrtms1))^2)
+	)$
+
+/* Input: pure state vector and mixed state
+*  Output: fidelity between states
+*/
+fidelity_pure_mixed(vp,sm):=ctranspose(vp).sm.vp$
+
+/* Input: list containing 0 and 1 that encodes a binary number - i.e. [1,0,1]
+*  Output: vertical state vector - i.e.|101> == matrix([0],[0],[0],[0],[0],[1],[0],[0])
+*/
+ket(l):=block(
+	[t,i],
+	t:matrix([1]),
+	for i:1 thru length(l) do
+	(	
+		t:kronecker_product(t,k[l[i]])
+	),
+	return(t)
+)$
+
+/* Input: list containing 0 and 1 that encodes a binary number
+*  Output: horizontal bra vector
+*/
+bra(l):=ctranspose(ket(l))$
+
+/* Input: state vector |psi>
+*  Output: state |psi><psi|
+*/
+state(v):=(v.ctranspose(v))$
+
+
+/* Input: density matrix rho and unitary gate U
+*  Output: state after quantum evolution U rho U^*
+*/
+evolve(state,gate):=gate.state.ctranspose(gate)$
+
+/* Input: list of matrices
+*  Output: kronecker product
+*/
+kron(l):= block(
+	[t,i],
+	t:matrix([1]), 
+	for i:1 step 1 thru length(l) do
+	( 
+		t:kronecker_product(t,l[i])
+	),
+	return(t)
+)$
+
+/* Input: natural number, base of numeral system, length of output list - i.e: dec2base(5,3,3)
+*  Output: list of integers encoding the natural number in the given base -i.e: [0,1,2]
+*/
+dec2base(n,base,size):=block(
+	[nn,l,i],
+	nn:n,
+	l:makelist(0,i,1,size),
+	for i:0 step 1 thru size-1 do
+	(
+		l[size-i]:mod(nn,base),
+		nn:fix(nn/(base))
+	),
+	return(l)
+)$
+
+/* Input: natural number,  length of output list - i.e: dec2bin(5,4);
+*  Output: list of 0s ans 1s  encoding the natural number in binary system -i.e: [0,1,0,1]
+*/
+dec2bin(n,size):=dec2base(n,2,size)$
+
+/* Input: list of single qubit kraus operators and size (in qubits) of output channel
+*  Output: list of kraus operators E_k=\bigotimes_i e_\sigma(i) where e_n is input 
+   operator and \sigma ranges over all possible tuples of inidces
+*/
+nqubit_channel(opl,size):=block(
+	[ret,len,tuple,i,x,t],
+	len:length(opl)^size,
+	ret:makelist(0,i,1,len),
+	for i:1 thru len do
+	(
+		tuple:dec2base(i-1,length(opl),size),
+		t:matrix([1]), 
+		for j:1 thru size do
+		(	
+			x:tuple[j]+1,
+			t:kronecker_product(t,opl[x])
+		),
+		ret[i]:t
+	),
+	return(ret)
+)$
+
+/* Input: density matrix and list of Kraus operators - density matrix and operators must have appropriate sizes 
+*  Output: density operator after application of the channel
+ex. kraus
+*/
+apply_channel(st,opl):=sum(
+	opl[i].st.ctranspose(opl[i]),
+	i,1,length(opl))$
+
+/* Input: density matrix and list of one-qubit Kraus operators 
+*  Output: density operator after application of the n-qubit channel - see nqubit_channel()
+*/
+apply_nqubit_channel(st,opl):=block(
+	[size,c],
+	size:log2(length(st)),
+	c:nqubit_channel(opl,size),
+	return(apply_channel(st,c))
+)$
+
+/* Input: density matrix 
+*  Output: list of diagonal elements of the matrix
+*/
+probability_distribution(st):=block(
+	[ret,len,i],
+	len:length(col(st,1)),
+	ret:makelist(0,i,1,len),
+	for i:1 thru len do (
+		ret[i]:st[i,i]
+	),
+	return(ret)
+)$
+
+/* Input: real number
+*  Output: its base 2 logarithm
+*/
+log2(x):=radcan(log(x)/log(2))$
+
+/* Input: real positive number or zero
+*  Output: its base e logarithm or zero
+*/
+loge_safe(x):=if (x=0) then 0 else log(x)$
+
+/* Input: two matrices
+*  Output: their commutator
+*/
+commutator(A,B):=A.B-B.A$
+
+/* Input: ?
+*  Output: ?
+*/
+unitary2(a,b,c,d):=(
+exp(%i*a)*matrix([exp(-%i*b/2), 0], [0, exp(%i*b/2)]).matrix([cos(c/2), -sin(c/2)], [sin(c/2), cos(c/2)]).matrix([exp(-%i*d/2), 0], [0, exp(%i*d/2)]))$
+
+/* Input: ?
+*  Output: ?
+*/
+unitary4_canonical(a1,a2,a3):=(
+	expm(%i*a1*kron([Sx,Sx])+a2*kron([Sy,Sy])+a3*kron([Sz,Sz]))
+)$
+
+/* Input: real parameter in range [0,1]
+*  Output: 2 qubit Werner state
+*/
+werner_2q_state(a):=(
+1/4* (1 - a) * matrix([1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]) + a * matrix([1/2,0,0,1/2],[0,0,0,0],[0,0,0,0],[1/2,0,0,1/2])
+)$
+
+/* Input: matrix
+*  Output: column vector made of column of matrices
+*/
+vec(M):=block(
+	[V,cols,rows,i],
+	cols:matrix_size(M)[1],
+	rows:matrix_size(M)[2],
+	V:zeromatrix(cols*rows,1),
+	for i:1 thru rows do(
+		V:V+kronecker_product(ematrix(rows, 1, 1, i, 1),col(M,i))
+	),
+	return(V)
+)$
+
+/* Input: vector
+*  Output: matrix that mat(vec(M),x,y)==Id where [x,y]==matrix_size(M)
+*/
+mat(V,cols,rows):=block(
+	[M,len,c,r,i],
+	len:first(matrix_size(V)),
+	M:zeromatrix(cols,rows),
+	for r:1 thru rows do(	
+		for c:1 thru cols do(
+			M[c,r]:V[(r-1)*(cols)+c,1]
+		)
+	),
+	return(M)
+)$
+
+/* Input: list of Kraus operators
+*  Output: their superoperator matrix
+*/
+superoperator_matrix(lst):=sum(kronecker_product(conjugate(lst[i]),lst[i]),i,1,length(lst))$
+
+/* Input: one qubit gate, index of source qubit, index of target qubit, size of the gate in qubits - i.e
+*  Output: unitary matrix implementing appropriate unitary operation
+*  Example: 
+*  controled_gate(Sx,1,2,2);
+*	 matrix([1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0])
+*/
+controled_gate(gate,source,target,size):=block(
+	[i,l1,l2],
+	l1:matrix([1]),
+	l2:matrix([1]),
+	for i:1 thru size do
+	(
+		if is(equal(i,source)) then
+			l1:kron([l1,P[1]])
+		elseif is(equal(i,target)) then
+			l1:kron([l1,gate])
+		else
+		l1:kron([l1,Id])
+	),
+	for i:1 thru size do
+	(
+		if is(equal(i, source)) then
+			l2:kron([l2,P[0]])
+		else
+			l2:kron([l2,Id])
+	),
+	return(l1+l2)
+)$
+
+
+range(s,n):=create_list(x,x,s,n)$
+uniformmatrix(x,y,n):=zeromatrix(x,y)+n$
+get_submatrix(M,indx,indy):=block(
+	[x,y,S],
+	S:zeromatrix(length(indx),length(indy)),
+	for x:1 thru length(indx) do (
+		for y:1 thru length(indy) do(
+			S[x,y]:M[indx[x],indy[y]]
+		)
+	),
+	return(S)
+)$
+
+/*TODO: implement TrX from Tonny Cubitt
+%    X = TrX(RHO,SYS,DIM) traces out system SYS of a matrix RHO
+%    with subsystem dimensions specified by DIM.
+%
+%    If no dimensions are specified, i.e. DIM=[], TrX assumes a 2x2
+%    system.
+%
+%    If only one is specified, i.e. DIM=[dim1], it assumes a
+%    dim1 x dim1 system.
+%
+%    If two are specified, i.e. DIM=[dim1,dim2], a dim1 x dim2
+%    system is assumed.
+%
+%    DIM=[dim1,dim2,dim3] specifies a dim1 x dim2 x dim3 system
+%    (duh!)
+*/
+TrX(p,sys,dim):=block(
+	[l,dim1,dim2,dim3],
+	l:length(dim),
+  if(l=0) then (
+  	dim1:2,
+	  dim2:1,
+  	dim3:2,
+	 	if (sys=2) then sys:3
+  )
+	elseif (l=1) then (
+		dim1:dim[1],
+	  dim2:1,
+		dim3:dim1,
+		if (sys=2) then sys:3
+	)
+	elseif (l=2) then (
+	  dim1:dim[1],
+		dim2:1,
+	  dim3:dim[2],
+		if (sys=2) then sys:3		
+	)
+	elseif (l=3) then (
+		dim1:dim[1],
+	  dim2:dim[2],
+		dim3:dim[3]
+	),
+	if (dim2=1 and sys=2) then sys:3,
+
+	x:0,
+	if (sys=1) then (
+ 		x:zeromatrix(dim2*dim3,dim2*dim3),
+	  indx:range(1,dim2*dim3),
+	  for k:0 thru dim1-1 do (
+  	  x:x+get_submatrix(p,indx+k*dim2*dim3,indx+k*dim2*dim3)
+		)
+	)
+	elseif(sys=2) then (
+		x:zeromatrix(dim1*dim3,dim1*dim3),
+		indx:first(kronecker_product(uniformmatrix(1,dim1,1),matrix(range(1,dim3))) + kronecker_product(matrix(dim2*dim3*range(0,dim1-1)),uniformmatrix(1,dim3,1))),
+	  for k:0 thru dim2-1 do(
+  	  x:x+get_submatrix(p,indx+k*dim3,indx+k*dim3)
+  	)
+  )
+	elseif(sys=3) then (
+		x:zeromatrix(dim1*dim2,dim1*dim2),
+  	indx:dim3*(range(0,dim1*dim2-1)),
+		for k:1 thru dim3 do(
+			x:x+get_submatrix(p,indx+k,indx+k)
+		)
+	),
+	return(x)
+)$
+
+/* Input: density matrix
+*  Output: it's Von Neumann Enthropy
+*  Example: TODO
+*/
+entropy(M):=-mattrace(M.logm(M))$
+
+/* Input: list of kraus operators of a channel
+*  Output: Jamiolkowski representation of the channel
+*  Example: TODO
+*/
+jamiolkowski(c):=block(
+	[i,j,l,st,jam],
+	l:length(c[1]),
+	jam:zeromatrix(l*l,l*l),
+	for i:1 thru l do(
+		for j:1 thru l do(
+			st:ket(dec2bin(i-1,log2(l))).bra(dec2bin(j-1,log2(l))),
+			jam:jam+kron([apply_channel(st,c), st])
+		)
+	),
+	return(jam/l)
+)$
+
+/* Input: number n of qubits
+*  Output: maximaly entagled sate vector of system n x n qubits
+*  Example: TODO
+*/
+maxentanglement(size):=block(
+	[i,j,st],
+	st:zeromatrix(2^(2*size),1),
+	for i:1 thru 2^size do(
+		st:st+kron([ket(dec2bin(i-1,size)), ket(dec2bin(i-1,size))])
+	),
+	st:st/(sqrt(2^(size))),
+	return(st)
+)$
+
+
+/* Input: ?
+*  Output: ?
+*  SPRAWDZIC CZY DZIALA W NIETYPOWYCH PRZYPADKACH!!! NIE DZIALA!!! eigenvalmatrix(eigenvectors(werner_2q_state(0.1)),sqrt)
+
+eigenvalmatrix(l,func):=block(
+	[val, mult, i, j, k, ret, list, ret],
+	print(l),
+	val:l[1],
+	mult:l[2],
+	list:makelist(0,j,1, sum(mult[i], i, 1, length(mult))),
+	k:1,
+	for i:1 thru length(mult) do (
+		for j:1 thru mult[i] do(
+			list[k]:func(val[i]),
+			k:k+1
+		)
+	),
+	print(list),
+	ret:zeromatrix(length(list),length(list)),
+	for i:1 thru length(list) do (
+		ret[i,i]:list[i]
+	),
+	return(ret)
+)$
+*/
+/*
+partial_trace_b(rho, nqubits_b):=block(
+	[dim_a,dim_b,x,y,i,j,k,l,sigma],
+	dim_b:2^nqubits_b,
+	dim_a:length(rho)/(dim_b),
+	sigma:zeromatrix(dim_a,dim_a),
+	for i:1 thru dim_a do(
+		for j:1 thru dim_b do(
+			for k:1 thru dim_a do(
+				l:j,
+				x:(i-1)*dim_b+j,
+				y:(k-1)*dim_b+l,
+				sigma[i,k]:sigma[i,k]+rho[x,y]
+			)
+		)
+	),
+	return(radcan(sigma))
+)$*/

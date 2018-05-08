@@ -1,4 +1,4 @@
-;; qinf Version 0.12
+;; qinf Version VERSIONNUMBER
 
 ;; flip a qubit
 (defun $flip (x) (mod (+ x 1) 2))

@@ -1,0 +1,10 @@
+/* Set the search paths so the source and test files can be found */
+file_search_maxima: append (["./test/###.{lisp,mac}", "./src/###.{lisp,mac}"], file_search_maxima) $
+file_search_lisp: append (["./test/###.{lisp,mac}", "./src/###.{lisp,mac}"], file_search_lisp) $
+
+/* Load a modified, quieter version of 'batch' called 'batchtest' */
+loadfile("./test/btest.lisp")$ /* fails if we omitting the "./test/", despite change of file_search_lisp */
+
+/* Run the quieter test */
+batchtest("rtest_qinf.mac")$
+batchtest("rtest_ptrace.mac")$

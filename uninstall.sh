@@ -5,6 +5,8 @@
 
 FILES=' qinf.mac qinf.lisp qinf_utils.mac log2.mac  mmacompat.mac mmacompat_lisp.lisp '
 
-mkdir ${HOME}/.maxima
-echo "cd src && cp -a ${FILES} ${HOME}/.maxima"
-cd src && cp -a ${FILES} ${HOME}/.maxima
+INSTDIR=${HOME}/.maxima
+
+echo "cd ${INSTDIR} && rm ${FILES}"
+cd ${INSTDIR} && rm ${FILES}
+

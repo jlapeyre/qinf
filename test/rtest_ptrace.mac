@@ -1,0 +1,104 @@
+/*
+  quantum_information package for the Maxima computer algebra system.
+
+  Copyright 2008, John Lapeyre  All rights reserved.
+
+  This program is free software; you can redistribute it
+  and/or modify it only under the terms of the GNU General
+  Public License version 2 as published by the Free Software
+  Foundation.
+
+*/
+
+/* Testing ptrace function */
+
+
+block(
+  kill(all),
+  load("qinf.mac"),
+  display2d:false,
+  1
+);
+1;
+
+block(
+m1 : matrix([a1,b1],[c1,d1]),
+m2 : matrix([a2,b2],[c2,d2]),
+m3 : matrix([a3,b3],[c3,d3]),
+m4 : matrix([a4,b4],[c4,d4]),
+m5 : matrix([a5,b5],[c5,d5]),
+
+t1 : mat_trace(m1),
+t2 : mat_trace(m2),
+t3 : mat_trace(m3),
+t4 : mat_trace(m4),
+t5 : mat_trace(m5),
+mc : m1 otimes m2 otimes m3 otimes m4,
+mc5 : m1 otimes m2 otimes m3 otimes m4 otimes m5,
+1)$
+1;
+
+is ( ratsimp(ptrace(mc,1)) = ratsimp(t1 * m2 otimes m3 otimes m4))$
+true;
+
+is ( ratsimp(ptrace(mc,2)) = ratsimp(t2 * m1 otimes m3 otimes m4))$
+true;
+
+is ( ratsimp(ptrace(mc,3)) = ratsimp(t3 * m1 otimes m2 otimes m4))$
+true;
+
+is ( ratsimp(ptrace(mc,4)) = ratsimp(t4 * m1 otimes m2 otimes m3))$
+true;
+
+is ( ratsimp(ptrace(mc,1,3)) = ratsimp(t1*t3 * m2 otimes m4))$
+true;
+
+is ( ratsimp(ptrace(mc,2,4)) = ratsimp(t2*t4 * m1 otimes m3))$
+true;
+
+is ( ratsimp(ptrace(mc,1,2)) = ratsimp(t1*t2 * m3 otimes m4))$
+true;
+
+is ( ratsimp(ptrace(mc,1,2,3)) = ratsimp(t1*t2*t3 * m4))$
+true;
+
+is ( ratsimp(ptrace(mc,2,3,4)) = ratsimp(t2*t3*t4 * m1))$
+true;
+
+is ( part(ratsimp(ptrace(mc,1,2,3,4)),1,1) = ratsimp(t1*t2*t3*t4))$
+true;
+
+is ( ratsimp(ptrace(mc5,2,3,4)) = ratsimp(t2*t3*t4 * m1 otimes m5))$
+true;
+
+block(
+assume(alpha>0,1-alpha>0,beta>0,1-beta>0),
+/*declare([u00,u01,u10,u11], complex); */
+
+a : schmidt_ket(alpha),
+b : schmidt_ket(beta),
+ab : a otimes b,
+abm : proj(ab),
+1)$
+1;
+
+/* tovect appears to be broken
+is ( tovect( ptrace(abm,1,2)) = b ) $
+true;
+
+is ( tovect( ptrace(abm,3,4)) = a )$
+true;
+*/
+
+block(
+m1 : matrix([a1,b1,c1],[d1,e1,f1],[g1,h1,i1]),
+m2 : matrix([a2,b2,c2],[d2,e2,f2],[g2,h2,i2]),
+m3 : matrix([a3,b3,c3],[d3,e3,f3],[g3,h3,i3]),
+1);
+1;
+
+is ( ratsimp( ptracen(3, m1 otimes m2 otimes m3 , 1,2) = mat_trace(m1)*mat_trace(m2)*m3))$
+true;
+
+is ( ratsimp( ptracen(3, m1 otimes m2 otimes m3 ,3) = mat_trace(m3)* m1 otimes m2))$
+true;

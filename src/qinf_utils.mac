@@ -10,7 +10,13 @@
 
 */
 
-mapapply(f,lst) := map(lambda([n],apply(f,n)),lst);
+mapapply(f,lst) := map(lambda([n],apply((+f),n)),lst);
+
+
+/* following does not work,
+mapapply(f,lst) := map(lambda([n],apply('f,n)),lst);
+*/
+
 
 showexp('e) := print( e," = ", ev(e));
 

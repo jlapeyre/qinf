@@ -9,7 +9,7 @@
   Foundation.
 
 */
-/* qinf Version 0.12 */
+/* qinf Version VERSIONNUMBER */
 
 
 /*
@@ -17,8 +17,8 @@
   load("itensor");
 */
 load("qinf.lisp");
-load("listfunctions.mac");
-load(lapack);
+load("mmacompat.mac");
+/* load(lapack);   Add this back later.  loading lapack causes error */
 load("log2.mac");
 load("eigen");
 load("diag");
@@ -36,10 +36,10 @@ qudit_states : 2;
 /* test predicates */
 /* to lisp identitymatrixp(A) := zeromatrixp(A - ident(length(A)));*/
 
-ketp(e) := matrixp(e) and (length(part(e,1)) = 1); /* is it a ket */
+ketp(e) := matrixp(e) and (length(inpart(e,1)) = 1); /* is it a ket */
 brap(e) := matrixp(e) and (length(e) = 1);     /* is it a bra */
 braketp(e):= ketp(e) or brap(e);
-square_matp(e) := matrixp(e) and (length(e) = length(part(e,1))); /*square matrix */
+square_matp(e) := matrixp(e) and (length(e) = length(inpart(e,1))); /*square matrix */
 /* this one works only if trigsimp is enough to tell */
 unitary1p(m) := square_matp(m) and ( trigsimp( m . ctranspose(m)) = 1);
 
@@ -51,11 +51,11 @@ noramalize_operator(m) := m/mat_trace(m);
 
 /* ket -- a ket
    returns -- list of elements */
-ktolist(ket) := part(transpose(ket),1);
+ktolist(ket) := inpart(transpose(ket),1);
 
 /* kets -- a list of kets
    returns -- matrix each of whose rows is the elements of one ket */
-ketstomat(kets) := apply(matrix,map(ktolist,kets));
+ketstomat(kets) := apply('matrix,map(ktolist,kets));
 
 /*********
   Follwing routines are all for partial trace function ptrace */
@@ -157,7 +157,7 @@ tensor_product([a]) := block( [n,c,i],
 infix("otimes");
 "otimes"(a,b) := kronecker_product(a,b);
 
-tensor_power(mat,n) := apply(tensor_product,create_list(mat,i,1,n));
+tensor_power(mat,n) := apply('tensor_product,create_list(mat,i,1,n));
 
 /* to lisp
 commutator(A,B):= A . B - B . A;
@@ -200,26 +200,26 @@ ketz([a]) := _ket([1,0],[0,1],a);
 ketx([a]) := _ket([1,1]/sqrt(2),[1,-1]/sqrt(2),a);
 kety([a]) := _ket([1,%i]/sqrt(2),[1,-%i]/sqrt(2),a);
 
-braz([a]) := transpose(apply(ketz,a));
-brax([a]) := transpose(apply(ketx,a));
-bray([a]) := conjugate(transpose(apply(kety,a)));
+braz([a]) := transpose(apply('ketz,a));
+brax([a]) := transpose(apply('ketx,a));
+bray([a]) := conjugate(transpose(apply('kety,a)));
 
 ket_n(i,[a]) := block( [],
-  if i = 1 then return(apply(ketx,a)),
-  if i = 2 then return(apply(kety,a)),
-  if i = 3 then return(apply(ketz,a)),
+  if i = 1 then return(apply('ketx,a)),
+  if i = 2 then return(apply('kety,a)),
+  if i = 3 then return(apply('ketz,a)),
   false);
 
-bra_n([a]) := conjugate(transpose(apply(ket_n,a)));
+bra_n([a]) := conjugate(transpose(apply('ket_n,a)));
 
 /* convert ket to a list */
-listket(k) := part( transpose(k),1);
+listket(k) := inpart( transpose(k),1);
 
 /* should probably just use something like this 
  mat_unblocker(matrix([bell[0,0],bell[0,1]]));
  converts a list of kets to a matrix
  */
-matkets([k]) := apply(matrix,map(listket,k));
+matkets([k]) := apply('matrix,map(listket,k));
 
 /* Projection operators along z axis */
 Prz[0] : matrix([1,0],[0,0]);
@@ -296,7 +296,7 @@ pauli[i] := _pauli[i+1];
 */
 
 /* tensor product of pauli matrices from list of integers indexing pauli matrices */
-pauli_product([a]) := apply(tensor_product,map(lambda([i],pauli[i]), a));
+pauli_product([a]) := apply('tensor_product,map(lambda([i],pauli[i]), a));
 
 
 /* this can be implemented easily in a maxima idiom, but
@@ -307,17 +307,17 @@ invpauliexp(t) := block([n,i,m,nb],
   n : length(t),
   nb : radcan(log(n)/log(4)),
   v : create_list(0,i,1,nb),
-  m : t[1]*apply(pauli_product,v),
+  m : t[1]*apply('pauli_product,v),
   for i thru n-1 do (
     ptrace_increment_numeration(v,4),
-    m : m + t[i+1]*apply(pauli_product,v)),
+    m : m + t[i+1]*apply('pauli_product,v)),
   m);
 
 /* return linear list of coefficients in pauli expansion of matrix m,
    which represents an operator in a  tensor product space.
    So m is a 2^n by 2^n matrix, in the product space of n qubits.
 */
-_one_pauli_coeff(m,v) :=  mat_trace(apply(tensor_product,map( lambda([i],pauli[i]), v)) . m)/(2^length(v));
+_one_pauli_coeff(m,v) :=  mat_trace(apply('tensor_product,map( lambda([i],pauli[i]), v)) . m)/(2^length(v));
 pauliexp(m) := block([nbits,v,i, c:[] ],
   nbits : log2(length(m)),
   v : create_list(0,i,1,nbits),
@@ -391,7 +391,7 @@ spinor_rotation(phi,theta,gamma) := block ( [sg],
 insert_operator(nbits, [insargs]) := block ( [oplist : create_list(ident(2),i,1,nbits)],
   map( lambda([arg], block( [mop:first(arg),posns:rest(arg,1)],
         map(lambda([i],oplist[i]:mop), posns))),insargs),
-  apply(tensor_product,oplist));
+  apply('tensor_product,oplist));
 
 controlled_gate(nbits,qop,t,clst) := ident(2^nbits) +
           + insert_operator(nbits,cons(proj(ketz(1)),clst),[qop-ident(2),t]);
@@ -428,7 +428,9 @@ ghz[i,j,k] := (ketz(0,j,k) + (-1)^i * ketz(1,flip(j),flip(k)))/sqrt(2);
 array(ghzn,7); /* indices from 0 to 7 */
 fillarray(ghzn, map( lambda( [x],  ghz[x[1],x[2],x[3]]),create_list( [i,j,k], i,0,1,j,0,1,k,0,1)));
 
-/* this one is a function, not an array function */
+/* this one is a function, not an array function.
+ This is the parameter often called 'x'.
+*/
 werner(a,i,j) := a*(proj(bell[i,j])) + (1-a)*ident(4)/4;
 
 /* two bit schmidt ket */
@@ -453,24 +455,39 @@ entropy(rho) :=  block( [x,evs,sum:0],
    example: list_eivals([[c,d,e],[2,3,4]]);
       [c,c,d,d,d,e,e,e,e]
  */
-list_eivals(lst) := apply(append,apply(map, cons(lambda([a,b],  create_list(a,i,1,b)), lst)));
+list_eivals(lst) := apply('append,apply('map, cons(lambda([a,b],  create_list(a,i,1,b)), lst)));
 
-/* this returns  [sqrt(v1),sqrt(v2),sqrt(v3),sqrt(v4)],
-   with an attempt to order them properly, but it may fail of course if
-   the results are symbolic. This function allows the user to examine the
+
+/* Wootters' concurrence 
+ * This should be separated into more than two functions to allow user
+ * to see intermediate results.
+ */
+
+/* this returns  [sqrt(v1),sqrt(v2),sqrt(v3),sqrt(v4)].
+   This function allows the user to examine the
   results */
-concurrence_vals(rho) := sqrt(sort(list_eivals(eivals(rho . (pauli[2] otimes pauli[2]) . 
-                 conjugate(rho)  . (pauli[2] otimes pauli[2]))),">"));
+concurrence_eivals(rho) :=  block([sr], 
+                     sr : mat_function(sqrt,rho),	     
+		      list_eivals(eivals( mat_function(sqrt,(sr . (pauli[2] otimes pauli[2]) . 
+                 conjugate(rho)  . (pauli[2] otimes pauli[2]) . sr)))));
 
-/* Wootter's concurrence */
+/* Wootters' concurrence 
+ * Notice what we do to simplify the eignevalues. This is was done to
+ * get concurrence of Werner states. There are polynomials under the a radical.
+ * 1) square to remove radical. 2) factor, 3) take square root again. 4)
+ * these should be simplified enough to sort. If you assume(x>0,x<=1) then
+ * the correct formula for Werner states is given.
+ *
+ **/
 concurrence(rho) := block( [vals],
-		 vals : concurrence_vals(rho),
-		 max(0,apply("+",cons(part(vals,1),-1*rest(vals)))));
+		 vals : concurrence_eivals(rho),
+		 vals : sort(sqrt(factor(vals^2)),">"),
+		 ratsimp(max(0,apply("+",cons(inpart(vals,1),-1*rest(vals))))));
 
 /* float von Neumann entropy */
 entropyf(rho) :=  block( [x,evs,sum:0],
   evs : dgeev(rho),
-  evs : part(evs,1),
+  evs : inpart(evs,1),
   for x in evs do (
     if not(x = 0.0) then (
       sum : sum - x*log2(x))),
@@ -489,7 +506,7 @@ renyi_entropy(a,rho) := block([x,evs,sum:0],
 /* float renyi entropy */
 renyi_entropyf(a,rho) :=  block( [x,evs,sum:0],
   evs : dgeev(rho),
-  evs : part(evs,1),
+  evs : inpart(evs,1),
   for x in evs do (
     if not(x = 0.0) then (
       sum : sum + x^a)),
@@ -508,7 +525,7 @@ tsallis_entropy(q,rho) := block([x,evs,sum:0],
 /* float tsallis entropy */
 tsallis_entropyf(q,rho) :=  block( [x,evs,sum:0],
   evs : dgeev(rho),
-  evs : part(evs,1),
+  evs : inpart(evs,1),
   for x in evs do (
     if not(x = 0.0) then (
       sum : sum + x^q)),
@@ -551,7 +568,7 @@ separable(state) := block( [x1,x2,x3,x4],
 /* This returns the *square* of the Schmidt coefficients.
   It does not test that e is a pure state.
   The argument can be a ket or a bra or density matrix */
-schmidt_coefficients(e) := ( block [st],
+schmidt_coefficients(e) :=  block( [st],
   if (ketp(e) or brap(e)) then st:proj(e)
   else st : e,
   list_eivals(eivals(ptrace(st,1))));
@@ -563,10 +580,10 @@ tobra(v) := if ketp(v) then ctranspose(v) else
               error("tobra: neither bra nor ket");
 
 /* convert ket or bra to plain old list */
-vec_to_list(v) := part(tobra(v),1);
+vec_to_list(v) := inpart(tobra(v),1);
 
 state_length(v) := if ketp(v) then length(v) else
-         if brap(v) then length(part(v,1))
+         if brap(v) then length(inpart(v,1))
           else error("state_length: neither ket nor bra");
 
 /***************************************
@@ -595,14 +612,15 @@ Fold[ Partition, fmt, Most[Reverse[Flatten[Transpose[ddm]]]] ]] /* END mat2nten 
 */
 
 /* transpose matrix as nested list, not maxima matrix */
-ltranspose(m) := mat_to_list(transpose( apply(matrix,m)));
+ltranspose(m) := mat_to_list(transpose( apply('matrix,m)));
 
+/* mat2nten cannot handle 16x16 matrix unless mmacompat is compiled */
 /* mt -- matrix representation of operatore
    returns -- n-tensor representation */
-mat2nten(mt,ddl) := block( [ddm:ddl,fmt:flatten(mat_to_list(mt)),jm,lnd:length(ddl)],
+mat2nten(mt,ddl) := block( [ddm:ddl,fmt:flatten(ensurelist(mt)),jm,lnd:Length(ddl)],
   for jm:1 thru lnd step 1 do
-   if (not listp(ddm[jm])) then ddm[jm] : [ddl[jm],ddl[jm] ],
-  fold(list_partition,fmt,most(reverse(flatten(ltranspose(ddm))))));
+   if 0 = Length(dd[jm]) then ddm[jm]:[ddl[jm],ddl[jm] ],
+  Fold(Partition,fmt,Most(reverse(flatten(Transpose(ddm))))));
 
 /* convert bra or ket representation to tensor representation
    dl is list of dimensions of component spaces */
@@ -624,49 +642,6 @@ matinner(a,b) := block([c:conjugate(a), len:length(b)],
   sum(b[i] . c[i], i, 1,len));
 
 /* convert tensor rep to ket */
-kten2ket(t) := apply(ket,(flatten(t)));
-kten2bra(t) := ctranspose(apply(ket,(flatten(t))));
+kten2ket(t) := apply('ket,(flatten(t)));
+kten2bra(t) := ctranspose(apply('ket,(flatten(t))));
 
-/* return true if each element of the list has the same head
-   if the element is not a list structure, it returns false in place of the head 
-*/
-/*
-same_headsp(m) := is(length(unique(map(lambda([x],if mapatom(x) then false else part(x,0)),m)))=1);
-*/
-
-/* nasty bug if function names p% and p%% are not different, as here */
-same_inlist1(m,p%%) := is(length(unique(map(p%%,m)))=1);
-same_inlist(m,p%) := same_inlist1(m,lambda([x], if mapatom(x) then false else p%(x)));
-same_headp(m) := same_inlist(m,lambda([x],part(x,0)));
-same_lengthp(m) := same_inlist(m,lambda([x],length(x)));
-
-comp_inlist1(m,fcomp_inlist1%%,e) := block([r],
-  r:unique(map(fcomp_inlist1%%,m)),
-  is (length(r)=1 and r[1] = e));
-comp_inlist(m,fcomp_inlist%,e) := comp_inlist1(m,
-  lambda([x], if mapatom(x) then false else fcomp_inlist%(x)),e);
-/* are all heads the same as e*/
-comp_headp(m,e) := comp_inlist(m,lambda([x],part(x,0)),e);
-comp_lengthp(m,e) := comp_inlist(m,lambda([x],length(x)),e);
-
-
-gsame_inlist1(m,fgsame_inlist1%%) := block([r],
-  r:unique(map(fgsame_inlist1%%,m)),
-  if length(r)=1 then [true,r[1]] else [false,false]);
-
-gsame_inlist(m,p%) := gsame_inlist1(m,lambda([x], if mapatom(x) then false else p%(x)));
-gsame_headp(m) := gsame_inlist(m,lambda([x],part(x,0)));
-gsame_lengthp(m) := gsame_inlist(m,lambda([x],length(x)));
-
-
-
-/* dimensions of nested list. all lists at a given level
-  are assumed to be of the same length */
-/*  This was not finished.
-dimensions(t,hd) := block([r],
-  r : gsame_headp(t);
-  if r[1] = true then (
-
-  )
-);
-*/
