@@ -9,7 +9,7 @@
   Foundation.
 
 */
-/* qinf Version 0.10 */
+/* qinf Version 0.11 */
 
 
 /*
@@ -44,6 +44,9 @@ unitary1p(m) := square_matp(m) and ( trigsimp( m . ctranspose(m)) = 1);
 
 /* doesnt do conjugate (?)  */
 normalize_vector(v) :=  v/sqrt(v . conjugate(v));
+
+/* divide m by Tr(m) so that it has trace 1*/
+noramalize_operator(m) := m/mat_trace(m);
 
 
 /*********

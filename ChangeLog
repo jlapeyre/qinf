@@ -1,3 +1,9 @@
+Version 0.11
+2008-09-01  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* added normalize_matrix. documented this and normalize_vector.
+	
+
 Version 0.10
 2008-09-01  John Lapeyre  <lapeyre@physics.arizona.edu>
 
