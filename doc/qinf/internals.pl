@@ -2,6 +2,10 @@
 # Associate internals original text with physical files.
 
 
+$key = q/pauliexp/;
+$ref_files{$key} = "$dir".q|qinf.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/ket_to_mat/;
 $ref_files{$key} = "$dir".q|qinf.html|; 
 $noresave{$key} = "$nosave";

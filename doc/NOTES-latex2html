@@ -1,4 +1,4 @@
-latex2html -show_section_numbers -font_size 12pt -antialias -image_type gif -split 0 qinf.tex
+latex2html -info 0 -scalable_fonts  -no_navigation -show_section_numbers -antialias -image_type gif  -font_size 12pt -split 0 qinf.tex
 
 #  some options to try -white -antialias -image_type gif
 

@@ -2,6 +2,10 @@
 # Associate labels original text with physical files.
 
 
+$key = q/pauliexp/;
+$external_labels{$key} = "$URL/" . q|qinf.html|; 
+$noresave{$key} = "$nosave";
+
 $key = q/ket_to_mat/;
 $external_labels{$key} = "$URL/" . q|qinf.html|; 
 $noresave{$key} = "$nosave";
@@ -13,8 +17,12 @@ $noresave{$key} = "$nosave";
 # labels from external_latex_labels array.
 
 
-$key = q/ket_to_mat/;
+$key = q/pauliexp/;
 $external_latex_labels{$key} = q|4|; 
+$noresave{$key} = "$nosave";
+
+$key = q/ket_to_mat/;
+$external_latex_labels{$key} = q|5|; 
 $noresave{$key} = "$nosave";
 
 1;

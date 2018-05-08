@@ -3,8 +3,19 @@
 
 \usepackage{html}
 
-\html{ \renewcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}} }
-\latex{  \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}} }
+\html{ \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}} }
+\latex{ \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}} }
+
+% links to the maxima manual. this also gives the top directory
+%\def\maxdocdir{/usr/share/doc/maxima-doc/html/}
+%\def\maxdocdir{../maxima_html/}
+\def\maxdocdir{http://maxima.sourceforge.net/docs/manual/en/}
+\newcommand{\maxlink}[1]{{\maxdocdir}#1}
+%\newcommand{\maxman}[2]{{\htmladdnormallink{#1}{{\maxdocdir}#2}}  % link to page in manual
+\html{\newcommand{\maxman}[2]{\hlink{#1}{\maxlink{#2}}}}
+\latex{\newcommand{\maxman}[2]{#1}}
+
+\newcommand{\hlink}[2]{\htmladdnormallink{#1}{#2}}
 
 
 \usepackage{graphicx}
@@ -68,13 +79,16 @@
 
 \newcommand{\farg}[1]{{\it #1}} % an argument
 
+\newcommand{\maximalink}{\htmladdnormallink{ \pname{Maxima} }{http://maxima.sourceforge.net/}}
+
 % probably not used
 \newcommand{\maxcom}{\textsuperscript{$\dagger$}}
 
 \begin{document}
 
 
-\title{User's Manual for \qinf Quantum Information and Entanglement Package For The \pname{Maxima} Computer
+\title{User's Manual for \qinf Quantum Information and Entanglement Package
+ v. 0.05 For The \pname{Maxima} Computer
   Algebra System}
 \author{G. John Lapeyre, Jr.}
 
@@ -92,9 +106,11 @@
 
 \tableofcontents
 
+\htmlrule
 \section{Introduction}
 
-This quantum information package for the \pname{Maxima} computer
+This quantum information package for the 
+\maximalink computer
 algebra system allows the manipulation of instances of
 objects--- operators, vectors, tensors, {\it etc.}  that
 appear in quantum information theory.  More precisely these
@@ -103,11 +119,11 @@ particular basis as row and column vectors and matrices,
 whose entries may be explicit numbers (of various classes)
 or algebraic expressions. This software occupies a niche
 distinct from high performance numerical linear algebra
-software as well as software such as the \pname{Maxima} tensor
+software as well as software such as the \maximalink tensor
 packages that manipulate abstract mathematical objects.
 This document describes the functions and data in the
-package and how to use them with \pname{Maxima}, assuming that you
-do not know much about \pname{Maxima}, but do know quantum
+package and how to use them with \maximalink, assuming that you
+do not know much about \maximalink, but do know quantum
 information theory. However, most of the examples are also
 found in introductory texts on quantum information.  The
 package is intended for research and teaching in the theory
@@ -131,7 +147,7 @@ package are
 \end{itemize}
 
 This document begins with a very brief introduction to
-\pname{Maxima} emphasizing features that are important for
+\maximalink emphasizing features that are important for
 \qinfp. The remainder of the manual is a series of small
 sections introducing functions with examples. The examples
 mostly consist of testing equations. First identities and
@@ -151,21 +167,23 @@ Some suggestions and things to be aware of in the following sections.
 \begin{itemize}
    \item
     You probably need to read at least a ten minute tutorial before or in conjunction
-    with reading this document. There are several listed at the \pname{Maxima} website, and
+    with reading this document. There are several listed at the \maximalink website, and
     others that a search engine can find. If you are too impatient there is a very
-    brief introduction to \pname{Maxima} below.
+    brief introduction to \maximalink below. The best source for most questions is
+    the \maxman{\pname{Maxima manual}}{maxima.html}.
 \begin{comment}
   \begin{item}
-    Functions and features that are part of the standard \pname{Maxima} distribution,
+    Functions and features that are part of the standard \maximalink distribution,
     rather than part of the quantum information
     package are marked, where not obvious, with the dagger superscript--- \maxcom.
   \end{item}
 \end{comment}
    \item
-    There are several user interfaces to the \pname{Maxima}. All the
-    examples here are generated using the \ipname{imaxima} package
+    There are several user interfaces to \maximalink. All the
+    examples here are generated using the 
+    \htmladdnormallink{\ipname{imaxima}}{http://members3.jcom.home.ne.jp/imaxima/Site/Welcome.html} package
     for the \ipname{emacs} editor/environment, but the results are
-    similar to other graphical frontends to \pname{Maxima}.
+    similar to other graphical frontends to \maximalink.
    \item
     Most functions currently work only with qubits, others for variable number of
     states.
@@ -173,11 +191,19 @@ Some suggestions and things to be aware of in the following sections.
 
 \subsection{Acknowledgments}
 
-Some of the ideas used in this package are inspired by the package \ipname{qdens}
-written for a proprietary symbolic algebra system. (put reference here)
+Some of the ideas used in \pname{qinf} are inspired by the package 
+\html{\htmladdnormallink{\ipname{qdensity}}{http://www.pitt.edu/~tabakin/QDENSITY/}}
+\begin{latexonly}
+\ipname{qdensity} at \url{http://www.pitt.edu/~tabakin/QDENSITY/}
+\end{latexonly}
+written for a proprietary symbolic algebra system. None of the code in qdensity
+ has been borrowed for this project, however.
+
+\htmlrule
 
 \section{Using \pname{Maxima}. features important for \qinf}
-The package is loaded \index{loading \qinf} like this
+The package is loaded \index{loading \qinf}
+using \pname{Maxima}'s \maxman{load}{maxima_9.html#IDX313} function like this
 \bbm\index{\ifs{load}}
 \begin{verbatim}
 (%i1) load("qinf.mac");
@@ -192,25 +218,34 @@ There are several tutorials and manuals available for
 introduction to the \qinf package.  We will not give examples
 of matrices until later, but point out that the notation for
 \index{matrix multiplication} matrix multiplication in
-\pname{Maxima} is a dot\index{dot product}, eg. \verb|A . B|.  If
+\pname{Maxima} is a \maxman{dot}{maxima_25.html#SEC83}\index{dot product},
+ eg. \verb|A . B|.  If
 $A$ is a $m\times n$ and $B$ a $p\times q$ matrix, then the
 result is a $n\times p$ matrix.  The inner
 product\index{inner product} of quantum state vectors, the
 outer product \index{outer product} of quantum state vectors, the composition of
 operators, and the mapping of one vector to another by an
 operator are all special cases of matrix multiplication and
-are all represented by the dot.  The remaining product, the
-tensor product\index{tensor product}, becomes the Kronecker product in the matrix
+are all represented by the dot (along with conjugation in the case
+ of the inner and outer products.)  The remaining product, the
+tensor product\index{tensor product}, becomes the 
+Kronecker product in the matrix
 representation of a finite dimensional Hilbert space. To
-agree with standard terminology, we introduce the infix
+agree with standard terminology, we introduce the
+\maxman{infix}{maxima_6.html#IDX156}
 operator \ifs{otimes} and the function \ifs{tensor\_product}
 that eventually call the \pname{Maxima} function
-\ifs{kronecker\_product}.
+\ifs{kronecker\_product}.  See the 
+\maxman{section on matrices}{maxima_25.html#SEC81} in the \pname{Maxima}
+manual.
 
-\pname{Maxima} can use exact real and complex numbers or the
-standard floating point approximations, or arbitrary
-precision floating point numbers.  Numerical expressions are
-simplified upon entry. Each input line must be terminated by
+\pname{Maxima} can use exact real and 
+\maxman{complex numbers}{maxima_6.html#SEC22} or the
+standard 
+\maxman{floating point}{maxima_10.html#SEC38}  approximations, or 
+\maxman{arbitrary precision floating point}{maxima_10.html#IDX367}
+ numbers.  Numerical expressions are
+\maxman{simplified}{maxima_7.html#SEC29} upon entry. Each input line must be terminated by
 a semicolon (some interfaces do this automatically) or by a
 dollar sign, which suppresses the output.
 \bbm
@@ -220,9 +255,9 @@ dollar sign, which suppresses the output.
 \begin{dmath}[number={\%o1}]
   2\end{dmath} 
 \ebm
-Assignment is denoted by a colon \index{assignment} while
-function definitions are denoted by 
-%\verb|:=| 
+\maxman{Assignment}{maxima_5.html#IDX71} is denoted by a colon \index{assignment} while
+\maxman{function definitions}{maxima_5.html#IDX74} are denoted by 
+%\verb|:=|  broken by some package cant remember.
 :=
 \index{functions!user defined}
 For example, \verb| a : b+c ;| evaluates \verb|b+c| and assigns the result to \verb|a|.
@@ -246,7 +281,7 @@ On the other hand \verb| a(x,y) := x^y ;| defines the function $a(x,y)$.
 \ebm
 \index{suppressing output}
 We suppress the output here with a dollar sign because it's big-- $51$ terms.
-\ifs{expand}
+\ibd{expand}
 \bbm
 \begin{verbatim}
 (%i5) b : expand( (x+y)^50 )$
@@ -255,7 +290,7 @@ We suppress the output here with a dollar sign because it's big-- $51$ terms.
 \begin{dmath}[number={\%o6}]
  51\end{dmath}
 \ebm
-Some exact numbers and floating point approximations.
+Some exact numbers and  \maxman{floating point}{maxima_10.html#SEC38} approximations.
 \bbm
 \begin{verbatim}
 (%i7)  1  + sqrt(2);
@@ -269,7 +304,7 @@ index{floating point, conversion to}
 \begin{dmath}[number={\%o8}]
  2.4142135623730949\end{dmath}
 \ebm
-Defining and using a function.
+\maxman{Defining}{maxima_39.html#SEC160} and using a function.
 \index{functions!user defined}
 \bbm
 \begin{verbatim}
@@ -289,7 +324,7 @@ Defining and using a function.
  3\end{dmath}
 \ebm
 \index{complex numbers}
-Complex numbers.
+\maxman{Complex numbers}{maxima_6.html#SEC22}.
 % \verb|%i|
 \%i
  is the identifier for 
@@ -321,12 +356,13 @@ and \index{$e$ base of natural log}
  i\end{dmath}
 \ebm
 
+\htmlrule
 \section{Representation of states and operators}
 Kets are represented by $n \times 1$ matrices, bras by $1
 \times n$ matrices.\index{kets!representation} The objects
 are represented in the $z$ basis.  Bras and kets
 representing the same states are related by \pname{Maxima}'s conjugate
-transpose function \ifs{ctranspose}.
+transpose function \maxman{\ifs{ctranspose}}{maxima_60.html#IDX2119}.
 Density operators and other operators
 are represented by matrices.  The tensor product is
 represented by the Kronecker product.  There is no strong
@@ -337,6 +373,7 @@ vector represents a state vector in a particular space.
 %two qubits ${\cal H}_1 \otimes {\cal H}_2 $ and the space of
 %a single four state qudit.
 
+\htmlrule
 \section{Creating instances of states}
 Here are some methods for creating instances of states, from scratch or
 from other states. Although all operators  `create' states in this
@@ -475,7 +512,8 @@ $v_1\otimes v_2\cdots\otimes v_n$, where $v_i$ are vectors
 or matrices. The \fs{otimes} operator
 is an `infix' operator that
 is equivalent to the function \fs{tensor\_product}. The following uses
-\pname{Maxima}'s \func{is}{expr} function which tries to determine
+\pname{Maxima}'s 
+\maxman{\func{is}{expr}}{maxima_5.html#IDX97} function which tries to determine
 if the predicate \farg{expr} is true. Keep in mind that, in
 this example, the expressions are not analyzed abstractly,
 but rather vectors with integer elements are generated and
@@ -589,6 +627,7 @@ We can also check that
  \mathbf{true}\end{dmath}
 \ebm
 
+\htmlrule
 \section{Creating and using operators}
 \subsection{\imarray{pauli}{i}}
 creates the pauli matrices $(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
@@ -676,6 +715,7 @@ $[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$.
  \left[ \mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}
 \ebm
 
+\htmlrule
 \section{Entanglement-- \func{ptrace}{\rho,i_1,\ldots}, \func{entropy}{\rho}, \func{purity}{\rho}}
 
 Now we are ready to introduce features that are more
@@ -701,7 +741,8 @@ $$
 $$
  Notice that we use the \pname{Maxima} function \ifs{ratsimp} to put both sides of the
 equation in the same form because \ifs{=} checks only that two expressions are lexically
-identical (well, modulo some details of the simplification process.) We also make
+identical (well, modulo some details of the 
+\maxman{simplification}{maxima_7.html#SEC29} process.) We also make
 use of \pname{Maxima}'s \ifs{mat\_trace} function ( so named to avoid conflicting
 with the code-execution trace function.)
 \bbm
@@ -733,6 +774,19 @@ first component.
 \begin{dmath}[number={\%o10}]
  \pmatrix{\left(\mathrm{i1}+\mathrm{e1}+\mathrm{a1}\right)\*\left(\mathrm{i2}+\mathrm{e2}+\mathrm{a2}\right)\*\left(\mathrm{i3}+\mathrm{e3}+\mathrm{a3}\right)\cr }\end{dmath}
 \ebm
+
+\subsection{\ifs{entropy}}
+\func{entropy}{\rho} returns the von Neumann \fs{entropy} of
+the density matrix $\rho$  defined by
+\begin{equation}
+ S(\rho) = -\mbox{Tr}\left(\rho \log_2 \rho\right).
+\end{equation}
+
+\subsection{\ifs{purity}}
+ \func{purity}{\rho} returns the purity of the 
+density matrix $\rho$ defined by $\mbox{Tr}(\rho^2)$. The purity
+is $1$ for a pure state and is less than $1$ for a mixed state.
+
 
 \subsection{An entangled pure global state has mixed reduced states}
 We examine a textbook example of entanglement--- the joint
@@ -766,11 +820,7 @@ we set some rules, and try again. \ibd{assume}
 \begin{dmath}[number={\%o5}]
  \pmatrix{\alpha&\linebreak[0]0&\linebreak[0]0&\linebreak[0]\isqrt{1-\alpha}\*\isqrt{\alpha}\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr 0&\linebreak[0]0&\linebreak[0]0&\linebreak[0]0\cr \isqrt{1-\alpha}\*\isqrt{\alpha}&\linebreak[0]0&\linebreak[0]0&\linebreak[0]1-\alpha\cr }\end{dmath}
 \ebm
-The von Neumann \ifs{entropy} defined as
-\begin{equation}
- S(\rho) = -\mbox{Tr}\rho \log_2 \rho,
-\end{equation}
-vanishes for a pure state, so that $S(\ket{\alpha}\bra{\alpha})$ is
+The entropy vanishes for a pure state, so that $S(\ket{\alpha}\bra{\alpha})$ is
 \bbm
 \begin{verbatim}
 (%i6)  entropy(pr);
@@ -778,14 +828,15 @@ vanishes for a pure state, so that $S(\ket{\alpha}\bra{\alpha})$ is
 \begin{dmath}[number={\%o7}]
  0\end{dmath}
 \ebm
-The \ifs{purity} $\mbox{Tr}(\rho^2)$ is equal to $1$ if and only if $\rho$ is a pure state.
+The \ifs{purity} is equal to $1$ if and only if $\rho$ is a pure state.
 \bbm
 \begin{verbatim}
 (%i8) purity(pr);
 \end{verbatim}
 \begin{dmath}[number={\%o8}]
  \alpha^{2}+2\*\left(1-\alpha\right)\*\alpha+\left(1-\alpha\right)^{2}\end{dmath}
-The above line should be simplified by writing it as a canonical rational expression (CRE)
+The above line should be 
+\maxman{simplified}{maxima_7.html#SEC29} by writing it as a canonical rational expression (CRE)
 \ibd{ratsimp} \index{canonical rational expression}
 \begin{verbatim}
 (%i9) ratsimp(%);
@@ -841,21 +892,114 @@ $\alpha=0,1$ giving pure joint states.  \bbm
 \end{dmath}
 \ebm
 
+\htmlrule
 \section{More operators and functions}
 
-\subsection{\ifs{pauli\_product}}
+The next four functions \func{pauli\_product}{i_1,\ldots,i_n},
+\func{pauliexp}{\rho}, \func{invpauliexp}{c}, and \func{correlation\_tensor}{c,i_1,\ldots,i_n}
+are related. An example using them follows their definitions.
 
-\subsection{\ifs{pauliexp}}
+\subsection{\ifs{pauli\_product} \ tensor product of pauli matrices }
+\func{pauli\_product}{i_1,\ldots,i_n} returns the tensor product
+$\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$, where the indices
+$i_j$ are in $\{0,1,2,3\}$. 
 
-\subsection{\ifs{invpauliexp}}
+\subsection{\ifs{pauliexp}\ expansion in terms of tensor products of pauli matrices  }
+\func{pauliexp}{\rho} returns the correlation tensor, that
+is, the coefficients in the expansion of the matrix $\rho$
+in tensor products of pauli matrices. Explicitly, \fs{pauliexp}
+returns the coefficents $c_{i_1,\ldots,i_n}$ in
+\begin{equation}\label{pauliexp}
+ \rho = \sum_{i_1,\ldots,i_n=0}^1 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
+\end{equation}
+$\rho$ must be a $2^n\times 2^n$ matrix. The coefficients are returned as a list
+of $2^n\times 2^n$ elements. The place of $c_{i_1,\ldots,i_n}$ in the returned list is determined
+by taking ${i_1,\ldots,i_n}$ to be the  binary representation of an integer. For convenience,
+the coefficient can be retrieved by index with the function \fs{correlation\_tensor}.
 
-\subsection{\ifs{tpauliexp}, \ifs{linvpauliexp}, \ifs{correlation\_tensor}}
+\subsection{\ifs{invpauliexp} inverse of expansion in terms of tensor products of pauli matrices}
+\func{invpauliexp}{c} is the inverse of \fs{pauiexp}. Given a list $c$ representing
+the correlation tensor ({\it i.e.} expansion coefficients),
+ \fs{invpauliexp} returns the matrix $\rho$ given by (\ref{pauliexp}).
+
+\subsection{\fs{correlation\_tensor} retrieve component of correlation tensor by index}
+\func{correlation\_tensor}{c,i_1,\ldots,i_n} returns the expansion coefficient for
+the term $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$ in the expansion of
+$\rho$, where $c$ is the list of coefficients in the expansion of $\rho$ as given,
+for intance, by \fs{pauliexp}.
+
+\subsection{Using \fs{pauliexp} and \fs{invpauliexp}; an example}
+Here is an example using the four functions defined above.
+First we create three generic $2\times2$ (complex) matrices.
+\bbm
+\begin{verbatim}
+(%i2) m1 : matrix([a1,b1],[c1,d1]);
+\end{verbatim}
+\begin{dmath}[number={\%o2}]
+ \pmatrix{\mathrm{a1}&\linebreak[0]\mathrm{b1}\cr \mathrm{c1}&\linebreak[0]\mathrm{d1}\cr }\end{dmath}
+\begin{verbatim}
+(%i3) m2 : matrix([a2,b2],[c2,d2]) $
+(%i4) m3 : matrix([a3,b3],[c3,d3]) $
+\end{verbatim}
+\ebm
+Here is the tensor product of the three matrices. This is {\it not} a generic element in
+the three qubit Hilbert space represented by $M(\mathbb{C},8)$. For instance,
+the three matrices have $12$ complex parameters while a generic matrix in
+the tensor product space  has $64$ complex parameters.
+\bbm
+\begin{verbatim}
+(%i5) mp : m1 otimes m2 otimes  m3 ;
+\end{verbatim}
+\begin{dmath}[number={\%o5}]
+ \pmatrix{\mathrm{a1}\*\mathrm{a2}\*\mathrm{a3}&\linebreak[0]\mathrm{a1}\*\mathrm{a2}\*\mathrm{b3}&\linebreak[0]\mathrm{a1}\*\mathrm{a3}\*\mathrm{b2}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{b3}&\linebreak[0]\mathrm{a2}\*\mathrm{a3}\*\mathrm{b1}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{b3}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{b3}\cr \mathrm{a1}\*\mathrm{a2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{a2}\*\mathrm{d3}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{d3}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{c3}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{c3}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}\cr \mathrm{a1}\*\mathrm{a3}\*\mathrm{c2}&\linebreak[0]\mathrm{a1}\*\mathrm{b3}\*\mathrm{c2}&\linebreak[0]\mathrm{a1}\*\mathrm{a3}\*\mathrm{d2}&\linebreak[0]\mathrm{a1}\*\mathrm{b3}\*\mathrm{d2}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}&\linebreak[0]\mathrm{b1}\*\mathrm{b3}\*\mathrm{c2}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{d2}&\linebreak[0]\mathrm{b1}\*\mathrm{b3}\*\mathrm{d2}\cr \mathrm{a1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{a1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{a1}\*\mathrm{d2}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{b1}\*\mathrm{d2}\*\mathrm{d3}\cr \mathrm{a2}\*\mathrm{a3}\*\mathrm{c1}&\linebreak[0]\mathrm{a2}\*\mathrm{b3}\*\mathrm{c1}&\linebreak[0]\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}&\linebreak[0]\mathrm{b2}\*\mathrm{b3}\*\mathrm{c1}&\linebreak[0]\mathrm{a2}\*\mathrm{a3}\*\mathrm{d1}&\linebreak[0]\mathrm{a2}\*\mathrm{b3}\*\mathrm{d1}&\linebreak[0]\mathrm{a3}\*\mathrm{b2}\*\mathrm{d1}&\linebreak[0]\mathrm{b2}\*\mathrm{b3}\*\mathrm{d1}\cr \mathrm{a2}\*\mathrm{c1}\*\mathrm{c3}&\linebreak[0]\mathrm{a2}\*\mathrm{c1}\*\mathrm{d3}&\linebreak[0]\mathrm{b2}\*\mathrm{c1}\*\mathrm{c3}&\linebreak[0]\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}&\linebreak[0]\mathrm{a2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{a2}\*\mathrm{d1}\*\mathrm{d3}&\linebreak[0]\mathrm{b2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{b2}\*\mathrm{d1}\*\mathrm{d3}\cr \mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}&\linebreak[0]\mathrm{b3}\*\mathrm{c1}\*\mathrm{c2}&\linebreak[0]\mathrm{a3}\*\mathrm{c1}\*\mathrm{d2}&\linebreak[0]\mathrm{b3}\*\mathrm{c1}\*\mathrm{d2}&\linebreak[0]\mathrm{a3}\*\mathrm{c2}\*\mathrm{d1}&\linebreak[0]\mathrm{b3}\*\mathrm{c2}\*\mathrm{d1}&\linebreak[0]\mathrm{a3}\*\mathrm{d1}\*\mathrm{d2}&\linebreak[0]\mathrm{b3}\*\mathrm{d1}\*\mathrm{d2}\cr \mathrm{c1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{c1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{c1}\*\mathrm{d2}\*\mathrm{d3}&\linebreak[0]\mathrm{c2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{c2}\*\mathrm{d1}\*\mathrm{d3}&\linebreak[0]\mathrm{c3}\*\mathrm{d1}\*\mathrm{d2}&\linebreak[0]\mathrm{d1}\*\mathrm{d2}\*\mathrm{d3}\cr }\end{dmath}
+\ebm
+We compute the correlation tensor of \verb|mp|
+\bbm
+\begin{verbatim}
+(%i6) pe : pauliexp(mp) $
+\end{verbatim}
+\ebm
+Check that the tensor has $64$ elements and see what a coefficient looks like.
+\bbm
+\begin{verbatim}
+(%i7) length(pe);
+\end{verbatim}
+\begin{dmath}[number={\%o7}]
+ 64\end{dmath}
+\begin{verbatim}
+(%i8) part(pe,10);
+\end{verbatim}
+\begin{dmath}[number={\%o8}]
+ \ifracn{-i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
+\ebm
+Check that the inverse of the expansion gives the original matrix back
+\bbm
+\begin{verbatim}
+(%i9) is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
+\end{verbatim}
+\begin{dmath}[number={\%o9}]
+ \mathbf{true}\end{dmath}
+\ebm
+Here is the convenience function to return an element of the correlation tensor by index
+\bbm
+\begin{verbatim}
+(%i10) correlation_tensor(pe,1,2,3);
+\end{verbatim}
+\begin{dmath}[number={\%o10}]
+ \ifracn{i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
+\ebm
 
 \subsection{\ifs{fidelity}}
+\func{fidelity}{\rho_1,\rho_2} returns the scalar valued fidelity
+of the density matrices $\rho_1$ and $\rho_2$ defined by
+$$
+ \mbox{Tr}\left(\sqrt{\sqrt{\rho_2}\rho_1\sqrt{\rho_2}}\right).
+$$
 
 \subsection{\ifs{spinor\_rotation\_op}, \ifs{spinor\_rotation\_op\_trig}}
+ Stub
 
-
+\htmlrule
 \section{Entanglement.  longer examples}
 
 \subsection{Entanglement swapping\index{entanglement swapping}}
@@ -1022,7 +1166,7 @@ that the state is in fact projected onto $\ket{u_m}$.
 Finally, we compare this to the trace computed by hand from the expression following (\ref{ket_to_mat}),
 which is given by
 \begin{equation}
- p_m=\sum^1_{i,j=0} \widehat{\alpha}_{i,j}^2 \widehat{\beta}_{i,j}^2 |\widehat{u}_m,ij|^2
+ p_m=\sum^1_{i,j=0} \widehat{\alpha}_{i,j}^2 \widehat{\beta}_{i,j}^2 |\widehat{u}_{m,ij}|^2
 \end{equation}
 \bbm
 \begin{verbatim}
@@ -1034,7 +1178,10 @@ which is given by
 and see that $p_m$ is the same as above--- verifying this last formula was well. 
 \ebm
 %\section*{Index}
+\htmlrule
 \printindex
+\htmlrule
+
 %\addcontentsline{toc}{section}{Index}
 
 \end{document}
