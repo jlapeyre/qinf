@@ -1,4 +1,4 @@
-;; qinf Version 0.11
+;; qinf Version 0.12
 
 ;; flip a qubit
 (defun $flip (x) (mod (+ x 1) 2))
@@ -17,6 +17,8 @@
 ;(defun add-digit (val posn base)
 ;  (* val (power base posn)))
 
+;; the same as fromdigits, but the order of digits is reversed. This situation
+;; should be rationalized and a generically named function should be used
 (defun $ptrace_numeration_to_int (vec b)
   ( let ( (res 0))
     ( dotimes ( i (- (length vec) 1 ) res)

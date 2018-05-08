@@ -1,0 +1,112 @@
+/* These are some compatibility functions.
+   Some functions are commented out and notated with --> lisp
+   This indicates that they are hand-coded in lisp and appear
+   in listfunctions.lisp
+
+*/
+
+load("listfunctions.lisp");
+
+
+
+/* set small numbers to 0 */
+chop_epsilon : 1e-16;
+chop(e) :=  block( [res],
+  if listp(e) then
+   e:map(chop,e)
+  else
+  res : is(abs(e)< chop_epsilon),
+  if is(res=true) then 0 else e);
+
+
+/* list_partition. Similar to Mma's Partition
+   but this treats overhanging differently.
+   list_partition(x,n) partitions list x into a n
+   parts (each the element of a list)
+   list_partition(x,n,d) does the same with offset d
+   list_partition([a,b,c,d,e,f],2);
+    --> [[a,b],[c,d],[e,f]]
+   list_partition([a,b,c,d,e,f],2,1);
+    --> [[a,b],[b,c],[c,d],[d,e],[e,f]]
+*/
+
+/* not named partition because that is already taken in Maxima. */
+list_partition(x,n,[id]) := block([d:0],
+  if length(id) = 1 then d : id[1],
+  if length(x) <= n   then [x] else
+   cons(rest(x,n-length(x)),list_partition(rest(x,n-d),n,d)));
+
+
+/* fold. Similar (same?) as Mma Fold, ie,
+  fold(f,x,[a,b,c]) --> f(f(f(x,a),b),c)
+*/
+
+/* --> lisp
+ recursive, but table size becomes a problem before call stack does
+fold(f%,x,v) := if length(v)=1 then apply(f%,[x,v[1]])
+	         else apply(f%,[fold(f%,x,rest(v,-1)),last(v)]);
+*/
+
+/* foldlist. same as Mma FoldList, ie,
+  foldlist(f,x,[a,b,c]) --> [x, f(x,a), f(f(x,a),b), f(f(f(x,a),b),c)]
+*/
+
+foldlist(f%,x,v) := block( [e],
+		 if length(v)=0 then [x]
+	         else ( e : foldlist(f%,x,rest(v,-1)),
+	         endcons(apply(f%,[last(e),last(v)]),e)));
+
+/* nest. Same as Mma Nest
+   ie nest(f,x,3) --> f(f(f(x)))
+*/
+/* --> lisp
+This is not tail recursive. But a more-or-less direct translation
+ to lisp, and compilation results in allowing n>25000, compared
+  to n about 140 in uncompiled maxima 
+nest(f%,x,n) := if n=0 then x
+                  else apply(f%,[nest(f%,x,n-1)]);
+*/
+
+/* convenience function. not a good name */
+most(v) := rest(v,-1);
+
+/*
+   integerdigit(n) returns list of digits in integer n
+   integerdigits(n,b) returned digits are in base b
+   integerdigits(n,b,pad) leading zeros appended so list
+            is of total length pad.
+   for base greater than 10, additional digits are denoted in decimal,
+   not using A,B, etc.
+*/
+integerdigits(n,[ib]) := (block[m,r:[],b:10,pad:0,diff],
+   n : abs(n),
+   if length(ib)>0 then b:ib[1],
+   if length(ib)>1 then pad:ib[2],
+   while n > 0 do (
+    m : floor(n/b),
+    r:cons( n-m*b, r),
+    n:m),
+   diff : pad-length(r),
+   if diff > 0 then r:append(create_list(0,i,1,diff),r),
+  r);
+
+
+/* fromdigits(v) return integer computed from list of digits v
+   fromdigits(v,b) digits are interpreted base b
+*/
+fromdigits(v,[ib]) := (block[s:0,b:10,i,m],
+  if length(ib)>0 then b:ib[1],
+  m:length(v),
+  for i thru m do
+      s : s + v[m-i+1]*b^(i-1),
+      s);
+    
+/* integer division discarding remainder.
+   This must be possible more easily somehow */
+intdiv(a,b):=a/b-mod(a,b)/b;
+
+integerfactor(n,b) := block([facs:ifactors(n), bfacs:ifactors(b)],
+  print(facs,bfacs));
+
+
+  

@@ -9,7 +9,7 @@
   Foundation.
 
 */
-/* qinf Version 0.11 */
+/* qinf Version 0.12 */
 
 
 /*
@@ -17,6 +17,7 @@
   load("itensor");
 */
 load("qinf.lisp");
+load("listfunctions.mac");
 load(lapack);
 load("log2.mac");
 load("eigen");
@@ -48,6 +49,13 @@ normalize_vector(v) :=  v/sqrt(v . conjugate(v));
 /* divide m by Tr(m) so that it has trace 1*/
 noramalize_operator(m) := m/mat_trace(m);
 
+/* ket -- a ket
+   returns -- list of elements */
+ktolist(ket) := part(transpose(ket),1);
+
+/* kets -- a list of kets
+   returns -- matrix each of whose rows is the elements of one ket */
+ketstomat(kets) := apply(matrix,map(ktolist,kets));
 
 /*********
   Follwing routines are all for partial trace function ptrace */
@@ -318,7 +326,13 @@ pauliexp(m) := block([nbits,v,i, c:[] ],
     ptrace_increment_numeration(v,4)),
     c);
 
-/* return one element of tensor stored in linear array output by linvpaulexp */
+/* same as pauliexp, but return the tensor as nested lists that can
+  be accessed via  t[i][j][k]...
+ */
+tpauliexp(m) := ket2kten_n(pauliexp(m),4);
+
+/* this function should be generalized to tensors of different shapes */
+/* return one element of tensor stored in linear array output by invpaulexp */
 correlation_tensor(t,[v]) :=  block([n:length(t)],
   if n = 4^length(v) then
    t[ptrace_numeration_to_int(v,4)+1]
@@ -543,6 +557,116 @@ schmidt_coefficients(e) := ( block [st],
   list_eivals(eivals(ptrace(st,1))));
 
 
+/* convert ket v to bra. if v is a bra, fall through */
+tobra(v) := if ketp(v) then ctranspose(v) else
+             if brap(v) then v else
+              error("tobra: neither bra nor ket");
+
+/* convert ket or bra to plain old list */
+vec_to_list(v) := part(tobra(v),1);
+
+state_length(v) := if ketp(v) then length(v) else
+         if brap(v) then length(part(v,1))
+          else error("state_length: neither ket nor bra");
+
+/***************************************
+ * More or less translations of Richard Griffith's Code
+****************************************/
+
+/* bellbas . bellket = compbasket */
+bellbas : ketstomat(create_list(belln[i],i,0,3));
+/* basbell . ket = ket in Bell basis */
+basbell : transpose(bellbas);
+/* Converts matrix from Bell to regular basis */
+bell2mat(mat) := bellbas . mat . basbell;
+mat2bell(mat) := basbell . mat . bellbas;
+
+/*		mat2nten::usage = "mat2nten[mt,ddl] converts the (possibly
+rectangular) matrix mt to an n-tensor using the double dimension list ddl,
+with, e.g., {2,3,{4,5}} interpreted as {{2,2},{3,3},{4,5}}." */
+/* mat2nten:comment. Dimension list ddl is converted to ddm with every 
+entry a two-component list, e.g.,  ddl={2,{3,4}}->ddm={{2,2},{3,4}}. */
+/*
+	mat2nten[mt_,ddl_]:=Module[
+{ddm=ddl,fmt=Flatten[mt],jm,lnd=Length[ddl]},
+		For[jm=1,jm<=lnd,++jm, 
+If[  0==Length[ ddm[[jm]] ]  , ddm[[jm]]={ddl[[jm]],ddl[[jm]]}  ];  ];
+Fold[ Partition, fmt, Most[Reverse[Flatten[Transpose[ddm]]]] ]] /* END mat2nten */
+*/
+
+/* transpose matrix as nested list, not maxima matrix */
+ltranspose(m) := mat_to_list(transpose( apply(matrix,m)));
+
+/* mt -- matrix representation of operatore
+   returns -- n-tensor representation */
+mat2nten(mt,ddl) := block( [ddm:ddl,fmt:flatten(mat_to_list(mt)),jm,lnd:length(ddl)],
+  for jm:1 thru lnd step 1 do
+   if (not listp(ddm[jm])) then ddm[jm] : [ddl[jm],ddl[jm] ],
+  fold(list_partition,fmt,most(reverse(flatten(ltranspose(ddm))))));
+
+/* convert bra or ket representation to tensor representation
+   dl is list of dimensions of component spaces */
+ket2kten(v,dl) := block( [],
+  if braketp(v) then v:vec_to_list(v),
+  if length(dl) = 1 then v else
+  map(lambda([x],ket2kten(x,rest(dl))),list_partition(v,length(v)/first(dl))));
+
+/*  convert bra or ket rep to tensor rep, with all component spaces of dim n */
+ket2kten_n(v,n) := block( [],
+  if braketp(v) then v:vec_to_list(v),
+  ket2kten(v,create_list(n,i,1,radcan(log(length(v))/log(n)))));
+
+/*  convert bra or ket rep to tensor rep, with all component spaces of dim  2  */
+ket2kten2(v) := ket2kten_n(v,2);
+
+/* hilbert-schmidt product <a,b> := Tr( a^dagger b) */
+matinner(a,b) := block([c:conjugate(a), len:length(b)],
+  sum(b[i] . c[i], i, 1,len));
+
+/* convert tensor rep to ket */
+kten2ket(t) := apply(ket,(flatten(t)));
+kten2bra(t) := ctranspose(apply(ket,(flatten(t))));
+
+/* return true if each element of the list has the same head
+   if the element is not a list structure, it returns false in place of the head 
+*/
+/*
+same_headsp(m) := is(length(unique(map(lambda([x],if mapatom(x) then false else part(x,0)),m)))=1);
+*/
+
+/* nasty bug if function names p% and p%% are not different, as here */
+same_inlist1(m,p%%) := is(length(unique(map(p%%,m)))=1);
+same_inlist(m,p%) := same_inlist1(m,lambda([x], if mapatom(x) then false else p%(x)));
+same_headp(m) := same_inlist(m,lambda([x],part(x,0)));
+same_lengthp(m) := same_inlist(m,lambda([x],length(x)));
+
+comp_inlist1(m,fcomp_inlist1%%,e) := block([r],
+  r:unique(map(fcomp_inlist1%%,m)),
+  is (length(r)=1 and r[1] = e));
+comp_inlist(m,fcomp_inlist%,e) := comp_inlist1(m,
+  lambda([x], if mapatom(x) then false else fcomp_inlist%(x)),e);
+/* are all heads the same as e*/
+comp_headp(m,e) := comp_inlist(m,lambda([x],part(x,0)),e);
+comp_lengthp(m,e) := comp_inlist(m,lambda([x],length(x)),e);
 
 
-  
+gsame_inlist1(m,fgsame_inlist1%%) := block([r],
+  r:unique(map(fgsame_inlist1%%,m)),
+  if length(r)=1 then [true,r[1]] else [false,false]);
+
+gsame_inlist(m,p%) := gsame_inlist1(m,lambda([x], if mapatom(x) then false else p%(x)));
+gsame_headp(m) := gsame_inlist(m,lambda([x],part(x,0)));
+gsame_lengthp(m) := gsame_inlist(m,lambda([x],length(x)));
+
+
+
+/* dimensions of nested list. all lists at a given level
+  are assumed to be of the same length */
+/*  This was not finished.
+dimensions(t,hd) := block([r],
+  r : gsame_headp(t);
+  if r[1] = true then (
+
+  )
+);
+*/
