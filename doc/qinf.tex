@@ -94,7 +94,7 @@
 
 
 \title{User's Manual for \qinf Quantum Information and Entanglement Package
- v. 0.06 For The \pname{Maxima} Computer
+ v. 0.07 For The \pname{Maxima} Computer
   Algebra System}
 \author{G. John Lapeyre, Jr.}
 
@@ -805,14 +805,14 @@ density matrix $\rho$ defined by $\mbox{Tr}(\rho^2)$. The purity
 is $1$ for a pure state and is less than $1$ for a mixed state.
 
 \subsection{\ifs{renyi\_entropy}}
- \func{renyi\_entropy}{\rho} gives the R\'enyi entropy, defined by
+ \func{renyi\_entropy}{alpha,rho} gives the R\'enyi entropy, defined by
 \begin{equation}
  S_{\mbox{renyi}}(\alpha,\rho) = \frac{1}{1-\alpha}\log_2\left(\mbox{Tr}(\rho^\alpha)\right).
 \end{equation}
 \ifs{renyi\_entropyf} is the floating point version of \fs{renyi\_entropy}.
 
 \subsection{\ifs{tsallis\_entropy}}
- \func{tsallis\_entropy}{\rho} gives the Tsallis entropy, defined by
+ \func{tsallis\_entropy}{q,rho} gives the Tsallis entropy, defined by
 \begin{equation}
  S_{\mbox{tsallis}}(q,\rho) = \frac{1}{q-1}\left(1-\mbox{Tr}(\rho^q)\right).
 \end{equation}
@@ -1028,7 +1028,23 @@ $$
 $$
 
 \subsection{\ifs{spinor\_rotation\_op}, \ifs{spinor\_rotation\_op\_trig}}
- Stub
+
+\func{spinor\_rotation\_op}{phi,theta,gamma} retuns the matrix that represents
+rotation through an angle \farg{gamma} about the axis specified by 
+\farg{phi} and \farg{theta}. The function \func{spinor\_rotation\_op\_trig}{phi,theta,gamma}
+returns the same matrix expressed only with cosines and sines. Explicitly the matrices are
+\bbm
+\begin{verbatim}
+(%i2) spinor_rotation_op(phi,theta,gamma);
+\end{verbatim}
+\begin{dmath}[number={\%o2}]
+ \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]-i\*\iexpt{e}{- i\*\varphi }\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)\cr -i\*\iexpt{e}{i\*\varphi}\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}
+\begin{verbatim}
+(%i3) spinor_rotation_op_trig(phi,theta,gamma);
+\end{verbatim}
+\begin{dmath}[number={\%o3}]
+ \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]\left(-\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)\cr \left(\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}.
+\ebm
 
 \htmlrule
 \section{Entanglement.  longer examples}
@@ -1155,7 +1171,7 @@ $\mathbb{C}^2\otimes\mathbb{C}^2$ to $M(\mathbb{C},2)$:
       a_{10} & a_{11} \cr
     },
 \end{equation}
-one can show that $\rho_{D}$ is equal to $X_m^{}X_m^{\dagger}$, with
+one can show that $\rho_{D}$ is equal to $X_m^{\dagger}X_m$, with
 $X_m = \widehat{\alpha}\,\widehat{u}_m\,\widehat{\beta}$.
 The \pname{Maxima} function implementing the mapping (\ref{ket_to_mat}) is
 \bbm
@@ -1164,52 +1180,65 @@ The \pname{Maxima} function implementing the mapping (\ref{ket_to_mat}) is
 \end{verbatim}
 \ebm
 Then the second calculation of $\rho_D$, which we call \verb|rho_4a| is given by
-the following two lines.
+the following lines.
 \bbm
 \begin{verbatim}
-(%i11)  X : ket_to_mat(a) . ket_to_mat(u) . ket_to_mat(b);
-\end{verbatim}
-\begin{dmath}[number={\%o11}]
-  \pmatrix{\isqrt{\alpha}\*\isqrt{\beta}\*\mathrm{u00}&\linebreak[0]\isqrt{\alpha}\*\isqrt{1-\beta}\*\mathrm{u01}\cr
-    \isqrt{1-\alpha}\*\isqrt{\beta}\*\mathrm{u10}&\linebreak[0]\isqrt{1-\alpha}\*\isqrt{1-\beta}\*\mathrm{u11}\cr
-  }\end{dmath} \ibd{conjsimp}\ibd{ctranspose}
-\begin{verbatim}
-(%i12) rho_4a : conjsimp(ctranspose(X) . X);
+(%i11) mu : ket_to_mat(u)$
+(%i12) X :  ket_to_mat(a) . mu . ket_to_mat(b);
 \end{verbatim}
 \begin{dmath}[number={\%o12}]
+ \pmatrix{\isqrt{\alpha}\*\isqrt{\beta}\*\mathrm{u00}&\linebreak[0]\isqrt{\alpha}\*\isqrt{1-\beta}\*\mathrm{u01}\cr \isqrt{1-\alpha}\*\isqrt{\beta}\*\mathrm{u10}&\linebreak[0]\isqrt{1-\alpha}\*\isqrt{1-\beta}\*\mathrm{u11}\cr }\end{dmath}
+\begin{verbatim}
+(%i13) rho_4a : conjsimp( ctranspose(X) . X );
+\end{verbatim}
+\begin{dmath}[number={\%o13}]
  \pmatrix{\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}&\linebreak[0]\left(1-\alpha\right)\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u10}^{\star}\*\mathrm{u11}+\alpha\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u00}^{\star}\*\mathrm{u01}\cr \left(1-\alpha\right)\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u10}\*\mathrm{u11}^{\star}+\alpha\*\isqrt{1-\beta}\*\isqrt{\beta}\*\mathrm{u00}\*\mathrm{u01}^{\star}&\linebreak[0]\left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}\cr }\end{dmath}
 \ebm
-Comparing \verb|(%o9)| and  \verb|(%o12)|, we see that the two methods of calculating
-the reduced state for qubit $D$ after the measurement give the same result, showing that the second
-method is correct. Now we compute the probability 
+We compare \verb|(%o9)| and  \verb|(%o13)|, to see that the two methods of calculating
+the reduced state for qubit $D$ after the measurement give the same result
+\bbm
+\begin{verbatim}
+(%i14) is ( ratsimp(rho_4a) = ratsimp(rho_4) );
+\end{verbatim}
+\begin{dmath}[number={\%o14}]
+ \mathbf{true}\end{dmath}
+\ebm
+Now we compute the probability 
 $p_m=\mbox{Tr}(\rho)=\mbox{Tr}(\rho_D)$
 that the state is in fact projected onto $\ket{u_m}$.
 \bbm
 \begin{verbatim}
-(%i13)  res1 : conjsimp(mat_trace(rho));
+(%i15) P1 : conjsimp( mat_trace(rho));
 \end{verbatim}
-\begin{dmath}[number={\%o13}]
- \left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}
-\begin{verbatim}
-(%i14) res2 : conjsimp(mat_trace(rho_4a));
-\end{verbatim}
-\begin{dmath}[number={\%o14}]
+\begin{dmath}[number={\%o15}]
  \left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}
 \ebm
 Finally, we compare this to the trace computed by hand from the expression following (\ref{ket_to_mat}),
 which is given by
 \begin{equation}
- p_m=\sum^1_{i,j=0} \widehat{\alpha}_{i,j}^2 \widehat{\beta}_{i,j}^2 |\widehat{u}_{m,ij}|^2
+ p_m=\sum^1_{i,j=0} {\alpha}_{i} {\beta}_{j} |\widehat{u}_{m,ij}|^2,
 \end{equation}
+where $\alpha_0=\alpha,\  \alpha_1=1-\alpha, \  \beta_0=\beta, \ \beta_1=1-\beta$,
 \bbm
 \begin{verbatim}
-(%i15) res3 : ratsimp(braz(0,0).a^2 * braz(0,0).b^2 *abs(u00)^2+ braz(0,0).a^2 * braz(1,1).b^2 * abs(u01)^2 
-    +  braz(1,1).a^2 * braz(0,0).b^2 * abs(u10)^2 +  braz(1,1).a^2 * braz(1,1).b^2 * abs(u11)^2);
+(%i16) av : [alpha,1-alpha]$
+(%i17) bv : [beta,1-beta] $
+(%i18) P2 : apply( "+", create_list( av[i] * abs(mu[i,j])^2 * bv[j], i,[1,2],j,[1,2]));
 \end{verbatim}
-\begin{dmath}[number={\%o15}]
- \left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}
+\begin{dmath}[number={\%o18}]
+ \left(1-\alpha\right)\*\left(1-\beta\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\alpha\*\left(1-\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}.
 \ebm
-and see that $p_m$ is the same as above--- verifying this last formula was well. 
+Here we have used \pname{Maxima}'s \ifs{apply} and \ifs{create\_list} functions.
+Once again we compare the probabilities computed via the two methods
+\bbm
+\begin{verbatim}
+(%i19) is (ratsimp(P1) = ratsimp(P2));
+\end{verbatim}
+\begin{dmath}[number={\%o19}]
+ \mathbf{true}\end{dmath}
+\ebm
+and see that they give the same result.
+
 %\section*{Index}
 \htmlrule
 \printindex

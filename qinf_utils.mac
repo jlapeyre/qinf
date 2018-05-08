@@ -1,0 +1,37 @@
+/*
+  quantum_information package for the Maxima computer algebra system.
+
+  Copyright 2008, John Lapeyre  All rights reserved.
+
+  This program is free software; you can redistribute it
+  and/or modify it only under the terms of the GNU General
+  Public License version 2 as published by the Free Software
+  Foundation.
+
+*/
+
+mapapply(f,lst) := map(lambda([n],apply(f,n)),lst);
+
+showexp('e) := print( e," = ", ev(e));
+
+/* use the following if simplifying conjugates is broken */
+/*csq(u) := u * conjugate(u); */
+
+
+
+/* Code supplied by  Barton Willis.
+   Modified slightly by John Lapeyre.
+ */
+
+conjsimp (e) := block([args],
+  if mapatom(e) then e
+  elseif ?mtimesp(e) then (
+    args : args(e),
+    for p in args do e : ratsubst('abs(p)^2, p * conjugate(p),e),
+    e)
+  else apply(op(e), map('conjsimp, args(e))));
+
+inargs(e) := block([inflag:true],args(e));
+inop(e) := block([inflag:true],op(e));
+
+/* End of code supplied by  Barton Willis */

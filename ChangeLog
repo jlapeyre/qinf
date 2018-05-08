@@ -1,3 +1,10 @@
+Version 0.07
+2008-08-25  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* corrected errors in manual and cleaned up entanglement
+	  swapping section.
+	* automated packaging more
+
 Version 0.06
 2008-08-25  John Lapeyre  <lapeyre@physics.arizona.edu>
 	* translate some functions to lisp, adding

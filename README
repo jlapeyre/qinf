@@ -28,21 +28,27 @@ linux, mac OS X, MS Windows.
 This software is quite usable, but incomplete. For instance the manual
 probably ends mid-sentence.
 
-----------
-Documentation:
-doc/qinf.pdf         -- manual/tutorial
-doc/qinf/index.html  -- manual/tutorial in html
-
 -----------
 Installation
 
+To use this package put the four files listed below in some
+directory and run Maxima and give the command
+load("qinf.mac").
+
 qinf.mac   -- the main file to be loaded.
+qinf.lisp  
+log2.mac   
+qinf_utils.mac
 
-log2.mac   -- put these in the same directory as qinf.mac
-utils.mac
+You may find the file ./install.sh useful if you are using
+unix/linux.
 
-To use this package put the three files above in some directory and run Maxima and
-give the command load("qinf.mac"). 
+The last three files are loaded automtically.
+
+----------
+Documentation:
+doc/qinf.pdf         -- manual/tutorial
+doc/qinf/qinf.html  -- manual/tutorial in html
 
 -------
 Application subdirectory

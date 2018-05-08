@@ -10,7 +10,7 @@
 
 */
 
-/* qinf Version 0.06 */
+/* qinf Version 0.07 */
 
 /*
   currently prints a bunch of garbage
@@ -22,7 +22,7 @@ load(lapack);
 load("log2.mac");
 load("eigen");
 load("diag");
-load("utils.mac");
+load("qinf_utils.mac");
 
 qudit_states : 2;
 
@@ -443,10 +443,8 @@ commutator(A,B):= A . B - B . A;
 anticommutator(A,B):= A . B + B . A;
 */
 
-/* Rotate through angle 2*gamma about direction
-   (theta,phi) w.r.t z-axis. Note we use 2*gamma rather
-   than gamma, to avoid appearance of gamma/2 in big expressions.
-   Change this for distribution.
+/* Rotate through angle gamma about direction
+   (theta,phi) w.r.t z-axis.
  */
 spinor_rotation_op_trig(phi,theta,gamma) := block ( [sg],
     sg: sin(gamma/2),
