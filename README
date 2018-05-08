@@ -1,19 +1,56 @@
-quantum_informaion package for Maxima copyright 2008 , John Lapeyre
+quantum_information package for Maxima copyright 2008 , John Lapeyre
 
-This software is usable, but incomplete. For instance the manual
+This quantum information package for the Maxima computer
+algebra system allows the manipulation of instances of
+objects--- operators, vectors, tensors, etc.  that
+appear in quantum information theory.  More precisely these
+objects are typically represented in this package in a
+particular basis as row and column vectors and matrices,
+whose entries may be explicit numbers (of various classes)
+or algebraic expressions. This software occupies a niche
+distinct from high performance numerical linear algebra
+software as well as software such as the Maxima tensor
+packages that manipulate abstract mathematical objects.
+This manual describes the functions and data in the
+package and how to use them with Maxima, assuming that you
+do not know much about Maxima, but do know quantum
+information theory. However, most of the examples are also
+found in introductory texts on quantum information.  The
+package is intended for research and teaching in the theory
+of entanglement and quantum information and related fields.
+
+Maxima is free software available at
+http://maxima.sourceforge.net/
+
+It is pre-packaged  for most linux distributions. It runs under
+linux, mac OS X, MS Windows.
+
+This software is quite usable, but incomplete. For instance the manual
 probably ends mid-sentence.
 
-qinf.mac      -- the main file to be loaded.
-frompra.mac   -- some application. Some of this will be moved to qinf.mac
+-----------
+Installation
 
-rtest_qinf.mac -- run with batch("rtest_qinf.mac", test);
+qinf.mac   -- the main file to be loaded.
+
+log2.mac   -- put these in the same directory as qinf.mac
+utils.mac
+
+To use this package put the three files above in some directory and run Maxima and
+give the command load("qinf.mac"). See the document in the doc subdirectory.
 
 -------
-following are original test scripts. These are to be converted to
+application subdirectory
+frompra.mac   -- some application. Some of this will be moved to qinf.mac
+
+-------
+cd to the test subdirectory before doing the following
+rtest_qinf.mac -- run with batch("rtest_qinf.mac", test);
+
+following are original test scripts. These need to be converted to
 be used with batch(*,test). They are run via
 load("test_ptrace.mac"), etc.
 
 test_ptrace.mac 
 test_qinf.mac
 
-other files are loaded by the main files and will be described later

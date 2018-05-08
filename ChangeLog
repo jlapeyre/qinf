@@ -1,9 +1,17 @@
+Version 0.03
+2008-08-16  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* much work on manual
+	* add ptracen function and regression test
+	* add matcols function
+	* convert figure to pdf so it builds with pdflatex
+	* changed directory structure
+	
 Version 0.02
 2008-08-12  John Lapeyre  <lapeyre@physics.arizona.edu>
 
 	* reformatted to remove hanging parentheses
 	* started documentation in qinf.tex
-	
 
 Version 0.01
 2008-08-11  John Lapeyre  <lapeyre@physics.arizona.edu>	

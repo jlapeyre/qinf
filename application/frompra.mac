@@ -1,0 +1,77 @@
+/*
+  quantum_information package for the Maxima computer algebra system.
+
+  Copyright 2008, John Lapeyre  All rights reserved.
+
+  This program is free software; you can redistribute it
+  and/or modify it only under the terms of the GNU General
+  Public License version 2 as published by the Free Software
+  Foundation.
+
+*/
+
+load("qinf.mac");
+load("qtest.mac");
+
+/* testing calculations in Phys Rev A 77 pg 022308 (2008) */
+
+/* bipartite state vector to 4x4 matrix,  maps 
+  C^2 otimes C^2 to M(C,2) */
+bptom(iket) := matrix([iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]]);
+
+/* Note that this disagrees with statement following eqn 3
+ in paper, which has X . ctranspose(X)  */
+swap_reduced_3(alpha,beta,u) := ( block [X],
+  X : bptom(alpha) . bptom(u) . bptom(beta),
+  ctranspose(X) . X
+  );
+
+assume(alpha>0,1-alpha>0,beta>0,1-beta>0);
+declare([u00,u01,u10,u11], complex);
+
+a : schmidt_ket(alpha);
+b : schmidt_ket(beta);
+u : ket(u00,u01,u10,u11);
+
+am : bptom(a);
+bm : bptom(b);
+um : bptom(u);
+
+rho4 : (ident(2) otimes toproj(u) otimes ident(2)) . toproj(a otimes b);
+rho_m : ptrace(rho4,2,3);
+rho_mt : ptrace(rho4,1,2,3);
+
+sw3 : swap_reduced_3(a,b,u);
+
+res1 : mat_trace(rho4);
+res2 : mat_trace(sw3);
+res1 : conjsimp(res1);
+res2 : conjsimp(res2);
+
+
+res3 : braz(0,0).a^2 * braz(0,0).b^2 *abs(u00)^2+ braz(0,0).a^2 * braz(1,1).b^2 * abs(u01)^2 + 
+    braz(1,1).a^2 * braz(0,0).b^2 * abs(u10)^2 +  braz(1,1).a^2 * braz(1,1).b^2 * abs(u11)^2;
+
+qtest(
+  is ( ratsimp(res1) = ratsimp(res2)),
+  true
+  );
+
+qtest(
+  is ( ratsimp(res1) = ratsimp(res3)),
+  true
+  );
+
+qtest(
+  is ( ratsimp(res2) = ratsimp(res3)),
+  true
+  );
+
+qtest(
+  zeromatrixp(ratsimp(rho_mt-sw3)),
+  true
+  );
+
+/*
+map(showexp, '[a,b,u,am,bm,um,rho_mt, ratsimp(rho_mt-sw3)]);
+*/

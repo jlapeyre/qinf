@@ -49,6 +49,9 @@ diagonalize(A) := block( [uie],
 
 diagonalization_op(A) := part(diagonalize(A),1);
 
+/* return matrix with columns i1 through i2 */
+matcols(A,i1,i2) := mat_unblocker(matrix(map( lambda([i],col(A,i)), makelist(i,i,i1,i2))));
+
 /* call: eg  matrix_function(A,'exp) */
 /* Don't use this one. mat_function in package "diag" seems better */
 /* furthermore, we should use leftmatrix and rightmatrix here */
@@ -73,6 +76,7 @@ matrix_sqrt(A) := mat_function(sqrt,A);
 
 /* doesnt do conjugate */
 normalize_vector(v) :=  v/sqrt(v . conjugate(v));
+
 
 
 /*********
@@ -117,6 +121,18 @@ ptrace(A,[qs]) := block ( [i,B,b,nA],
     B : ptrace_one_dimension(qudit_states,B,qs[i]),
     qs : qs - 1),
   B);
+
+
+/* The same as ptrace, but qudits of dimension b are used */
+ptracen(b,A,[qs]) := block ( [i,B,nA],
+  qs : sort(qs,"<"),
+  B : A,
+  for i:1 thru length(qs) do (
+    B : ptrace_one_dimension(b,B,qs[i]),
+    qs : qs - 1),
+  B);
+
+
 
 /* partial trace over one component */
 ptrace_one_dimension(b,A,q) := block ( [nA,nbitsA,nbitsB, B,x,y,x1,x2,y1,y2,
@@ -219,6 +235,7 @@ listket(k) := part( transpose(k),1);
 
 /* should probably just use something like this 
  mat_unblocker(matrix([bell[0,0],bell[0,1]]));
+ converts a list of kets to a matrix
  */
 matkets([k]) := apply(matrix,map(listket,k));
 
@@ -302,7 +319,9 @@ invpauliexp(m) :=
 pauli_prod_exp(m) := apply(tensor_product,mapapply(pauliexp,m));
 
 /* this can be implemented easily in a maxima idiom, but
- I wonder if this is more efficient */
+ I wonder if this is more efficient.
+ return a matrix in terms of its correlation tensor coefficients
+*/
 tpauliexp(t) := block([n,i,m,nb],
   n : length(t),
   nb : radcan(log(n)/log(4)),
