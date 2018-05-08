@@ -1,3 +1,12 @@
+Version 0.10
+2008-09-01  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* added separable(state)
+	* braketp (ketp, brap, square_matp were added last revision)
+	* add some error detection
+	* add zip distribution form
+        * found a few ther QC computer algebra packages to look at.
+	
 Version 0.09
 2008-08-28  John Lapeyre  <lapeyre@physics.arizona.edu>
 

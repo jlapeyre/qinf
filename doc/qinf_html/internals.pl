@@ -2,10 +2,6 @@
 # Associate internals original text with physical files.
 
 
-$key = q/cite_perseguers:022308/;
-$ref_files{$key} = "$dir".q|qinf.html|; 
-$noresave{$key} = "$nosave";
-
 $key = q/pauliexp/;
 $ref_files{$key} = "$dir".q|qinf.html|; 
 $noresave{$key} = "$nosave";

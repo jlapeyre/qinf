@@ -1,0 +1,17 @@
+\begin{thebibliography}{1}
+
+\bibitem{HHH08}
+R.~Horodecki, P.~Horodecki, M.~Horodecki, and K.~Horodecki.
+\newblock {\em Rev. Mod. Phys.}, 2008.
+\newblock to appear.
+\newblock \href {http://arxiv.org/abs/arXiv:quant-ph/0702225v2}
+  {\path{arXiv:arXiv:quant-ph/0702225v2}}.
+
+\bibitem{Wootters97}
+William~K. Wootters.
+\newblock Entanglement of formation of an arbitrary state of two qubits.
+\newblock {\em Phys. Rev. Lett.}, 80:2245--2248, 1998.
+\newblock \href {http://arxiv.org/abs/arXiv:quant-ph/9709029v2}
+  {\path{arXiv:arXiv:quant-ph/9709029v2}}.
+
+\end{thebibliography}

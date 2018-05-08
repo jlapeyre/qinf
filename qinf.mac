@@ -9,7 +9,7 @@
   Foundation.
 
 */
-/* qinf Version 0.09 */
+/* qinf Version 0.10 */
 
 
 /*
@@ -37,6 +37,7 @@ qudit_states : 2;
 
 ketp(e) := matrixp(e) and (length(part(e,1)) = 1); /* is it a ket */
 brap(e) := matrixp(e) and (length(e) = 1);     /* is it a bra */
+braketp(e):= ketp(e) or brap(e);
 square_matp(e) := matrixp(e) and (length(e) = length(part(e,1))); /*square matrix */
 /* this one works only if trigsimp is enough to tell */
 unitary1p(m) := square_matp(m) and ( trigsimp( m . ctranspose(m)) = 1);
@@ -250,11 +251,15 @@ proj(v) := block( [],
     return( v . ctranspose(v) ));
 
 /* compute ket corresponding to projection operator.
- does not check if matrix is actually a projection operator.
  Sometimes the zero eigenvalues are listed first, sometimes second.
- It can change because phases are lost in computing the projection operator */
+ It can change because phases are lost in computing the projection operator.
+ implementation: diagonalize matrix and return eivect with eival 1.
+ Best not to test for proj op  because of marginal cases
+*/
 tovect(A) :=  block ( [t,pos],
   t : simtran(A),
+/*  if not( part(t,1,1) = [0,1] or part(t,1,1) = [1,0] ) then
+    error("tovect: density matrix is not a projection operator"),*/
   if  sublist_indices(part(t,1,1), lambda([x],x=0)) = [2] then (
     return(transpose(second(t))) )
   else
@@ -498,6 +503,30 @@ tsallis_entropyf(q,rho) :=  block( [x,evs,sum:0],
 fidelity(rho1,rho2) := block( [sr2],
   sr2 : mat_function(sqrt,rho2),
   mat_trace(mat_function(sqrt, sr2 . rho1 .sr2)));
+
+/* test for separability
+  The idea now is to add other methods here later.
+  Currently works for a pure bipartite state
+  state -- input 2-qubit state as ket or bra (four elements)
+  returns -- a scalar r. If r=1, the state is separable,
+   if r<1 it is entangled.
+  The scalar is purity(ptrace(state,1))
+  The explicit formula is not to long, so we write it out.
+*/
+separable(state) := block( [x1,x2,x3,x4],
+  if brap(state) then state : ctranspose(state),
+  if  not ( ketp(state) and (length(state)=4))
+    then error("argument to separable must be a pure bi-partite state vector"),
+  x1:state[1,1],
+  x2:state[2,1],
+  x3:state[3,1],
+  x4:state[4,1],
+  2*abs(x3)^2*abs(x4)^2+2*abs(x2)^2*abs(x4)^2
+                     +2*conjugate(x1)*x2*x3*conjugate(x4)+x4^4
+                     +2*x1*conjugate(x2)*conjugate(x3)*x4
+                     +2*abs(x1)^2*abs(x3)^2+x3^4+2*abs(x1)^2*abs(x2)^2+x2^4
+                     +x1^4);
+  
 
 /**********************************/
 

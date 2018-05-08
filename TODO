@@ -1,5 +1,17 @@
-* check for separability of pure bipartite state of system AB,
-  by doing purity( ptrace(rho,1)) , ie Tr((rho_A)^2)
+* in R Griffiths doc. pg 4, line should read 'product of sums' not
+  'sum of products'.
+
+* func to create density matrix from pos semi def matrix. (ie normalize)
+
+* add examples of quantum circuits with gates to doc.
+
+* collect discussion of implementation of objects and matrix operators
+  in one place in docs.
+
+* add error detection
+
+* document separable. is this the best way to implement this, or should
+  they be separate functions ?
 
 * unitaryp is problematic to implement. How should floating point
   or trigsimp be done ?
@@ -21,7 +33,6 @@
 
 * improve lisp integer numeration code
 
-* remove unused code from qinf.mac, put it in optional mac file
 
 * put proj(ketz(0,0)) = proj(braz(0,0))  in example
 
@@ -74,6 +85,8 @@ check matrix rank and schmidt rank
 
 Partially Done
 ------------------------------------------
+* remove unused code from qinf.mac, put it in optional mac file
+
 * entropy and other functions that compute eigenvalues
   do not handle floating point numbers. They convert them
   to rationals. this is wrong behavior. Note, it might
@@ -83,6 +96,10 @@ Partially Done
 
 Done
 ------------------------------------------
+* provide ZIP archive format
+* Just linked quantiki list. list other computer algebra quantum inf sites. 
+* check for separability of pure bipartite state of system AB,
+  by doing purity( ptrace(rho,1)) , ie Tr((rho_A)^2)
 * change instances of 'commmand' to 'function'.
   "the cos command" --> "the cos function"
 * check statement about  'is' checking for lexical, equality. this

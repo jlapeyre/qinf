@@ -133,14 +133,12 @@
 
 
 \title{User's Manual for \qinf Quantum Information and Entanglement Package
- v. 0.09 For The \pname{Maxima} Computer
+ v. 0.10 For The \pname{Maxima} Computer
   Algebra System}
 
 \author{G. John Lapeyre, Jr.}
 
 \maketitle
-
-
 
 \begin{verbatim}
          Copyright (c)  2008  Gerald John Lapeyre Jr.
@@ -157,25 +155,25 @@
 \htmlrule
 \section{Introduction}
 
-This quantum information package for the 
-\maximalink computer
-algebra system allows the manipulation of instances of
-objects--- operators, vectors, tensors, {\it etc.}  that
-appear in quantum information theory.  More precisely these
-objects are typically represented in this package in a
-particular basis as row and column vectors and matrices,
-whose entries may be explicit numbers (of various classes)
-or algebraic expressions. This software occupies a niche
-distinct from high performance numerical linear algebra
-software as well as software such as the \maximalink tensor
-packages that manipulate abstract mathematical objects.
-This document describes the functions and data in the
-package and how to use them with \maximalink, assuming that you
-do not know much about \maximalink, but do know quantum
-information theory. However, most of the examples are also
-found in introductory texts on quantum information.  The
-package is intended for research and teaching in the theory
-of entanglement and quantum information and related fields.
+This quantum information package for the \maximalink
+computer algebra system allows the manipulation of instances
+of objects--- operators, vectors, tensors, {\it etc.}  that
+appear in the theory of quantum information and of quantum
+entanglement.  More precisely these objects are typically
+represented in this package as row and column vectors and
+matrices, whose entries may be explicit numbers (of various
+classes) or algebraic expressions. This software occupies a
+niche distinct from high performance numerical linear
+algebra software as well as software such as the \maximalink
+tensor packages that manipulate abstract mathematical
+objects.  This document describes the functions and data in
+the package and how to use them with \maximalink, assuming
+that you do not know much about \maximalink, but do know
+quantum information theory. However, most of the examples
+are also found in introductory texts on quantum information.
+The package is intended for research and teaching in the
+theory of entanglement and quantum information and related
+fields.
 
 
 Examples of the facilities of the
@@ -353,8 +351,8 @@ Some exact numbers and  \maxman{floating point}{maxima_10.html#SEC38} approximat
 \end{verbatim}
 \begin{dmath}[number={\%o7}]
  \isqrt{2}+1\end{dmath}
-\begin{verbatim}
 \index{floating point, conversion to}
+\begin{verbatim}
 (%i8)  1  + sqrt(2), float;
 \end{verbatim}
 \begin{dmath}[number={\%o8}]
@@ -752,7 +750,9 @@ the uniform mixed state.
 
 \htmlrule
 \section{Creating and using operators}
-\subsection{\fs{pauli} --- pauli matrices$.$}
+
+\subsection{Pauli matrices}\index{pauli matrices}
+\subsubsection{\fs{pauli} --- pauli matrices$.$}
 \ibd{pauli}
 \marray{pauli}{i}
 creates the pauli matrices $(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
@@ -842,12 +842,126 @@ $[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$.  \bbm
  \left[ \mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}
 \ebm
 
-\subsection{{\bf pauli\_product} ---  tensor product of pauli matrices$.$}
+\subsubsection{{\bf pauli\_product} ---  tensor product of pauli matrices$.$}
 \ibd{pauli\_product}
 \func{pauli\_product}{i_1,\ldots,i_n} returns the tensor product
 $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$, where the indices
 $i_j$ are in $\{0,1,2,3\}$. As elsewhere in this document, $\sigma_0$ is
 the $2\times 2$ identity matrix.
+
+The next three functions 
+\func{pauliexp}{\rho}, \func{invpauliexp}{c}, and \func{correlation\_tensor}{c,i_1,\ldots,i_n}
+are related. An example using them follows their definitions.
+
+\subsubsection{\fs{pauliexp} --- expansion of operator in terms of tensor products of pauli matrices$.$}
+\ibd{pauliexp}
+\func{pauliexp}{\rho} returns the correlation tensor,
+\index{correlation tensor}
+ that is, the coefficients in the expansion of the matrix $\rho$
+in tensor products of pauli matrices. Explicitly, \fs{pauliexp}
+returns the coefficients $c_{i_1,\ldots,i_n}$ in
+\begin{equation}\label{pauliexp}
+ \rho = \sum_{i_1,\ldots,i_n=0}^3 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
+\end{equation}
+$\rho$ must be a $2^n\times 2^n$ matrix. The coefficients are returned as a list
+of $2^n\times 2^n$ elements. The place of $c_{i_1,\ldots,i_n}$ in the returned list is determined
+by taking ${i_1,\ldots,i_n}$ to be the  binary representation of an integer. For convenience,
+the coefficient can be retrieved by index with the function \fs{correlation\_tensor}.
+
+\subsubsection{\fs{invpauliexp} --- inverse of expansion in terms of tensor products of pauli matrices$.$}
+\ibd{invpauliexp}
+\func{invpauliexp}{c} is the inverse of \fs{pauiexp}. Given a list $c$ representing
+the correlation tensor ({\it i.e.} expansion coefficients),
+ \fs{invpauliexp} returns the matrix $\rho$ given by (\ref{pauliexp}).
+
+\subsubsection{\fs{correlation\_tensor} --- retrieve component of correlation tensor by index$.$}
+\ibd{correlation\_tensor}
+\func{correlation\_tensor}{c,i_1,\ldots,i_n} returns the expansion coefficient for
+the term $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$ in the expansion of
+$\rho$, where $c$ is the list of coefficients in the expansion of $\rho$ as given,
+for instance, by \fs{pauliexp}.
+
+\subsubsection{Using \fs{pauliexp} and \fs{invpauliexp}; an example$.$}
+Here is an example using the three functions defined above.
+First we create three generic $2\times2$ (complex) matrices.
+\bbm
+\begin{verbatim}
+(%i2) m1 : matrix([a1,b1],[c1,d1]);
+\end{verbatim}
+\begin{dmath}[number={\%o2}]
+ \pmatrix{\mathrm{a1}&\linebreak[0]\mathrm{b1}\cr \mathrm{c1}&\linebreak[0]\mathrm{d1}\cr }\end{dmath}
+\begin{verbatim}
+(%i3) m2 : matrix([a2,b2],[c2,d2]) $
+(%i4) m3 : matrix([a3,b3],[c3,d3]) $
+\end{verbatim}
+\ebm
+Here is the tensor product of the three matrices. This is {\it not} a generic element in
+the three qubit Hilbert space represented by $M(\mathbb{C},8)$. For instance,
+the three matrices have $12$ complex parameters while a generic matrix in
+the tensor product space  has $64$ complex parameters.
+\bbm
+\begin{verbatim}
+(%i5) mp : m1 otimes m2 otimes  m3 ;
+\end{verbatim}
+\begin{dmath}[number={\%o5}]
+ \pmatrix{\mathrm{a1}\*\mathrm{a2}\*\mathrm{a3}&\linebreak[0]\mathrm{a1}\*\mathrm{a2}\*\mathrm{b3}&\linebreak[0]\mathrm{a1}\*\mathrm{a3}\*\mathrm{b2}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{b3}&\linebreak[0]\mathrm{a2}\*\mathrm{a3}\*\mathrm{b1}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{b3}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{b3}\cr \mathrm{a1}\*\mathrm{a2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{a2}\*\mathrm{d3}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{d3}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{c3}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{c3}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}\cr \mathrm{a1}\*\mathrm{a3}\*\mathrm{c2}&\linebreak[0]\mathrm{a1}\*\mathrm{b3}\*\mathrm{c2}&\linebreak[0]\mathrm{a1}\*\mathrm{a3}\*\mathrm{d2}&\linebreak[0]\mathrm{a1}\*\mathrm{b3}\*\mathrm{d2}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}&\linebreak[0]\mathrm{b1}\*\mathrm{b3}\*\mathrm{c2}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{d2}&\linebreak[0]\mathrm{b1}\*\mathrm{b3}\*\mathrm{d2}\cr \mathrm{a1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{a1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{a1}\*\mathrm{d2}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{b1}\*\mathrm{d2}\*\mathrm{d3}\cr \mathrm{a2}\*\mathrm{a3}\*\mathrm{c1}&\linebreak[0]\mathrm{a2}\*\mathrm{b3}\*\mathrm{c1}&\linebreak[0]\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}&\linebreak[0]\mathrm{b2}\*\mathrm{b3}\*\mathrm{c1}&\linebreak[0]\mathrm{a2}\*\mathrm{a3}\*\mathrm{d1}&\linebreak[0]\mathrm{a2}\*\mathrm{b3}\*\mathrm{d1}&\linebreak[0]\mathrm{a3}\*\mathrm{b2}\*\mathrm{d1}&\linebreak[0]\mathrm{b2}\*\mathrm{b3}\*\mathrm{d1}\cr \mathrm{a2}\*\mathrm{c1}\*\mathrm{c3}&\linebreak[0]\mathrm{a2}\*\mathrm{c1}\*\mathrm{d3}&\linebreak[0]\mathrm{b2}\*\mathrm{c1}\*\mathrm{c3}&\linebreak[0]\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}&\linebreak[0]\mathrm{a2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{a2}\*\mathrm{d1}\*\mathrm{d3}&\linebreak[0]\mathrm{b2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{b2}\*\mathrm{d1}\*\mathrm{d3}\cr \mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}&\linebreak[0]\mathrm{b3}\*\mathrm{c1}\*\mathrm{c2}&\linebreak[0]\mathrm{a3}\*\mathrm{c1}\*\mathrm{d2}&\linebreak[0]\mathrm{b3}\*\mathrm{c1}\*\mathrm{d2}&\linebreak[0]\mathrm{a3}\*\mathrm{c2}\*\mathrm{d1}&\linebreak[0]\mathrm{b3}\*\mathrm{c2}\*\mathrm{d1}&\linebreak[0]\mathrm{a3}\*\mathrm{d1}\*\mathrm{d2}&\linebreak[0]\mathrm{b3}\*\mathrm{d1}\*\mathrm{d2}\cr \mathrm{c1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{c1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{c1}\*\mathrm{d2}\*\mathrm{d3}&\linebreak[0]\mathrm{c2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{c2}\*\mathrm{d1}\*\mathrm{d3}&\linebreak[0]\mathrm{c3}\*\mathrm{d1}\*\mathrm{d2}&\linebreak[0]\mathrm{d1}\*\mathrm{d2}\*\mathrm{d3}\cr }\end{dmath}
+\ebm
+We compute the correlation tensor of \verb|mp|
+\bbm
+\begin{verbatim}
+(%i6) pe : pauliexp(mp) $
+\end{verbatim}
+\ebm
+Check that the tensor has $64$ elements and see what a coefficient looks like.
+\bbm
+\begin{verbatim}
+(%i7) length(pe);
+\end{verbatim}
+\begin{dmath}[number={\%o7}]
+ 64\end{dmath}
+\begin{verbatim}
+(%i8) part(pe,10);
+\end{verbatim}
+\begin{dmath}[number={\%o8}]
+ \ifracn{-i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
+\ebm
+Check that the inverse of the expansion gives the original matrix back
+\bbm
+\begin{verbatim}
+(%i9) is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
+\end{verbatim}
+\begin{dmath}[number={\%o9}]
+ \mathbf{true}\end{dmath}
+\ebm
+Here is the convenience function to return an element of the correlation tensor by index
+\bbm
+\begin{verbatim}
+(%i10) correlation_tensor(pe,1,2,3);
+\end{verbatim}
+\begin{dmath}[number={\%o10}]
+ \ifracn{i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
+\ebm
+
+\subsection{\fs{spinor\_rotation}, \fs{spinor\_rotation\_trig}$.$}
+\ibd{spinor\_rotation}\ibd{spinor\_rotation\_trig}
+\index{rotation!spinor}
+\func{spinor\_rotation}{phi,theta,gamma} returns the matrix that represents
+the operator that rotates a spinor through an angle \farg{gamma} about the axis specified by 
+\farg{phi} (angle about the $z$-axis) and \farg{theta} (inclination from the $z$-axis). The function \func{spinor\_rotation\_trig}{phi,theta,gamma}
+returns the same matrix expressed only with cosines and sines. This is the standard
+axis-angle parameterization.  Explicitly the matrices are
+\bbm
+\begin{verbatim}
+(%i2) spinor_rotation(phi,theta,gamma);
+\end{verbatim}
+\begin{dmath}[number={\%o2}]
+ \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]-i\*\iexpt{e}{- i\*\varphi }\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)\cr -i\*\iexpt{e}{i\*\varphi}\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}
+\begin{verbatim}
+(%i3) spinor_rotation_trig(phi,theta,gamma);
+\end{verbatim}
+\begin{dmath}[number={\%o3}]
+ \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]\left(-\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)\cr \left(\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}.
+\ebm
 
 \subsection{\fs{insert\_operator} --- insert single qubit operators in $n$-qubit operator}
  \ibd{insert\_operator}
@@ -1070,6 +1184,18 @@ in decreasing order\cite{Wootters97}
 the eigenvalues in decreasing order, to the extent that \pname{Maxima}
 can determine the order.
 
+\subsection{\fs{separable} --- test for separability$.$}\index{separability}
+\ibd{separable}
+This currently accepts only pure, bipartite states.
+\func{separable}{e} attempts to determine if \farg{e} is a separable
+state. \fs{separable} returns a scalar value $r$. If $r=1$, then
+\farg{e} is separable. If $r<1$, it is not. Explicitly, the value
+returned for the state with density operator $\rho_{AB}$ 
+is $\mbox{Tr}(\rho_A^2)$
+
+When other methods are added, the organization and naming of the tests may
+change.
+
 \subsection{An entangled pure global state has mixed reduced states}
 We examine a textbook example of entanglement--- the joint
 state of two qubits. The state of the whole system is pure,
@@ -1178,119 +1304,23 @@ $\alpha=0,1$ giving pure joint states.  \bbm
 \htmlrule
 \section{More operators and functions}
 
-The next three functions 
-\func{pauliexp}{\rho}, \func{invpauliexp}{c}, and \func{correlation\_tensor}{c,i_1,\ldots,i_n}
-are related. An example using them follows their definitions.
+Unless noted, all functions return either true or false.
 
-\subsection{\fs{pauliexp} --- expansion of operator in terms of tensor products of pauli matrices$.$}
-\ibd{pauliexp}
-\func{pauliexp}{\rho} returns the correlation tensor,
-\index{correlation tensor}
- that is, the coefficients in the expansion of the matrix $\rho$
-in tensor products of pauli matrices. Explicitly, \fs{pauliexp}
-returns the coefficients $c_{i_1,\ldots,i_n}$ in
-\begin{equation}\label{pauliexp}
- \rho = \sum_{i_1,\ldots,i_n=0}^3 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
-\end{equation}
-$\rho$ must be a $2^n\times 2^n$ matrix. The coefficients are returned as a list
-of $2^n\times 2^n$ elements. The place of $c_{i_1,\ldots,i_n}$ in the returned list is determined
-by taking ${i_1,\ldots,i_n}$ to be the  binary representation of an integer. For convenience,
-the coefficient can be retrieved by index with the function \fs{correlation\_tensor}.
-
-\subsection{\fs{invpauliexp} --- inverse of expansion in terms of tensor products of pauli matrices$.$}
-\ibd{invpauliexp}
-\func{invpauliexp}{c} is the inverse of \fs{pauiexp}. Given a list $c$ representing
-the correlation tensor ({\it i.e.} expansion coefficients),
- \fs{invpauliexp} returns the matrix $\rho$ given by (\ref{pauliexp}).
-
-\subsection{\fs{correlation\_tensor} --- retrieve component of correlation tensor by index$.$}
-\ibd{correlation\_tensor}
-\func{correlation\_tensor}{c,i_1,\ldots,i_n} returns the expansion coefficient for
-the term $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$ in the expansion of
-$\rho$, where $c$ is the list of coefficients in the expansion of $\rho$ as given,
-for instance, by \fs{pauliexp}.
-
-\subsection{Using \fs{pauliexp} and \fs{invpauliexp}; an example$.$}
-Here is an example using the three functions defined above.
-First we create three generic $2\times2$ (complex) matrices.
-\bbm
-\begin{verbatim}
-(%i2) m1 : matrix([a1,b1],[c1,d1]);
-\end{verbatim}
-\begin{dmath}[number={\%o2}]
- \pmatrix{\mathrm{a1}&\linebreak[0]\mathrm{b1}\cr \mathrm{c1}&\linebreak[0]\mathrm{d1}\cr }\end{dmath}
-\begin{verbatim}
-(%i3) m2 : matrix([a2,b2],[c2,d2]) $
-(%i4) m3 : matrix([a3,b3],[c3,d3]) $
-\end{verbatim}
-\ebm
-Here is the tensor product of the three matrices. This is {\it not} a generic element in
-the three qubit Hilbert space represented by $M(\mathbb{C},8)$. For instance,
-the three matrices have $12$ complex parameters while a generic matrix in
-the tensor product space  has $64$ complex parameters.
-\bbm
-\begin{verbatim}
-(%i5) mp : m1 otimes m2 otimes  m3 ;
-\end{verbatim}
-\begin{dmath}[number={\%o5}]
- \pmatrix{\mathrm{a1}\*\mathrm{a2}\*\mathrm{a3}&\linebreak[0]\mathrm{a1}\*\mathrm{a2}\*\mathrm{b3}&\linebreak[0]\mathrm{a1}\*\mathrm{a3}\*\mathrm{b2}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{b3}&\linebreak[0]\mathrm{a2}\*\mathrm{a3}\*\mathrm{b1}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{b3}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{b3}\cr \mathrm{a1}\*\mathrm{a2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{a2}\*\mathrm{d3}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{b2}\*\mathrm{d3}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{c3}&\linebreak[0]\mathrm{a2}\*\mathrm{b1}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{c3}&\linebreak[0]\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}\cr \mathrm{a1}\*\mathrm{a3}\*\mathrm{c2}&\linebreak[0]\mathrm{a1}\*\mathrm{b3}\*\mathrm{c2}&\linebreak[0]\mathrm{a1}\*\mathrm{a3}\*\mathrm{d2}&\linebreak[0]\mathrm{a1}\*\mathrm{b3}\*\mathrm{d2}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}&\linebreak[0]\mathrm{b1}\*\mathrm{b3}\*\mathrm{c2}&\linebreak[0]\mathrm{a3}\*\mathrm{b1}\*\mathrm{d2}&\linebreak[0]\mathrm{b1}\*\mathrm{b3}\*\mathrm{d2}\cr \mathrm{a1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{a1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{a1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{a1}\*\mathrm{d2}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{b1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{b1}\*\mathrm{d2}\*\mathrm{d3}\cr \mathrm{a2}\*\mathrm{a3}\*\mathrm{c1}&\linebreak[0]\mathrm{a2}\*\mathrm{b3}\*\mathrm{c1}&\linebreak[0]\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}&\linebreak[0]\mathrm{b2}\*\mathrm{b3}\*\mathrm{c1}&\linebreak[0]\mathrm{a2}\*\mathrm{a3}\*\mathrm{d1}&\linebreak[0]\mathrm{a2}\*\mathrm{b3}\*\mathrm{d1}&\linebreak[0]\mathrm{a3}\*\mathrm{b2}\*\mathrm{d1}&\linebreak[0]\mathrm{b2}\*\mathrm{b3}\*\mathrm{d1}\cr \mathrm{a2}\*\mathrm{c1}\*\mathrm{c3}&\linebreak[0]\mathrm{a2}\*\mathrm{c1}\*\mathrm{d3}&\linebreak[0]\mathrm{b2}\*\mathrm{c1}\*\mathrm{c3}&\linebreak[0]\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}&\linebreak[0]\mathrm{a2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{a2}\*\mathrm{d1}\*\mathrm{d3}&\linebreak[0]\mathrm{b2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{b2}\*\mathrm{d1}\*\mathrm{d3}\cr \mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}&\linebreak[0]\mathrm{b3}\*\mathrm{c1}\*\mathrm{c2}&\linebreak[0]\mathrm{a3}\*\mathrm{c1}\*\mathrm{d2}&\linebreak[0]\mathrm{b3}\*\mathrm{c1}\*\mathrm{d2}&\linebreak[0]\mathrm{a3}\*\mathrm{c2}\*\mathrm{d1}&\linebreak[0]\mathrm{b3}\*\mathrm{c2}\*\mathrm{d1}&\linebreak[0]\mathrm{a3}\*\mathrm{d1}\*\mathrm{d2}&\linebreak[0]\mathrm{b3}\*\mathrm{d1}\*\mathrm{d2}\cr \mathrm{c1}\*\mathrm{c2}\*\mathrm{c3}&\linebreak[0]\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}&\linebreak[0]\mathrm{c1}\*\mathrm{c3}\*\mathrm{d2}&\linebreak[0]\mathrm{c1}\*\mathrm{d2}\*\mathrm{d3}&\linebreak[0]\mathrm{c2}\*\mathrm{c3}\*\mathrm{d1}&\linebreak[0]\mathrm{c2}\*\mathrm{d1}\*\mathrm{d3}&\linebreak[0]\mathrm{c3}\*\mathrm{d1}\*\mathrm{d2}&\linebreak[0]\mathrm{d1}\*\mathrm{d2}\*\mathrm{d3}\cr }\end{dmath}
-\ebm
-We compute the correlation tensor of \verb|mp|
-\bbm
-\begin{verbatim}
-(%i6) pe : pauliexp(mp) $
-\end{verbatim}
-\ebm
-Check that the tensor has $64$ elements and see what a coefficient looks like.
-\bbm
-\begin{verbatim}
-(%i7) length(pe);
-\end{verbatim}
-\begin{dmath}[number={\%o7}]
- 64\end{dmath}
-\begin{verbatim}
-(%i8) part(pe,10);
-\end{verbatim}
-\begin{dmath}[number={\%o8}]
- \ifracn{-i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
-\ebm
-Check that the inverse of the expansion gives the original matrix back
-\bbm
-\begin{verbatim}
-(%i9) is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
-\end{verbatim}
-\begin{dmath}[number={\%o9}]
- \mathbf{true}\end{dmath}
-\ebm
-Here is the convenience function to return an element of the correlation tensor by index
-\bbm
-\begin{verbatim}
-(%i10) correlation_tensor(pe,1,2,3);
-\end{verbatim}
-\begin{dmath}[number={\%o10}]
- \ifracn{i\*\mathrm{c1}\*\mathrm{c2}\*\mathrm{d3}+i\*\mathrm{b1}\*\mathrm{c2}\*\mathrm{d3}-i\*\mathrm{b2}\*\mathrm{c1}\*\mathrm{d3}-i\*\mathrm{b1}\*\mathrm{b2}\*\mathrm{d3}-i\*\mathrm{a3}\*\mathrm{c1}\*\mathrm{c2}-i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{c2}+i\*\mathrm{a3}\*\mathrm{b2}\*\mathrm{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}
-\ebm
-
-\subsection{\fs{spinor\_rotation}, \fs{spinor\_rotation\_trig}$.$}
-\ibd{spinor\_rotation}\ibd{spinor\_rotation\_trig}
-\index{rotation!spinor}
-\func{spinor\_rotation}{phi,theta,gamma} returns the matrix that represents
-the operator that rotates a spinor through an angle \farg{gamma} about the axis specified by 
-\farg{phi} (angle about the $z$-axis) and \farg{theta} (inclination from the $z$-axis). The function \func{spinor\_rotation\_trig}{phi,theta,gamma}
-returns the same matrix expressed only with cosines and sines. This is the standard
-axis-angle parameterization.  Explicitly the matrices are
-\bbm
-\begin{verbatim}
-(%i2) spinor_rotation(phi,theta,gamma);
-\end{verbatim}
-\begin{dmath}[number={\%o2}]
- \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]-i\*\iexpt{e}{- i\*\varphi }\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)\cr -i\*\iexpt{e}{i\*\varphi}\*\sin \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}
-\begin{verbatim}
-(%i3) spinor_rotation_trig(phi,theta,gamma);
-\end{verbatim}
-\begin{dmath}[number={\%o3}]
- \pmatrix{\cos \left(\frac{\gamma}{2}\right)-i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]\left(-\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)\cr \left(\sin \varphi\*\sin \vartheta-i\*\cos \varphi\*\sin \vartheta\right)\*\sin \left(\frac{\gamma}{2}\right)&\linebreak[0]i\*\cos \vartheta\*\sin \left(\frac{\gamma}{2}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}.
-\ebm
+\subsection{Predicate functions --- testing for properties}
+\subsubsection{\fs{identitymatrixp} }\ibd{identitymatrixp}
+ \index{identity matrix!testing for}
+\func{identitymatrixp}{e} returns  true if \farg{e} is the $n\times n$ identity
+ matrix for any $n$.
+\subsubsection{\fs{ketp}, \fs{brap}, \fs{braketp}}\ibd{ketp}\ibd{brap}\ibd{braketp}
+\func{ketp}{e} returns true if the expression \farg{e} is a ket
+(column vector).
+\func{brap}{e} returns true if the expression \farg{e} is a bra
+(row vector).
+ \func{braketp}{e}
+returns \verb|(ketp(e) or brap(e))|, ie returns true if \farg{e} is either a ket or
+a bra.
+\subsubsection{\fs{square\_matp}}\ibd{square\_matp}
+\func{square\_matp}{e} returns true if \farg{e} is a square matrix.
 
 \htmlrule
 \section{Entanglement.  longer examples}
@@ -1298,7 +1328,7 @@ axis-angle parameterization.  Explicitly the matrices are
 \subsection{Entanglement swapping\index{entanglement swapping}}
 
 In this subsection, we check a calculation that would
-be relatively difficult to check by hand
+be relatively difficult to check by hand.
 Consider a pair of entangled qubits $A$ and $B$, and another
 entangled pair $C$ and $D$. By performing a joint
 measurement on, say $B$ and $C$, we can put $A$ and $B$ in

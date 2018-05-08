@@ -1,0 +1,46 @@
+/* These lines are used to generate the swapping example in the manual */
+
+assume(alpha>0,1-alpha>0,beta>0,1-beta>0);
+
+a : schmidt_ket(alpha);
+
+b : schmidt_ket(beta);
+
+declare([u00,u01,u10,u11], complex);
+
+u : ket(u00,u01,u10,u11);
+
+rho : (ident(2) otimes toproj(u) otimes ident(2)) . toproj(a otimes b)$
+
+rho_14 : ptrace(rho,2,3);
+
+rho_4 : conjsimp(ptrace(rho,1,2,3));
+
+ket_to_mat(iket) := matrix([iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]])$
+
+/* ma : ket_to_mat(a)$ */
+mb : ket_to_mat(b)$
+/* mu : ket_to_mat(u)$ */
+
+/* X :  ma . mu . mb; */
+X :  ket_to_mat(a) . mu . ket_to_mat(b);
+
+rho_4a : conjsimp( ctranspose(X) . X );
+
+is ( ratsimp(rho_4a) = ratsimp(rho_4) );
+
+P1 : conjsimp( mat_trace(rho));
+
+av : [alpha,1-alpha]$
+bv : [beta,1-beta] $
+
+P2 : apply( "+", create_list( av[i] * abs(mu[i,j])^2 * bv[j], i,[1,2],j,[1,2]));
+
+is (ratsimp(P1) = ratsimp(P2));
+
+
+
+
+
+
+

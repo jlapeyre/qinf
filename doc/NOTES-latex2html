@@ -15,8 +15,10 @@ latex2html -info 0 -scalable_fonts  -no_navigation -show_section_numbers -antial
  to \url, which latex2html picks up and makes a link from. So in the .bib file,
  doi, url, and eprint all produce a working link in the final html
 
-* index
-
+* index. This adds an index to the content line:
+ \newpage
+ \addcontentsline{toc}{section}{Index}
+ \printindex
 
 * the font_size above makes the math a little bigger
 
