@@ -20,17 +20,31 @@ while(<>) {
 #	print "$link\n";
     }
     # name of section
+    # this defines a macro, so it needs to be tex-legal
     if(/name=\"Name\"\s+value=\"([^\"]+)/){
 	$entry = $1;
 	$entry =~ s/\s//g; # remove whitespace
-	$entry =~ s/\%/\\%/g;
-	$entry =~ s/\!/\\!/g;
-	$entry =~ s/\*/\\*/g;
-	$entry =~ s/\:/\\:/g;
-	$entry =~ s/\'/\\'/g;
-	$entry =~ s/\#/\\#/g;
-	$entry =~ s/\^/\\^/g;
-	$entry =~ s/\_//g; # should replace with legal char
+	$entry =~ s/\%/percent/g;
+	$entry =~ s/\!/bang/g;
+	$entry =~ s/\*/star/g;
+	$entry =~ s/\:/colon/g;
+	$entry =~ s/\'/quote/g;
+	$entry =~ s/\#/sharp/g;
+	$entry =~ s/\^/caret/g;
+	$entry =~ s/\+/plus/g;
+	$entry =~ s/\-/minus/g;
+	$entry =~ s/\./dot/g;
+	$entry =~ s/\//slash/g;
+	$entry =~ s/\?/question/g;
+	$entry =~ s/\[/opensquare/g;
+	$entry =~ s/\]/closesquare/g;
+	$entry =~ s/\{/curly/g;
+	$entry =~ s/\|/pipe/g;
+	$entry =~ s/\=/equal/g;
+	$entry =~ s/\~/twiddle/g;
+	$entry =~ s/\&/amp/g;
+	$entry =~ s/\;/semicolon/g;
+	$entry =~ s/\_/U/g;
 	$entry =~ s/1/one/g;
 	$entry =~ s/2/two/g;
 	$entry =~ s/3/three/g;

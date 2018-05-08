@@ -7,6 +7,17 @@ latex2html -info 0 -scalable_fonts  -no_navigation -show_section_numbers -antial
 
 #  some options to try -white -antialias -image_type gif
 
+* Biblography
+  use this command to make a bst file.
+ ./urlbst --eprint --doi --hyperref /usr/share/texmf-texlive/bibtex/bst/base/plain.bst ./plain_ep_doi_hr.bst Then, in the latex file, do this
+ \renewcommand{\href}[2]{\url{#1}}
+ This will break the \href macro, which I wasnt using anyway. But it changes \href
+ to \url, which latex2html picks up and makes a link from. So in the .bib file,
+ doi, url, and eprint all produce a working link in the final html
+
+* index
+
+
 * the font_size above makes the math a little bigger
 
 * using \begin{item} \end{item} did not work.

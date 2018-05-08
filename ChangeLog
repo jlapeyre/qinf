@@ -1,7 +1,18 @@
+Version 0.09
+2008-08-28  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* add concurrence, some docs for it.
+	* start bibliography, create bst, get links working
+	* remove some old code from qinf.mac, put it in optional_qinf.mac
+        * fixed documentation: quirks, inaccuracies, index
+	* add other functions. not documented.
+	* add (crude) install script
+	
 Version 0.08
 2008-08-27  John Lapeyre  <lapeyre@physics.arizona.edu>
 
 	* fixed bugs in gates. added some documentation for them.
+	* added werner state, GHZ states
 
 Version 0.07
 2008-08-27  John Lapeyre  <lapeyre@physics.arizona.edu>
