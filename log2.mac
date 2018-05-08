@@ -21,6 +21,15 @@
 
 load("log10");
 
+
+multp (e) := not atom(e) and op(e) = "*";
+
+divp (e) := not atom(e) and op(e) = "/";
+
+exponp (e) := not atom(e) and op(e) = "^";
+
+/* three functions above are also defined in log10.mac */
+
 divisible_by2 (e) := integerp(e) and e # 0 and mod (e, 2) = 0;
 
 not2 (e) := e # 2;

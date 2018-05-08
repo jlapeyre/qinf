@@ -10,22 +10,24 @@
 
 */
 
-qudit_states : 2;
-
-load("log2.mac");
-load("eigen");
-load("diag");
-load("utils.mac");
+/* qinf Version 0.02 */
 
 /*
   currently prints a bunch of garbage
   load("itensor");
 */
 
-/*
- obsolete
-log2(x) := log(x)/log(2);
+load("log2.mac");
+load("eigen");
+load("diag");
+load("utils.mac");
+
+/* testing namespaces. 
+in_namespace(qinf);
+export(identitymatrixp);
 */
+
+qudit_states : 2;
 
 
 /*******************************************
@@ -69,9 +71,8 @@ matrix_exp_trig(A) := matrix_cos(%i*A)-%i*matrix_sin(%i*A);
 matrix_log(A) := mat_function(log,A);
 matrix_sqrt(A) := mat_function(sqrt,A);
 
-normalize_vector(v) := (
-  ratsimp(v/sqrt(v . v))
-  );
+/* doesnt do conjugate */
+normalize_vector(v) :=  v/sqrt(v . conjugate(v));
 
 
 /*********
@@ -99,8 +100,7 @@ ptrace_increment_numeration(vec, b) := block ( [i:1,j],
     if vec[i] = b then 
     for j:1 thru i do vec[j] : 0
     else i : length(vec) + 1),
-  vec
-  );
+  vec);
 
 
 
@@ -115,10 +115,8 @@ ptrace(A,[qs]) := block ( [i,B,b,nA],
   B : A,
   for i:1 thru length(qs) do (
     B : ptrace_one_dimension(qudit_states,B,qs[i]),
-    qs : qs - 1
-    ),
-  B
-  );
+    qs : qs - 1),
+  B);
 
 /* partial trace over one component */
 ptrace_one_dimension(b,A,q) := block ( [nA,nbitsA,nbitsB, B,x,y,x1,x2,y1,y2,
@@ -146,15 +144,11 @@ ptrace_one_dimension(b,A,q) := block ( [nA,nbitsA,nbitsB, B,x,y,x1,x2,y1,y2,
       for j:0 thru b-1 do (
         ind1 : j1+j*b^qm+j2+1,
         ind2 : k1+j*b^qm+k2+1,
-        sum : sum + A[ind1,ind2]
-        ),
+        sum : sum + A[ind1,ind2]),
       B[i1,i2] : sum,
-      ptrace_increment_numeration(y,b)
-      ),
-    ptrace_increment_numeration(x,b)
-    ),
-  B
-  );
+      ptrace_increment_numeration(y,b)),
+    ptrace_increment_numeration(x,b)),
+   B);
 
 
 
@@ -164,10 +158,8 @@ tensor_product([a]) := block( [n,c,i],
   n : length(a),
   c : a[1],
   for i:2 thru n do (
-    c : kronecker_product(c,a[i])
-    ),
-  c
-  );
+    c : kronecker_product(c,a[i])),
+  c);
 
 
 infix("otimes");
@@ -202,10 +194,8 @@ _ket(zero,one,a) := block ( [v,i],
   else v:transpose(one),
   for i:2 thru length(a) do (
     if a[i] = 0 then v: tensor_product( v,transpose(zero))
-    else v: tensor_product(v,transpose(one))
-    ),
-  v
-  );
+    else v: tensor_product(v,transpose(one))),
+  v);
 
 /* product state kets of multiple qubits. In several bases. */
 ketz([a]) := _ket([1,0],[0,1],a);
@@ -220,12 +210,17 @@ ket_n(i,[a]) := block( [],
   if i = 1 then return(apply(ketx,a)),
   if i = 2 then return(apply(kety,a)),
   if i = 3 then return(apply(ketz,a)),
-  false
-  );
+  false);
 
 bra_n([a]) := conjugate(transpose(apply(ket_n,a)));
 
+/* convert ket to a list */
+listket(k) := part( transpose(k),1);
 
+/* should probably just use something like this 
+ mat_unblocker(matrix([bell[0,0],bell[0,1]]));
+ */
+matkets([k]) := apply(matrix,map(listket,k));
 
 /* Projection operators along z axis */
 Prz[0] : matrix([1,0],[0,0]);
@@ -234,12 +229,11 @@ Prz[1] : matrix([0,0],[0,1]);
 /* general projection operator pair for one qubit. This uses a
   particular parametrization */
 Pr_n(a,phi) := block ( [p1,p2],
-  declare(a,real),
-  declare(phi,real),
+/*  declare(a,real),
+  declare(phi,real), */
   p1 : matrix([      a ,                sqrt(a*(1-a))*exp(-%i*phi)],
               [sqrt(a*(1-a))*exp(%i*phi),          1-a            ]),
-  [ratsimp(p1),ratsimp(ident(2)-p1)]
-  );
+  [p1,ident(2)-p1] );
 
 /* convert list v to a matrix (vector) or pass through,
    if v is already a matrix.
@@ -249,10 +243,8 @@ tomatrix(v) := block(
   v : matrix(v)
   else if not matrixp(v) then (
     print("error, arg neither matrix nor list"),
-    return(0)
-    ),
-  v
-  );
+    return(0)),
+  v );
 
 
 
@@ -267,8 +259,7 @@ toproj(v) := block( [],
   if length(v) = 1 then
     return( ctranspose(v) . v )
   else
-    return( v . ctranspose(v) )
-  );
+    return( v . ctranspose(v) ));
 
 /* compute ket corresponding to projection operator.
  does not check if matrix is actually a projection operator.
@@ -279,8 +270,7 @@ tostate(A) :=  block ( [t,pos],
   if  sublist_indices(part(t,1,1), lambda([x],x=0)) = [2] then (
     return(transpose(second(t))) )
   else
-   return(transpose(last(t)))
-  );
+   return(transpose(last(t))));
     
 
 pauli_0 : ident(2);
@@ -292,10 +282,12 @@ _pauli : [
     ident(2),
     matrix( [0,1], [1,0]),
     matrix( [0,-%i], [%i,0]),
-    matrix( [1,0], [0,-1])
-];
+    matrix( [1,0], [0,-1])];
 
 pauli[i] := _pauli[i+1];
+
+/* tensor product of pauli matrices from list of integers indexing pauli matrices */
+pauli_product([a]) := apply(tensor_product,map(lambda([i],pauli[i]), a));
 
 /* expansion of C(2) matrix in pauli matrices.
    there is a function for converting both ways.
@@ -306,24 +298,40 @@ pauliexp([c]) :=
 invpauliexp(m) :=
     [m[2,2]+m[1,1],m[2,1]+m[1,2],%i*m[1,2]-%i*m[2,1],m[1,1]-m[2,2]]/2;
 
-lpauliexp(m) := apply(tensor_product,mapapply(pauliexp,m));
+/* this below is not quite right. not general enough */
+pauli_prod_exp(m) := apply(tensor_product,mapapply(pauliexp,m));
 
-_inv_one_pauli_coeff(m,v) :=  mat_trace(apply(tensor_product,map( lambda([i],pauli[i]), v)) . m)/(2^length(v));
+/* this can be implemented easily in a maxima idiom, but
+ I wonder if this is more efficient */
+tpauliexp(t) := block([n,i,m,nb],
+  n : length(t),
+  nb : radcan(log(n)/log(4)),
+  v : create_list(0,i,1,nb),
+  m : t[1]*apply(pauli_product,v),
+  for i thru n-1 do (
+    v : ptrace_increment_numeration(v,4),
+    m : m + t[i+1]*apply(pauli_product,v)),
+  m);
 
 /* return linear list of coefficients in pauli expansion of matrix m,
    which represents an operator in a  tensor product space.
    So m is a 2^n by 2^n matrix, in the product space of n qubits.
 */
+_inv_one_pauli_coeff(m,v) :=  mat_trace(apply(tensor_product,map( lambda([i],pauli[i]), v)) . m)/(2^length(v));
 linvpauliexp(m) := block([nbits,v,i, c:[] ],
   nbits : log2(length(m)),
   v : create_list(0,i,1,nbits),
   for i thru length(m)^2 do (
     c : append(c, [ _inv_one_pauli_coeff(m,v) ] ),
-    v : ptrace_increment_numeration(v,4)
-    ),
-    c
-  );
+    v : ptrace_increment_numeration(v,4)),
+    c);
 
+/* return one element of tensor stored in linear array output by linvpaulexp */
+correlation_tensor(t,[v]) :=  block([n:length(t)],
+  if n = 4^length(v) then
+   t[ptrace_numeration_to_int(v,4)+1]
+  else
+   error("tensor data requires ",radcan(log(n)/log(4)), " indices"));
 
 
 /* flip the bit */
@@ -337,6 +345,7 @@ belln[0] : bell[0,0];
 belln[1] : bell[0,1];
 belln[2] : bell[1,0];
 belln[3] : bell[1,1];
+
 /* two bit schmidt ket */
 schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1);
 
@@ -347,17 +356,14 @@ entropy(rho) :=  block( [x,evs,sum:0],
   evs : map( lambda([i,j], [i,j]), evs[1], evs[2]),
   for x in evs do (
     if not(x[1] = 0) then (
-      sum : sum - x[2]*x[1]*log2(x[1])
-      )
-    ),
+      sum : sum - x[2]*x[1]*log2(x[1]))),
   sum);
 
 purity(rho) :=  mat_trace(rho . rho);
 
 fidelity(rho1,rho2) := block( [sr2],
   sr2 : mat_function(sqrt,rho2),
-  mat_trace(mat_function(sqrt, sr2 . rho1 .sr2))
-  );
+  mat_trace(mat_function(sqrt, sr2 . rho1 .sr2)));
 
 commutator(A,B):= A . B - B . A;
 anticommutator(A,B):= A . B + B . A;
@@ -376,9 +382,7 @@ spinor_rotation_op_trig(phi,theta,gamma) := block ( [sg],
     cp: cos(phi),
     matrix(
      [ cg -%i*ct*sg,            (-%i*st*cp-st*sp)*sg],
-     [ (-%i*st*cp + st*sp)*sg,  cg +%i*ct*sg        ]
-    )
-);
+     [ (-%i*st*cp + st*sp)*sg,  cg +%i*ct*sg        ]));
 
 /* this one uses exp instead of cos and sin */
 spinor_rotation_op(phi,theta,gamma) := block ( [sg],
@@ -390,7 +394,5 @@ spinor_rotation_op(phi,theta,gamma) := block ( [sg],
     cp: cos(phi),
     matrix(
      [ cg -%i*ct*sg,            -%i*st*exp(-%i*phi)*sg],
-     [ -%i*st*exp(%i*phi)*sg,   cg +%i*ct*sg          ]
-    )
-);
+     [ -%i*st*exp(%i*phi)*sg,   cg +%i*ct*sg          ]));
 

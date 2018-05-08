@@ -1,0 +1,11 @@
+Version 0.02
+2008-08-12  John Lapeyre  <lapeyre@physics.arizona.edu>
+
+	* reformatted to remove hanging parentheses
+	* started documentation in qinf.tex
+	
+
+Version 0.01
+2008-08-11  John Lapeyre  <lapeyre@physics.arizona.edu>	
+	* initial release
+	
