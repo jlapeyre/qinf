@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7 More operators and functions</TITLE>
+<META NAME="description" CONTENT="7 More operators and functions">
+<META NAME="keywords" CONTENT="qinf_local">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="qinf_local.css">
+
+</HEAD>
+
+<BODY text="#000000" bgcolor="#FFFFFF">
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html303"
+  HREF="node8.html#SECTION00081000000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> Predicate functions -- testing for properties</A>
+<UL>
+<LI><A NAME="tex2html304"
+  HREF="node8.html#SECTION00081100000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>identitymatrixp</B> </A>
+<LI><A NAME="tex2html305"
+  HREF="node8.html#SECTION00081200000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>ketp</B>, <B>brap</B>, <B>braketp</B></A>
+<LI><A NAME="tex2html306"
+  HREF="node8.html#SECTION00081300000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>square_matp</B></A>
+</UL>
+<BR>
+<LI><A NAME="tex2html307"
+  HREF="node8.html#SECTION00082000000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> Miscellaneous</A>
+<UL>
+<LI><A NAME="tex2html308"
+  HREF="node8.html#SECTION00082100000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>normalize_vector</B></A>
+<LI><A NAME="tex2html309"
+  HREF="node8.html#SECTION00082200000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>normalize_matrix</B></A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00080000000000000000">
+<SPAN CLASS="arabic">7</SPAN> More operators and functions</A>
+</H1>
+
+<P>
+Unless noted, all functions return either true or false.
+
+<P>
+
+<H2><A NAME="SECTION00081000000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> Predicate functions -- testing for properties</A>
+</H2>
+
+<H3><A NAME="SECTION00081100000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>identitymatrixp</B> </A>
+</H3><A NAME="5362"></A>
+ <A NAME="3854"></A>
+<B>identitymatrixp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$e$"></SPAN>) returns  true if <I>e</I> is the <SPAN CLASS="MATH"><IMG
+ WIDTH="57" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img184.png"
+ ALT="$n\times n$"></SPAN> identity
+ matrix for any <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN>.
+
+<H3><A NAME="SECTION00081200000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>ketp</B>, <B>brap</B>, <B>braketp</B></A>
+</H3><A NAME="5369"></A><A NAME="5371"></A><A NAME="5373"></A>
+<B>ketp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$e$"></SPAN>) returns true if the expression <I>e</I> is a ket
+(column vector).
+<B>brap</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$e$"></SPAN>) returns true if the expression <I>e</I> is a bra
+(row vector).
+ <B>braketp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$e$"></SPAN>)
+returns <code>(ketp(e) or brap(e))</code>, ie returns true if <I>e</I> is either a ket or
+a bra.
+
+<H3><A NAME="SECTION00081300000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>square_matp</B></A>
+</H3><A NAME="5382"></A>
+<B>square_matp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$e$"></SPAN>) returns true if <I>e</I> is a square matrix.
+
+<H2><A NAME="SECTION00082000000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> Miscellaneous</A>
+</H2>
+
+<H3><A NAME="SECTION00082100000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>normalize_vector</B></A>
+</H3><A NAME="5387"></A>
+  <B>normalize_vector</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img185.png"
+ ALT="$v$"></SPAN>) returns <!-- MATH
+ $v/{\langle v|v\rangle}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="72" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img186.png"
+ ALT="$v/{\langle v\vert v\rangle}$"></SPAN>.
+
+<H3><A NAME="SECTION00082200000000000000">
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>normalize_matrix</B></A>
+</H3><A NAME="5392"></A>
+  <B>normalize_matrix</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img133.png"
+ ALT="$m$"></SPAN>) returns <!-- MATH
+ $m/\mbox{Tr}(m)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="91" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img187.png"
+ ALT="$m/\mbox{Tr}(m)$"></SPAN>.
+
+<P>
+<BR CLEAR="ALL">
+<HR>
+<BR><HR>
+<ADDRESS>
+John Lapeyre
+2008-09-02
+</ADDRESS>
+</BODY>
+</HTML>

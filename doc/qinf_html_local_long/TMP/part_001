@@ -1,0 +1,28 @@
+\documentclass[leqno,10pt]<<1>>article<<1>>
+\usepackage<<2>>boxedminipage<<2>>
+\begin<<84>>tex2html_deferred<<84>>\par\end<<85>>tex2html_deferred<<85>>
+\bibliographystyle<<3>>plain_ep_doi_hr<<3>>
+\begin<<86>>tex2html_deferred<<86>>\par\end<<87>>tex2html_deferred<<87>>
+\usepackage<<4>>makeidx<<4>> 
+\makeindex
+\begin<<88>>tex2html_deferred<<88>>\par\end<<89>>tex2html_deferred<<89>>
+\usepackage<<5>>html<<5>>
+\begin<<90>>tex2html_deferred<<90>>\par\end<<91>>tex2html_deferred<<91>>
+\begin<<92>>tex2html_deferred<<92>>\renewedcommand<<6>>href<<6>>[2]<<38>>\url<<7>>#1<<7>><<38>>\end<<93>>tex2html_deferred<<93>>  <tex2html_comment_mark>14
+\begin<<94>>tex2html_deferred<<94>>\par\end<<95>>tex2html_deferred<<95>>
+\begin<<96>>tex2html_nowrap<<96>>
+\newedcommand<<8>>bbm<<8>><<39>>\vspace<<9>>5pt<<9>>\par
+\noindent\begin<<10>>boxedminipage<<10>><<11>>2.0\linewidth<<11>><<39>>\end<<97>>tex2html_nowrap<<97>>  
+\begin<<98>>tex2html_deferred<<98>>\par\end<<99>>tex2html_deferred<<99>>
+\begin<<100>>tex2html_nowrap<<100>>
+\newedcommand<<17>>maxlink<<17>>[1]<<41>><<18>>maxima_html/<<18>>#1<<41>>\end<<101>>tex2html_nowrap<<101>> 
+\begin<<102>>tex2html_nowrap<<102>>
+\newedcommand<<19>>maxman<<19>>[2]<<52>>\htmladdnormallink<<73>>#1<<73>><<74>><<76>>maxima_html/<<76>>#2<<74>><<52>>\end<<103>>tex2html_nowrap<<103>> 
+\begin<<104>>tex2html_nowrap<<104>>
+\newedcommand<<22>>umaxman<<22>>[2]<<53>>\htmladdnormallink<<77>><<79>>\bf #1<<79>><<77>><<78>><<80>>maxima_html/<<80>>#2<<78>>\maxcom\index<<44>>#1@<<25>>\bf #1<<25>><<44>><<53>>\end<<105>>tex2html_nowrap<<105>> 
+\begin<<106>>tex2html_nowrap<<106>>
+\newedcommand<<26>>imaxman<<26>>[2]<<45>>\htmladdnormallink<<81>>#1<<81>><<82>><<83>>maxima_html/<<83>>#2<<82>>\index<<29>>#1<<29>><<45>>\end<<107>>tex2html_nowrap<<107>> 
+\begin<<108>>tex2html_deferred<<108>>\par\end<<109>>tex2html_deferred<<109>>
+\begin<<110>>tex2html_nowrap<<110>>
+\newedcommand<<35>>hlink<<35>>[2]<<48>>\htmladdnormallink<<36>>#1<<36>><<37>>#2<<37>><<48>>\end<<111>>tex2html_nowrap<<111>> 
+\begin<<112>>tex2html_deferred<<112>>\par\end<<113>>tex2html_deferred<<113>>

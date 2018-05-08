@@ -1,0 +1,51 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {subsection}{\numberline {1.1}Acknowledgments}{3}{subsection.1.1}
+\contentsline {section}{\numberline {2}Using {\it Maxima}. features important for {\it qinf } $.$}{3}{section.2}
+\contentsline {section}{\numberline {3}Representation of states and operators}{6}{section.3}
+\contentsline {section}{\numberline {4}Creating instances of states}{6}{section.4}
+\contentsline {subsection}{\numberline {4.1}{\bf ketz}, {\bf braz},{\bf ketx}, {\bf brax}, {\bf kety}, {\bf bray} --- multipartite eigenstate kets and bras of $\MathChar "711B _x,\MathChar "711B _y,\MathChar "711B _z$}{6}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}{\bf ket\_n}, {\bf bra\_n} --- alternate form of {\bf ketz}, etc$.$}{7}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}{\bf proj} --- Density matrix representation of a pure state (projection operator)$.$}{7}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}{\bf otimes}, {\bf tensor\_product}, {\bf tensor\_power} --- Creating state vectors with the tensor product$.$}{8}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}{\bf schmidt\_ket} --- bipartite ket in Schmidt basis$.$}{9}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}{\bf bell} and {\bf belln} --- Bell state kets in computational basis$.$}{9}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}{\bf ghz} and {\bf ghzn} --- GHZ state kets$.$}{11}{subsection.4.7}
+\contentsline {subsection}{\numberline {4.8}{\bf werner} --- Werner state density matrix$.$}{11}{subsection.4.8}
+\contentsline {section}{\numberline {5}Creating and using operators}{11}{section.5}
+\contentsline {subsection}{\numberline {5.1}Pauli matrices}{11}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}{\bf pauli} --- pauli matrices$.$}{11}{subsubsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.2}{\bf pauli\_product} --- tensor product of pauli matrices$.$}{13}{subsubsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.3}{\bf pauliexp} --- expansion of operator in terms of tensor products of pauli matrices$.$}{13}{subsubsection.5.1.3}
+\contentsline {subsubsection}{\numberline {5.1.4}{\bf invpauliexp} --- inverse of expansion in terms of tensor products of pauli matrices$.$}{13}{subsubsection.5.1.4}
+\contentsline {subsubsection}{\numberline {5.1.5}{\bf correlation\_tensor} --- retrieve component of correlation tensor by index$.$}{13}{subsubsection.5.1.5}
+\contentsline {subsubsection}{\numberline {5.1.6}Using {\bf pauliexp} and {\bf invpauliexp}; an example$.$}{13}{subsubsection.5.1.6}
+\contentsline {subsection}{\numberline {5.2}{\bf spinor\_rotation}, {\bf spinor\_rotation\_trig}$.$}{15}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}{\bf insert\_operator} --- insert single qubit operators in $n$-qubit operator}{15}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Gates}{16}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}{\bf hadamard} operator$.$}{16}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}{\bf controlled\_gate} --- gate with $n$ control qubits}{16}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}{\bf cnot}, {\bf cphase}, {\bf crot}$.$}{16}{subsubsection.5.4.3}
+\contentsline {subsubsection}{\numberline {5.4.4}{\bf swap}$.$}{16}{subsubsection.5.4.4}
+\contentsline {subsubsection}{\numberline {5.4.5}{\bf toffoli}$.$}{17}{subsubsection.5.4.5}
+\contentsline {subsubsection}{\numberline {5.4.6}{\bf fredkin}$.$}{17}{subsubsection.5.4.6}
+\contentsline {section}{\numberline {6}Entanglement}{17}{section.6}
+\contentsline {subsection}{\numberline {6.1}{\bf ptrace}, {\bf ptracen} --- partial trace$.$}{17}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}{\bf entropy} --- von Neumann entropy$.$}{18}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}{\bf renyi\_entropy}$.$}{18}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}{\bf tsallis\_entropy}$.$}{18}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}{\bf purity}$.$}{18}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}{\bf fidelity}$.$}{18}{subsection.6.6}
+\contentsline {subsection}{\numberline {6.7}{\bf concurrence} --- Wootter's concurrence$.$}{19}{subsection.6.7}
+\contentsline {subsection}{\numberline {6.8}{\bf separable} --- test for separability$.$}{19}{subsection.6.8}
+\contentsline {subsection}{\numberline {6.9}An entangled pure global state has mixed reduced states}{19}{subsection.6.9}
+\contentsline {section}{\numberline {7}More operators and functions}{21}{section.7}
+\contentsline {subsection}{\numberline {7.1}Predicate functions --- testing for properties}{22}{subsection.7.1}
+\contentsline {subsubsection}{\numberline {7.1.1}{\bf identitymatrixp} }{22}{subsubsection.7.1.1}
+\contentsline {subsubsection}{\numberline {7.1.2}{\bf ketp}, {\bf brap}, {\bf braketp}}{22}{subsubsection.7.1.2}
+\contentsline {subsubsection}{\numberline {7.1.3}{\bf square\_matp}}{22}{subsubsection.7.1.3}
+\contentsline {subsection}{\numberline {7.2}Miscellaneous}{22}{subsection.7.2}
+\contentsline {subsubsection}{\numberline {7.2.1}{\bf normalize\_vector}}{22}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.2}{\bf normalize\_matrix}}{22}{subsubsection.7.2.2}
+\contentsline {section}{\numberline {8}Entanglement. longer examples}{22}{section.8}
+\contentsline {subsection}{\numberline {8.1}Entanglement swapping}{22}{subsection.8.1}
+\contentsline {section}{Index}{27}{section*.2}

@@ -1,0 +1,674 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on July, 31 2008 by texi2html 1.76 -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people <dev@texi2html.cvshome.org>
+Send bugs and suggestions to <users@texi2html.cvshome.org>
+
+-->
+<head>
+<title>Maxima Manual: 3. Help</title>
+
+<meta name="description" content="Maxima Manual: 3. Help">
+<meta name="keywords" content="Maxima Manual: 3. Help">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.76">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+body
+{
+    color: black;
+    background: white; 
+    margin-left: 8%;
+    margin-right: 13%;
+}
+
+h1
+{
+    margin-left: +8%;
+    font-size: 150%;
+    font-family: sans-serif
+}
+
+h2
+{
+    font-size: 125%;
+    font-family: sans-serif
+}
+
+h3
+{
+    font-size: 100%;
+    font-family: sans-serif
+}
+
+h2,h3,h4,h5,h6 { margin-left: +4%; }
+
+div.textbox
+{
+    border: solid;
+    border-width: thin;
+    /* width: 100%; */
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em
+}
+
+div.titlebox
+{
+    border: none;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background: rgb(200,255,255);
+    font-family: sans-serif
+}
+
+div.synopsisbox
+{
+    border: none;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+     background: rgb(255,220,255);
+    /*background: rgb(200,255,255); */
+    /* font-family: fixed */
+}
+
+pre.example
+{
+    border: 1px solid gray;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    /* background: rgb(247,242,180); */ /* kind of sandy */
+    /* background: rgb(200,255,255); */ /* sky blue */
+    background-color: #F1F5F9; /* light blue-gray */
+    /* font-family: "Lucida Console", monospace */
+}
+
+div.spacerbox
+{
+    border: none;
+    padding-top: 2em;
+    padding-bottom: 2em
+}
+
+div.image
+{
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+}
+
+div.categorybox
+{
+    border: 1px solid gray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: rgb(247,242,220);
+}
+
+
+-->
+</style>
+
+<link rel="icon" href="http://maxima.sourceforge.net/favicon.ico"/>
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<a name="Help"></a>
+<a name="SEC4"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="maxima_2.html#SEC3" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC5" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima_2.html#SEC2" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h1 class="chapter"> 3. Help </h1>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#SEC5">3.1 Lisp and Maxima</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">            
+</td></tr>
+<tr><td align="left" valign="top"><a href="#SEC6">3.2 Garbage Collection</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">          
+</td></tr>
+<tr><td align="left" valign="top"><a href="#SEC7">3.3 Documentation</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">               
+</td></tr>
+<tr><td align="left" valign="top"><a href="#SEC8">3.4 Functions and Variables for Help</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">        
+</td></tr>
+</table>
+
+<p><a name="Item_003a-Lisp-and-Maxima"></a>
+</p><hr size="6">
+<a name="Lisp-and-Maxima"></a>
+<a name="SEC5"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC4" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC6" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 3.1 Lisp and Maxima </h2>
+<p>Maxima is written in Lisp, and it is easy to access Lisp functions and variables
+from Maxima and vice versa.
+Lisp and Maxima symbols are distinguished by a naming convention.
+A Lisp symbol which begins with a dollar sign <code>$</code> corresponds to
+a Maxima symbol without the dollar sign.
+A Maxima symbol which begins with a question mark <code>?</code> corresponds to
+a Lisp symbol without the question mark.
+For example, the Maxima symbol <code>foo</code> corresponds to the Lisp symbol <code>$foo</code>,
+while the Maxima symbol <code>?foo</code> corresponds to the Lisp symbol <code>foo</code>,
+Note that <code>?foo</code> is written without a space between <code>?</code> and <code>foo</code>;
+otherwise it might be mistaken for <code>describe (&quot;foo&quot;)</code>.
+</p>
+<p>Hyphen <code>-</code>, asterisk <code>*</code>, or other special characters in Lisp symbols
+must be escaped by backslash <code>\</code> where they appear in Maxima code.
+For example, the Lisp identifier <code>*foo-bar*</code> is written <code>?\*foo\-bar\*</code> in Maxima.
+</p>
+<p>Lisp code may be executed from within a Maxima session.
+A single line of Lisp (containing one or more forms) may be executed
+by the special command <code>:lisp</code>. For example,
+</p>
+<pre class="example">(%i1) :lisp (foo $x $y)
+</pre>
+
+<p>calls the Lisp function <code>foo</code> with Maxima variables <code>x</code> and <code>y</code> as arguments.
+The <code>:lisp</code> construct can appear at the interactive prompt
+or in a file processed by <code>batch</code> or <code>demo</code>, but not in a file processed by
+<code>load</code>, <code>batchload</code>, <code>translate_file</code>, or <code>compile_file</code>.
+</p>
+<p>The function <code>to_lisp()</code> opens an interactive Lisp session.
+Entering <code>(to-maxima)</code> closes the Lisp session and returns to Maxima.
+</p>
+<p>Lisp functions and variables which are to be visible in Maxima as
+functions and variables with ordinary names (no special punctuation)
+must have Lisp names beginning with the dollar sign <code>$</code>.
+</p>
+<p>Maxima is case-sensitive, distinguishing between lowercase and uppercase letters
+in identifiers, while Lisp is not.
+There are some rules governing the translation of names between Lisp and Maxima.
+</p>
+<ol>
+<li>
+A Lisp identifier not enclosed in vertical bars corresponds to a Maxima identifier
+in lowercase.
+Whether the Lisp identifier is uppercase, lowercase, or mixed case, is ignored.
+E.g., Lisp <code>$foo</code>, <code>$FOO</code>, and <code>$Foo</code> all correspond to Maxima <code>foo</code>.
+</li><li>
+A Lisp identifier which is all uppercase or all lowercase
+and enclosed in vertical bars corresponds to a Maxima identifier with case reversed.
+That is, uppercase is changed to lowercase and lowercase to uppercase.
+E.g., Lisp <code>|$FOO|</code> and <code>|$foo|</code>
+correspond to Maxima <code>foo</code> and <code>FOO</code>, respectively.
+</li><li>
+A Lisp identifier which is mixed uppercase and lowercase
+and enclosed in vertical bars corresponds to a Maxima identifier with the same case.
+E.g., Lisp <code>|$Foo|</code> corresponds to Maxima <code>Foo</code>.
+</li></ol>
+
+<p>The <code>#$</code> Lisp macro allows the use of Maxima expressions in Lisp code.
+<code>#$<var>expr</var>$</code> expands to a Lisp expression equivalent to the Maxima expression <var>expr</var>.
+</p>
+<pre class="example">(msetq $foo #$[x, y]$)
+</pre>
+
+<p>This has the same effect as entering
+</p>
+<pre class="example">(%i1) foo: [x, y];
+</pre>
+
+<p>The Lisp function <code>displa</code> prints an expression in Maxima format.
+</p>
+<pre class="example">(%i1) :lisp #$[x, y, z]$ 
+((MLIST SIMP) $X $Y $Z)
+(%i1) :lisp (displa '((MLIST SIMP) $X $Y $Z))
+[x, y, z]
+NIL
+</pre>
+<p>Functions defined in Maxima are not ordinary Lisp functions.
+The Lisp function <code>mfuncall</code> calls a Maxima function.
+For example:
+</p>
+<pre class="example">(%i1) foo(x,y) := x*y$
+(%i2) :lisp (mfuncall '$foo 'a 'b)
+((MTIMES SIMP) A B)
+</pre>
+<p>Some Lisp functions are shadowed in the Maxima package, namely the following.
+</p>
+<p><code>complement</code>,
+<code>continue</code>,
+<code>//</code>,
+<code>float</code>,
+<code>functionp</code>,
+<code>array</code>,
+<code>exp</code>,
+<code>listen</code>,
+<code>signum</code>,
+<code>atan</code>,
+<code>asin</code>,
+<code>acos</code>,
+<code>asinh</code>,
+<code>acosh</code>,
+<code>atanh</code>,
+<code>tanh</code>,
+<code>cosh</code>,
+<code>sinh</code>,
+<code>tan</code>,
+<code>break</code>,
+and <code>gcd</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Programming}
+</p>
+</div>
+
+
+<p><a name="Item_003a-Garbage-Collection"></a>
+</p><hr size="6">
+<a name="Garbage-Collection"></a>
+<a name="SEC6"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC5" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC7" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 3.2 Garbage Collection </h2>
+<p>Symbolic computation tends to create a good deal
+of garbage, and effective handling of this can be crucial to successful
+completion of some programs.
+</p>
+<p>Under GCL, on UNIX systems where the mprotect system call is available
+(including SUN OS 4.0 and some variants of BSD) a stratified garbage collection
+is available.   This limits the collection to pages which have been recently
+written to.    See the GCL documentation under ALLOCATE and GBC.   At the
+Lisp level doing (setq si::*notify-gbc* t) will help you determine which
+areas might need more space.
+</p>
+<p><a name="Item_003a-Documentation"></a>
+</p><hr size="6">
+<a name="Documentation"></a>
+<a name="SEC7"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC6" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC8" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 3.3 Documentation </h2>
+
+
+<p>The Maxima on-line user's manual can be viewed in different forms.
+From the Maxima interactive prompt, the user's manual
+is viewed as plain text by the <code>?</code> command (i.e., the <code>describe</code> function).
+The user's manual is viewed as <code>info</code> hypertext by the <code>info</code> viewer program
+and as a web page by any ordinary web browser.
+</p>
+<p><code>example</code> displays examples for many Maxima functions.
+For example,
+</p>
+<pre class="example">(%i1) example (integrate);
+</pre>
+<p>yields
+</p>
+<pre class="example">(%i2) test(f):=block([u],u:integrate(f,x),ratsimp(f-diff(u,x)))
+(%o2) test(f) := block([u], u : integrate(f, x), 
+
+                                         ratsimp(f - diff(u, x)))
+(%i3) test(sin(x))
+(%o3)                           0
+(%i4) test(1/(x+1))
+(%o4)                           0
+(%i5) test(1/(x^2+1))
+(%o5)                           0
+</pre>
+<p>and additional output.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Console interaction}
+</p>
+</div>
+
+
+<p><a name="Item_003a-Functions-and-Variables-for-Help"></a>
+</p><hr size="6">
+<a name="Functions-and-Variables-for-Help"></a>
+<a name="SEC8"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC7" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC4" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 3.4 Functions and Variables for Help </h2>
+
+<p><a name="Item_003a-demo"></a>
+</p><dl>
+<dt><u>Function:</u> <b>demo</b><i> (<var>filename</var>)</i>
+<a name="IDX8"></a>
+</dt>
+<dd><p>Evaluates Maxima expressions in <var>filename</var> and displays the results.
+<code>demo</code> pauses after evaluating each expression
+and continues after the user enters a carriage return.
+(If running in Xmaxima, <code>demo</code> may need to see a semicolon <code>;</code>
+followed by a carriage return.)
+</p>
+<p><code>demo</code> searches the list of directories
+<code>file_search_demo</code> to find <code>filename</code>.
+If the file has the suffix <code>dem</code>,
+the suffix may be omitted.
+See also <code>file_search</code>.
+</p>
+<p><code>demo</code> evaluates its argument.
+<code>demo</code> returns the name of the demonstration file.
+</p>
+<p>Example:
+</p>
+<pre class="example">(%i1) demo (&quot;disol&quot;);
+
+batching /home/wfs/maxima/share/simplification/disol.dem
+ At the _ prompt, type ';' followed by enter to get next demo
+(%i2)                      load(disol)
+
+_
+(%i3)           exp1 : a (e (g + f) + b (d + c))
+(%o3)               a (e (g + f) + b (d + c))
+
+_
+(%i4)                disolate(exp1, a, b, e)
+(%t4)                         d + c
+
+(%t5)                         g + f
+
+(%o5)                   a (%t5 e + %t4 b)
+
+_
+(%i5) demo (&quot;rncomb&quot;);
+
+batching /home/wfs/maxima/share/simplification/rncomb.dem
+ At the _ prompt, type ';' followed by enter to get next demo
+(%i6)                     load(rncomb)
+
+_
+                             z         x
+(%i7)               exp1 : ----- + ---------
+                           y + x   2 (y + x)
+                          z         x
+(%o7)                   ----- + ---------
+                        y + x   2 (y + x)
+
+_
+(%i8)                     combine(exp1)
+                          z         x
+(%o8)                   ----- + ---------
+                        y + x   2 (y + x)
+
+_
+(%i9)                     rncombine(%)
+                             2 z + x
+(%o9)                       ---------
+                            2 (y + x)
+
+_
+                             d   c   b   a
+(%i10)                exp2 : - + - + - + -
+                             3   3   2   2
+                          d   c   b   a
+(%o10)                    - + - + - + -
+                          3   3   2   2
+
+_
+(%i11)                    combine(exp2)
+                      2 d + 2 c + 3 (b + a)
+(%o11)                ---------------------
+                                6
+
+_
+(%i12)                   rncombine(exp2)
+                      2 d + 2 c + 3 b + 3 a
+(%o12)                ---------------------
+                                6
+
+_
+(%i13) 
+</pre>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Console interaction}
+ &middot;
+@ref{Category: File input}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-describe"></a>
+</p><dl>
+<dt><u>Function:</u> <b>describe</b><i> (<var>string</var>)</i>
+<a name="IDX9"></a>
+</dt>
+<dt><u>Function:</u> <b>describe</b><i> (<var>string</var>, exact)</i>
+<a name="IDX10"></a>
+</dt>
+<dt><u>Function:</u> <b>describe</b><i> (<var>string</var>, inexact)</i>
+<a name="IDX11"></a>
+</dt>
+<dd><p><code>describe(<var>string</var>)</code> is equivalent to <code>describe(<var>string</var>, exact)</code>.
+</p>
+<p><code>describe(<var>string</var>, exact)</code> finds an item with title equal
+(case-insensitive)
+to <var>string</var>, if there is any such item.
+</p>
+<p><code>describe(<var>string</var>, inexact)</code> finds all documented items which contain <var>string</var> in their titles.
+If there is more than one such item, Maxima asks the user to select
+an item or items to display.
+</p>
+<p>At the interactive prompt,
+<code>? foo</code> (with a space between <code>?</code> and <code>foo</code>)
+is equivalent to <code>describe(&quot;foo&quot;, exact)</code>,
+and <code>?? foo</code> is equivalent to <code>describe(&quot;foo&quot;, inexact)</code>.
+</p>
+<p><code>describe(&quot;&quot;, inexact)</code> yields a list of all topics documented in the on-line manual.
+</p>
+<p><code>describe</code> quotes its argument.
+<code>describe</code> returns <code>true</code> if some documentation is found, otherwise <code>false</code>.
+</p>
+<p>See also <a href="#SEC7">Documentation</a>.
+</p>
+<p>Example:
+</p>
+<pre class="example">(%i1) ?? integ
+ 0: Functions and Variables for Elliptic Integrals
+ 1: Functions and Variables for Integration
+ 2: Introduction to Elliptic Functions and Integrals
+ 3: Introduction to Integration
+ 4: askinteger  (Functions and Variables for Simplification)
+ 5: integerp  (Functions and Variables for Miscellaneous Options)
+ 6: integer_partitions  (Functions and Variables for Sets)
+ 7: integrate  (Functions and Variables for Integration)
+ 8: integrate_use_rootsof  (Functions and Variables for
+    Integration)
+ 9: integration_constant_counter  (Functions and Variables for
+    Integration)
+ 10: nonnegintegerp  (Functions and Variables for linearalgebra)
+Enter space-separated numbers, `all' or `none': 7 8
+
+ -- Function: integrate (&lt;expr&gt;, &lt;x&gt;)
+ -- Function: integrate (&lt;expr&gt;, &lt;x&gt;, &lt;a&gt;, &lt;b&gt;)
+     Attempts to symbolically compute the integral of &lt;expr&gt; with
+     respect to &lt;x&gt;.  `integrate (&lt;expr&gt;, &lt;x&gt;)' is an indefinite
+     integral, while `integrate (&lt;expr&gt;, &lt;x&gt;, &lt;a&gt;, &lt;b&gt;)' is a
+     definite integral, [...]
+     
+ -- Option variable: integrate_use_rootsof
+     Default value: `false'
+
+     When `integrate_use_rootsof' is `true' and the denominator of
+     a rational function cannot be factored, `integrate' returns
+     the integral in a form which is a sum over the roots (not yet
+     known) of the denominator.
+     [...]
+</pre>
+<p>In this example, items 7 and 8 were selected 
+(output is shortened as indicated by <code>[...]</code>.
+All or none of the items could have been selected by entering <code>all</code> or <code>none</code>,
+which can be abbreviated <code>a</code> or <code>n</code>, respectively.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Help}
+ &middot;
+@ref{Category: Console interaction}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-example"></a>
+</p><dl>
+<dt><u>Function:</u> <b>example</b><i> (<var>topic</var>)</i>
+<a name="IDX12"></a>
+</dt>
+<dt><u>Function:</u> <b>example</b><i> ()</i>
+<a name="IDX13"></a>
+</dt>
+<dd><p><code>example (<var>topic</var>)</code> displays some examples of <var>topic</var>,
+which is a symbol (not a string).
+Most topics are function names.
+<code>example ()</code> returns the list of all recognized topics.
+</p>
+<p>The name of the file containing the examples is given by the
+global variable <code>manual_demo</code>, which defaults to <code>&quot;manual.demo&quot;</code>.
+</p>
+<p><code>example</code> quotes its argument.
+<code>example</code> returns <code>done</code>
+unless there is an error or there is no argument, in which case <code>example</code>
+returns the list of all recognized topics.
+</p>
+<p>Examples:
+</p>
+<pre class="example">(%i1) example (append);
+(%i2) append([x+y,0,-3.2],[2.5E+20,x])
+(%o2)             [y + x, 0, - 3.2, 2.5E+20, x]
+(%o2)                         done
+(%i3) example (coeff);
+(%i4) coeff(b+tan(x)+2*a*tan(x) = 3+5*tan(x),tan(x))
+(%o4)                      2 a + 1 = 5
+(%i5) coeff(1+x*%e^x+y,x,0)
+(%o5)                         y + 1
+(%o5)                         done
+</pre>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Console interaction}
+</p>
+</div>
+
+</dd></dl>
+
+
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC4" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_4.html#SEC9" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>root</em> on <em>July, 31 2008</em> using <a href="http://texi2html.cvshome.org/"><em>texi2html 1.76</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

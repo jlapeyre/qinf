@@ -1,0 +1,728 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>6 Entanglement</TITLE>
+<META NAME="description" CONTENT="6 Entanglement">
+<META NAME="keywords" CONTENT="qinf">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="qinf.css">
+
+</HEAD>
+
+<BODY text="#000000" bgcolor="#FFFFFF">
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html280"
+  HREF="node7.html#SECTION00071000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ptrace</B>, <B>ptracen</B> -- partial trace<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html281"
+  HREF="node7.html#SECTION00072000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>entropy</B> -- von Neumann entropy<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html282"
+  HREF="node7.html#SECTION00073000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>renyi_entropy</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html283"
+  HREF="node7.html#SECTION00074000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>tsallis_entropy</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html284"
+  HREF="node7.html#SECTION00075000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>purity</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html285"
+  HREF="node7.html#SECTION00076000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>fidelity</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html286"
+  HREF="node7.html#SECTION00077000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">7</SPAN> <B>concurrence</B> -- Wootter's  concurrence<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html287"
+  HREF="node7.html#SECTION00078000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">8</SPAN> <B>separable</B> -- test for separability<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html288"
+  HREF="node7.html#SECTION00079000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">9</SPAN> An entangled pure global state has mixed reduced states</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00070000000000000000">
+<SPAN CLASS="arabic">6</SPAN> Entanglement</A>
+</H1>
+
+<P>
+Now we are ready to introduce features that are more
+specific to the study quantum entanglement. Included here
+are measures of the degree of purity and measures
+of the degree of entanglement. For a review of quantum
+entanglement, see Ref.[<A
+ HREF="node10.html#HHH08">1</A>].
+
+<P>
+
+<H2><A NAME="SECTION00071000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ptrace</B>, <B>ptracen</B> -- partial trace<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5188"></A><A NAME="5190"></A>
+<A NAME="3624"></A>
+compute the partial trace of the  density 
+operator <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> over the component spaces given by the indices.
+For <B>ptrace</B>(<!-- MATH
+ $\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="76" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img141.png"
+ ALT="$\rho,i_1,\ldots$"></SPAN>)<A NAME="5193"></A> the density matrix <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> is assumed to represent
+an operator in
+<!-- MATH
+ $(H_2)^{\otimes m}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="74" HEIGHT="43" ALIGN="MIDDLE" BORDER="0"
+ SRC="img142.png"
+ ALT="$(H_2)^{\otimes m}$"></SPAN>, with <SPAN CLASS="MATH"><IMG
+ WIDTH="57" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img143.png"
+ ALT="$n=2$"></SPAN>, that is
+a tensor product of qubit spaces. For <B>ptracen</B>(<!-- MATH
+ $n,\rho,i_1,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="98" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img144.png"
+ ALT="$n,\rho,i_1,\ldots$"></SPAN>)<A NAME="5196"></A> the component
+spaces are all <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN>-state qudits.
+
+<P>
+In this example we create three arbitrary <SPAN CLASS="MATH"><IMG
+ WIDTH="53" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img145.png"
+ ALT="$3\times3$"></SPAN> matrices, and check that
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\mbox{Tr}_{1,2}\left(m_1\otimes m_2\otimes m_3\right) = \left(\mbox{Tr}(m_1)\mbox{Tr}(m_2)\right) m_3
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="406" HEIGHT="38" BORDER="0"
+ SRC="img146.png"
+ ALT="\begin{displaymath}
+\mbox{Tr}_{1,2}\left(m_1\otimes m_2\otimes m_3\right) = \left(\mbox{Tr}(m_1)\mbox{Tr}(m_2)\right) m_3
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+and that
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\mbox{Tr}_{3}\left(m_1\otimes m_2\otimes m_3 \right) = \mbox{Tr}(m_3)(m_1\otimes m_2).
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="385" HEIGHT="38" BORDER="0"
+ SRC="img147.png"
+ ALT="\begin{displaymath}
+\mbox{Tr}_{3}\left(m_1\otimes m_2\otimes m_3 \right) = \mbox{Tr}(m_3)(m_1\otimes m_2).
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Notice that we use the <I>Maxima</I> function 
+<A NAME="tex2html40"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_12.html#IDX450"><B>ratsimp</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="5201"></A> to put both sides of the
+equation in the same canonical form.  We also make
+use of <I>Maxima</I>'s
+ <A NAME="tex2html41"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_60.html#IDX2148"><B>mat_trace</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="5209"></A><A NAME="3643"></A>
+ function ( so named to avoid conflicting
+with the code-execution trace function) and <I>Maxima</I>'s 
+<A NAME="tex2html42"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_25.html#IDX817"><B>matrix</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="5217"></A> function, which creates a matrix
+from a list of rows. <A NAME="3647"></A> <A NAME="3648"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="420" ALIGN="BOTTOM" BORDER="0"
+ SRC="img148.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i1) m1 : matrix([a1,b1,...
+...batim}
+\begin{dmath}[number={\%o5}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here we trace over one component repeatedly and check that the result is
+equal to the full trace. Note that, each time, we are tracing over the new
+first component.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img149.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) factor( ptracen(3,...
+...ft(\mathrm{i3}+\mathrm{e3}+\mathrm{a3}\right)\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00072000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>entropy</B> -- von Neumann entropy<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5233"></A>
+<A NAME="3677"></A>
+<B>entropy</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>) returns the von Neumann <B>entropy</B> of
+the density matrix <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> defined by
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+S(\rho) = -\mbox{Tr}\left(\rho \log_2 \rho\right).
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">5</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="206" HEIGHT="38" BORDER="0"
+ SRC="img150.png"
+ ALT="\begin{displaymath}
+S(\rho) = -\mbox{Tr}\left(\rho \log_2 \rho\right).
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+ <B>entropyf</B> <A NAME="5238"></A> is the floating point version of <B>entropy</B>.
+
+<P>
+
+<H2><A NAME="SECTION00073000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>renyi_entropy</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5242"></A>
+<A NAME="3688"></A>
+ <B>renyi_entropy</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="99" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img151.png"
+ ALT="$alpha,rho$"></SPAN>) gives the R&#233;nyi entropy, defined by
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+S_{\mbox{renyi}}(\alpha,\rho) = \frac{1}{1-\alpha}\log_2\left(\mbox{Tr}(\rho^\alpha)\right).
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">6</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="325" HEIGHT="53" BORDER="0"
+ SRC="img152.png"
+ ALT="\begin{displaymath}
+S_{\mbox{renyi}}(\alpha,\rho) = \frac{1}{1-\alpha}\log_2\left(\mbox{Tr}(\rho^\alpha)\right).
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+ <B>renyi_entropyf</B> <A NAME="5246"></A> is the floating point version of <B>renyi_entropy</B>.
+
+<P>
+
+<H2><A NAME="SECTION00074000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>tsallis_entropy</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5250"></A>
+<A NAME="3701"></A>
+ <B>tsallis_entropy</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="57" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img153.png"
+ ALT="$q,rho$"></SPAN>) gives the Tsallis entropy, defined by
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+S_{\mbox{tsallis}}(q,\rho) = \frac{1}{q-1}\left(1-\mbox{Tr}(\rho^q)\right).
+\end{equation}
+ -->
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">7</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG
+ WIDTH="321" HEIGHT="55" BORDER="0"
+ SRC="img154.png"
+ ALT="\begin{displaymath}
+S_{\mbox{tsallis}}(q,\rho) = \frac{1}{q-1}\left(1-\mbox{Tr}(\rho^q)\right).
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+ <B>tsallis_entropyf</B> <A NAME="5254"></A> is the floating point version of <B>tsallis_entropy</B>.
+
+<P>
+
+<H2><A NAME="SECTION00075000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>purity</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5258"></A>
+ <B>purity</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>) returns the purity of the 
+density matrix <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> defined by <!-- MATH
+ $\mbox{Tr}(\rho^2)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="63" HEIGHT="44" ALIGN="MIDDLE" BORDER="0"
+ SRC="img155.png"
+ ALT="$\mbox{Tr}(\rho^2)$"></SPAN>. The purity
+is <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$1$"></SPAN> for a pure state and is less than <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$1$"></SPAN> for a mixed state.
+
+<P>
+
+<H2><A NAME="SECTION00076000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>fidelity</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5262"></A>
+<B>fidelity</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="54" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img156.png"
+ ALT="$\rho_1,\rho_2$"></SPAN>) returns the scalar valued fidelity
+of the density matrices <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img157.png"
+ ALT="$\rho_1$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img158.png"
+ ALT="$\rho_2$"></SPAN> defined by
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\mbox{Tr}\left(\sqrt{\sqrt{\rho_2}\rho_1\sqrt{\rho_2}}\right).
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="171" HEIGHT="51" BORDER="0"
+ SRC="img159.png"
+ ALT="\begin{displaymath}
+\mbox{Tr}\left(\sqrt{\sqrt{\rho_2}\rho_1\sqrt{\rho_2}}\right).
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+
+<H2><A NAME="SECTION00077000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">7</SPAN> <B>concurrence</B> -- Wootter's  concurrence<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5266"></A><A NAME="3726"></A>
+The concurrence of a two-qubit state <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>
+ is defined by 
+<!-- MATH
+ $\max(0,\sqrt{\lambda_1}-\sqrt{\lambda_2}-\sqrt{\lambda_3}-\sqrt{\lambda_4}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="308" HEIGHT="46" ALIGN="MIDDLE" BORDER="0"
+ SRC="img160.png"
+ ALT="$\max(0,\sqrt{\lambda_1}-\sqrt{\lambda_2}-\sqrt{\lambda_3}-\sqrt{\lambda_4}$"></SPAN>),
+where the <SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img161.png"
+ ALT="$\lambda_i$"></SPAN> are the eigenvaluse of
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\rho (\sigma_y \otimes \sigma_y) \rho^{\mbox{*}} (\sigma_y \otimes \sigma_y),
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="207" HEIGHT="38" BORDER="0"
+ SRC="img162.png"
+ ALT="\begin{displaymath}
+\rho (\sigma_y \otimes \sigma_y) \rho^{\mbox{*}} (\sigma_y \otimes \sigma_y),
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+in decreasing order[<A
+ HREF="node10.html#Wootters97">2</A>]
+
+<P>
+<code>concurrence(rho)</code> returns the concurrence of the state <code>rho</code>.
+<code>concurrence_vals(rho)</code> returns a list of the square roots of
+the eigenvalues in decreasing order, to the extent that <I>Maxima</I>
+can determine the order.
+
+<P>
+
+<H2><A NAME="SECTION00078000000000000000"></A><A NAME="3735"></A>
+<BR>
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">8</SPAN> <B>separable</B> -- test for separability<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN>
+</H2>
+<A NAME="5270"></A>
+This currently accepts only pure, bipartite states.
+<B>separable</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$e$"></SPAN>) attempts to determine if <I>e</I> is a separable
+state. <B>separable</B> returns a scalar value <SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img163.png"
+ ALT="$r$"></SPAN>. If <SPAN CLASS="MATH"><IMG
+ WIDTH="54" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img164.png"
+ ALT="$r=1$"></SPAN>, then
+<I>e</I> is separable. If <SPAN CLASS="MATH"><IMG
+ WIDTH="54" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img165.png"
+ ALT="$r&lt;1$"></SPAN>, it is not. Explicitly, the value
+returned for the state with density operator <SPAN CLASS="MATH"><IMG
+ WIDTH="41" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img166.png"
+ ALT="$\rho_{AB}$"></SPAN> 
+is <!-- MATH
+ $\mbox{Tr}(\rho_A^2)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="67" HEIGHT="44" ALIGN="MIDDLE" BORDER="0"
+ SRC="img167.png"
+ ALT="$\mbox{Tr}(\rho_A^2)$"></SPAN>
+
+<P>
+When other methods are added, the organization and naming of the tests may
+change.
+
+<P>
+
+<H2><A NAME="SECTION00079000000000000000">
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">9</SPAN> An entangled pure global state has mixed reduced states</A>
+</H2>
+We examine a textbook example of entanglement-- the joint
+state of two qubits. The state of the whole system is pure,
+but the local states are mixed.  We begin by creating a
+joint state of two qubits in Schmidt basis
+<!-- MATH
+ ${\lvert\alpha \rangle}=\sqrt{\alpha}{\lvert 00 \rangle}+
+\sqrt{1-\alpha}{\lvert 11 \rangle}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="265" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img168.png"
+ ALT="${\lvert\alpha \rangle}=\sqrt{\alpha}{\lvert 00 \rangle}+
+\sqrt{1-\alpha}{\lvert 11 \rangle}.$"></SPAN> In order to see the mixed
+character of the local states, we need to express the full
+state as a density operator (or equivalently as a projection
+operator.) Let's try to make <!-- MATH
+ ${\lvert\alpha \rangle}{\langle\alpha \rvert}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="61" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img169.png"
+ ALT="${\lvert\alpha \rangle}{\langle\alpha \rvert}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="193" ALIGN="BOTTOM" BORDER="0"
+ SRC="img170.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) pr : proj(schmidt_k...
+...k[0]\sqrt{1-\alpha}^{\star}\*\sqrt{1-\alpha}\cr }
+\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We see that <I>Maxima</I> is allowing that the quantities under the radicals may be negative. So
+we set some rules, and try again. <A NAME="5295"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="318" ALIGN="BOTTOM" BORDER="0"
+ SRC="img171.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i3) assume(alpha&gt;0, 1-a...
+...reak[0]0&amp;\linebreak[0]0&amp;\linebreak[0]1-\alpha\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The entropy <A NAME="3785"></A>
+ vanishes for a pure state, so that <!-- MATH
+ $S({\lvert\alpha \rangle}{\langle\alpha \rvert})$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="92" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img172.png"
+ ALT="$S({\lvert\alpha \rangle}{\langle\alpha \rvert})$"></SPAN> is
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img173.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i6) entropy(pr);
+\end{verbatim}
+\begin{dmath}[number={\%o7}]
+0\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The  <B>purity</B> <A NAME="5314"></A> is equal to <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$1$"></SPAN> if and only if <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> is a pure state.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="263" ALIGN="BOTTOM" BORDER="0"
+ SRC="img174.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i8) purity(pr);
+\end{ve...
+...%);
+\end{verbatim}
+\begin{dmath}[number={\%o9}]
+1\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Now we compute the reduced density matrix of the second qubit by tracing over the first--
+<!-- MATH
+ $\rho_2=\mbox{Tr}_1 {\lvert\alpha \rangle}{\langle\alpha \rvert}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="145" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img175.png"
+ ALT="$\rho_2=\mbox{Tr}_1 {\lvert\alpha \rangle}{\langle\alpha \rvert}.$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img176.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) pr2 : ptrace(pr,1)...
+...pha&amp;\linebreak[0]0\cr 0&amp;\linebreak[0]1-\alpha\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Tracing over the second qubit instead gives the same result
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img177.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) pr2 : ptrace(pr,1)...
+...pha&amp;\linebreak[0]0\cr 0&amp;\linebreak[0]1-\alpha\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Computing
+the entropy<A NAME="3825"></A> of a local state
+shows that this state is, in general, mixed <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img178.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\index{entropy@{\bf entropy}}
+\begin{verbat...
+...{log2}\left(1-\alpha\right)\*\left(1-\alpha\right)\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Each eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img84.png"
+ ALT="$\lambda$"></SPAN> satisfies <!-- MATH
+ $0\le \lambda <1$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="96" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img179.png"
+ ALT="$0\le \lambda &lt;1$"></SPAN>, so that the sum of their squares is less than
+one 
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="118" ALIGN="BOTTOM" BORDER="0"
+ SRC="img180.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i13) purity(pr2);
+\end{...
+...er={\%o13}]
+\alpha^{2}+\left(1-\alpha\right)^{2}\end{dmath} \end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We
+can plot <A NAME="3841"></A> the results (the plot function  <B>plot2d</B> <A NAME="5351"></A> is more
+common, depending on your user interface.  <B>wxplot2d</B> <A NAME="5354"></A> has
+the same calling syntax, but inlines the resulting plot.) We
+see that the maximum entanglement occurs at <SPAN CLASS="MATH"><IMG
+ WIDTH="79" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img181.png"
+ ALT="$\alpha=1/2$"></SPAN> and
+decreases monotonically from there in both directions, with
+<SPAN CLASS="MATH"><IMG
+ WIDTH="78" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img182.png"
+ ALT="$\alpha=0,1$"></SPAN> giving pure joint states.  <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="520" ALIGN="BOTTOM" BORDER="0"
+ SRC="img183.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i14) wxplot2d([entropy(...
+...graphics[width=.5\linewidth]{figs/entropy_purity}
+\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+<BR CLEAR="ALL">
+<HR>
+<BR><HR>
+<ADDRESS>
+John Lapeyre
+2008-09-02
+</ADDRESS>
+</BODY>
+</HTML>

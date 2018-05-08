@@ -1,0 +1,959 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5 Creating and using operators</TITLE>
+<META NAME="description" CONTENT="5 Creating and using operators">
+<META NAME="keywords" CONTENT="qinf_local">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="qinf_local.css">
+
+</HEAD>
+
+<BODY text="#000000" bgcolor="#FFFFFF">
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html250"
+  HREF="node6.html#SECTION00061000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> Pauli matrices</A>
+<UL>
+<LI><A NAME="tex2html251"
+  HREF="node6.html#SECTION00061100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>pauli</B> -- pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html252"
+  HREF="node6.html#SECTION00061200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>pauli_product</B> --  tensor product of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html253"
+  HREF="node6.html#SECTION00061300000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>pauliexp</B> -- expansion of operator in terms of tensor products of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html254"
+  HREF="node6.html#SECTION00061400000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>invpauliexp</B> -- inverse of expansion in terms of tensor products of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html255"
+  HREF="node6.html#SECTION00061500000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>correlation_tensor</B> -- retrieve component of correlation tensor by index<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html256"
+  HREF="node6.html#SECTION00061600000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> Using <B>pauliexp</B> and <B>invpauliexp</B>; an example<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</UL>
+<BR>
+<LI><A NAME="tex2html257"
+  HREF="node6.html#SECTION00062000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>spinor_rotation</B>, <B>spinor_rotation_trig</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html258"
+  HREF="node6.html#SECTION00063000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>insert_operator</B> -- insert single qubit operators in <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN>-qubit operator</A>
+<LI><A NAME="tex2html259"
+  HREF="node6.html#SECTION00064000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Gates</A>
+<UL>
+<LI><A NAME="tex2html260"
+  HREF="node6.html#SECTION00064100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>hadamard</B> operator<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html261"
+  HREF="node6.html#SECTION00064200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>controlled_gate</B> -- gate with <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN> control qubits</A>
+<LI><A NAME="tex2html262"
+  HREF="node6.html#SECTION00064300000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>cnot</B>, <B>cphase</B>, <B>crot</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html263"
+  HREF="node6.html#SECTION00064400000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>swap</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html264"
+  HREF="node6.html#SECTION00064500000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>toffoli</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html265"
+  HREF="node6.html#SECTION00064600000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>fredkin</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H1><A NAME="SECTION00060000000000000000">
+<SPAN CLASS="arabic">5</SPAN> Creating and using operators</A>
+</H1>
+
+<P>
+
+<H2><A NAME="SECTION00061000000000000000"></A><A NAME="3061"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> Pauli matrices
+</H2>
+
+<H3><A NAME="SECTION00061100000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>pauli</B> -- pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="4900"></A>
+<B>pauli</B>[<SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img18.png"
+ ALT="$i$"></SPAN>]
+creates the pauli matrices <!-- MATH
+ $(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
+=(\mathbb{1}_2,\sigma_x,\sigma_y,\sigma_z).$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="295" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img86.png"
+ ALT="$(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
+=(\mathbb{1}_2,\sigma_x,\sigma_y,\sigma_z).$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="140" ALIGN="BOTTOM" BORDER="0"
+ SRC="img87.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i12) [ pauli[0], pauli[...
+...&amp;\linebreak[0]0\cr 0&amp;\linebreak[0]-1\cr } \right] \end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Show that the ket <!-- MATH
+ ${\lvert 1 \rangle}_x$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="40" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img88.png"
+ ALT="${\lvert 1 \rangle}_x$"></SPAN> is an eigenvector of <SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img89.png"
+ ALT="$\sigma_x$"></SPAN> with eigenvalue <SPAN CLASS="MATH"><IMG
+ WIDTH="33" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.png"
+ ALT="$-1$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img90.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i8) is ( pauli[1] . ket...
+...batim}
+\begin{dmath}[number={\%o8}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here are we check that all our definitions of the pauli matrices and kets are
+consistent in this sense.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="144" ALIGN="BOTTOM" BORDER="0"
+ SRC="img91.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) mapapply( lambda([i...
+...]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+Here we use <B>anticommutator</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="73" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img92.png"
+ ALT="$op_1,op_2$"></SPAN>) <A NAME="4920"></A> to test the anticommutation relations among
+the pauli matrices: <!-- MATH
+ $\{\sigma_i,\sigma_j\}= 2\delta_{i,j}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="140" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img93.png"
+ ALT="$\{\sigma_i,\sigma_j\}= 2\delta_{i,j}$"></SPAN> for <!-- MATH
+ $i,j \in\{1,2,3\}.$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="136" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img94.png"
+ ALT="$i,j \in\{1,2,3\}.$"></SPAN>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="234" ALIGN="BOTTOM" BORDER="0"
+ SRC="img95.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\index{genmatrix@{\bf genmatrix}}
+\begin{ve...
+...ix{1&amp;\linebreak[0]0\cr
+0&amp;\linebreak[0]1\cr }\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The <I>Maxima</I> function 
+<A NAME="tex2html35"
+  HREF="maxima_html/maxima_60.html#IDX2149"><B>mat_unblocker</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="4932"></A>,
+ flattens the
+blocks in the above expression, so we can write <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="138" ALIGN="BOTTOM" BORDER="0"
+ SRC="img96.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i4) identitymatrixp( ma...
+...atim}
+\begin{dmath}[number={\%o4}]
+\mathbf{true}\end{dmath} \end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Now we load the
+ <B>itensor</B> <A NAME="4943"></A> package, which provides the <A NAME="3123"></A> levi-civita tensor, and make use of the
+<I>Maxima</I> functions 
+<A NAME="tex2html36"
+  HREF="maxima_html/maxima_38.html#IDX1288"><B>permutations</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="4948"></A>
+(which returns
+the <A NAME="tex2html37"
+  HREF="maxima_html/maxima_38.html#SEC153">set</A>
+of all permutations of a list)
+and  <B>listify</B> <A NAME="4957"></A> (which converts the set data type into the (ordered) list data type).
+The  <I>qinf </I> package provides <A NAME="4960"></A>
+<B>mapapply</B>(<!-- MATH
+ $func,[list1, list2,\ldots]$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="201" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img97.png"
+ ALT="$func,[list1, list2,\ldots]$"></SPAN>), which
+ <B>apply</B> <A NAME="4964"></A>s <I>func</I> to each of the <I>list</I>s and
+returns a list of the results.  (see the <I>Maxima</I>
+documentation for
+ <A NAME="tex2html38"
+  HREF="maxima_html/maxima_39.html#IDX1317"><B>apply</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="4971"></A>.)  With all these, we can test
+the commutation relations <A NAME="3139"></A> of the pauli
+matrices. (In reality, the matrix definitions are not
+complicated, we are actually testing the other functions.):
+<!-- MATH
+ $[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="170" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img98.png"
+ ALT="$[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$"></SPAN>.  <BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="269" ALIGN="BOTTOM" BORDER="0"
+ SRC="img99.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) load(''itensor'');
+...
+...]\mathbf{true},\linebreak[0]\mathbf{true} \right] \end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H3><A NAME="SECTION00061200000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>pauli_product</B> --  tensor product of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="4981"></A>
+<B>pauli_product</B>(<!-- MATH
+ $i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img100.png"
+ ALT="$i_1,\ldots,i_n$"></SPAN>) returns the tensor product
+<!-- MATH
+ $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="136" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img101.png"
+ ALT="$\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$"></SPAN>, where the indices
+<SPAN CLASS="MATH"><IMG
+ WIDTH="20" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img102.png"
+ ALT="$i_j$"></SPAN> are in <SPAN CLASS="MATH"><IMG
+ WIDTH="98" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img103.png"
+ ALT="$\{0,1,2,3\}$"></SPAN>. As elsewhere in this document, <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img104.png"
+ ALT="$\sigma_0$"></SPAN> is
+the <SPAN CLASS="MATH"><IMG
+ WIDTH="53" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img105.png"
+ ALT="$2\times 2$"></SPAN> identity matrix.
+
+<P>
+The next three functions 
+<B>pauliexp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>), <B>invpauliexp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img107.png"
+ ALT="$c$"></SPAN>), and <B>correlation_tensor</B>(<!-- MATH
+ $c,i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="104" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img108.png"
+ ALT="$c,i_1,\ldots,i_n$"></SPAN>)
+are related. An example using them follows their definitions.
+
+<P>
+
+<H3><A NAME="SECTION00061300000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>pauliexp</B> -- expansion of operator in terms of tensor products of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="4988"></A>
+<B>pauliexp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>) returns the correlation tensor,
+<A NAME="3173"></A>
+ that is, the coefficients in the expansion of the matrix <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>
+in tensor products of pauli matrices. Explicitly, <B>pauliexp</B>
+returns the coefficients <!-- MATH
+ $c_{i_1,\ldots,i_n}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="64" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img109.png"
+ ALT="$c_{i_1,\ldots,i_n}$"></SPAN> in
+<BR>
+<DIV ALIGN="LEFT" CLASS="mathdisplay">
+
+<!-- MATH
+ \begin{equation}
+\rho = \sum_{i_1,\ldots,i_n=0}^3 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
+\end{equation}
+ -->
+<A NAME="pauliexp"></A>
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD CLASS="eqno" WIDTH=10 ALIGN="LEFT">
+(<SPAN CLASS="arabic">4</SPAN>)</TD>
+<TD ALIGN="CENTER" NOWRAP><A NAME="pauliexp"></A><IMG
+ WIDTH="317" HEIGHT="68" BORDER="0"
+ SRC="img110.png"
+ ALT="\begin{displaymath}
+\rho = \sum_{i_1,\ldots,i_n=0}^3 c_{i_1,\ldots,i_n}  \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
+\end{displaymath}"></TD>
+</TR></TABLE>
+<BR CLEAR="ALL"></DIV><P></P>
+<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> must be a <SPAN CLASS="MATH"><IMG
+ WIDTH="73" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img111.png"
+ ALT="$2^n\times 2^n$"></SPAN> matrix. The coefficients are returned as a list
+of <SPAN CLASS="MATH"><IMG
+ WIDTH="73" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img111.png"
+ ALT="$2^n\times 2^n$"></SPAN> elements. The place of <!-- MATH
+ $c_{i_1,\ldots,i_n}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="64" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img109.png"
+ ALT="$c_{i_1,\ldots,i_n}$"></SPAN> in the returned list is determined
+by taking <!-- MATH
+ ${i_1,\ldots,i_n}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img29.png"
+ ALT="${i_1,\ldots,i_n}$"></SPAN> to be the  binary representation of an integer. For convenience,
+the coefficient can be retrieved by index with the function <B>correlation_tensor</B>.
+
+<P>
+
+<H3><A NAME="SECTION00061400000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>invpauliexp</B> -- inverse of expansion in terms of tensor products of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="4994"></A>
+<B>invpauliexp</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img107.png"
+ ALT="$c$"></SPAN>) is the inverse of <B>pauiexp</B>. Given a list <SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img107.png"
+ ALT="$c$"></SPAN> representing
+the correlation tensor (<I>i.e.</I> expansion coefficients),
+ <B>invpauliexp</B> returns the matrix <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> given by (<A HREF="#pauliexp">4</A>).
+
+<P>
+
+<H3><A NAME="SECTION00061500000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>correlation_tensor</B> -- retrieve component of correlation tensor by index<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="5000"></A>
+<B>correlation_tensor</B>(<!-- MATH
+ $c,i_1,\ldots,i_n$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="104" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img108.png"
+ ALT="$c,i_1,\ldots,i_n$"></SPAN>) returns the expansion coefficient for
+the term <!-- MATH
+ $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="136" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img101.png"
+ ALT="$\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$"></SPAN> in the expansion of
+<SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN>, where <SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img107.png"
+ ALT="$c$"></SPAN> is the list of coefficients in the expansion of <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img106.png"
+ ALT="$\rho$"></SPAN> as given,
+for instance, by <B>pauliexp</B>.
+
+<P>
+
+<H3><A NAME="SECTION00061600000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> Using <B>pauliexp</B> and <B>invpauliexp</B>; an example<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+Here is an example using the three functions defined above.
+First we create three generic <SPAN CLASS="MATH"><IMG
+ WIDTH="53" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img105.png"
+ ALT="$2\times 2$"></SPAN> (complex) matrices.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="225" ALIGN="BOTTOM" BORDER="0"
+ SRC="img112.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) m1 : matrix([a1,b1]...
+...2,d2]) $
+(%i4) m3 : matrix([a3,b3],[c3,d3]) $
+\end{verbatim}
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here is the tensor product of the three matrices. This is <I>not</I> a generic element in
+the three qubit Hilbert space represented by <!-- MATH
+ $M(\mathbb{C},8)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="79" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img113.png"
+ ALT="$M(\mathbb{C},8)$"></SPAN>. For instance,
+the three matrices have <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img114.png"
+ ALT="$12$"></SPAN> complex parameters while a generic matrix in
+the tensor product space  has <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img115.png"
+ ALT="$64$"></SPAN> complex parameters.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="298" ALIGN="BOTTOM" BORDER="0"
+ SRC="img116.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) mp : m1 otimes m2 o...
+...break[0]\mathrm{d1}\*\mathrm{d2}\*\mathrm{d3}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+We compute the correlation tensor of <code>mp</code>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="68" ALIGN="BOTTOM" BORDER="0"
+ SRC="img117.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i6) pe : pauliexp(mp) $
+\end{verbatim}
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Check that the tensor has <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img115.png"
+ ALT="$64$"></SPAN> elements and see what a coefficient looks like.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="262" ALIGN="BOTTOM" BORDER="0"
+ SRC="img118.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i7) length(pe);
+\end{ve...
+...m{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Check that the inverse of the expansion gives the original matrix back
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img119.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) is ( ratsimp( invpa...
+...batim}
+\begin{dmath}[number={\%o9}]
+\mathbf{true}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Here is the convenience function to return an element of the correlation tensor by index
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="137" ALIGN="BOTTOM" BORDER="0"
+ SRC="img120.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i10) correlation_tensor...
+...m{c1}+i\*\mathrm{a3}\*\mathrm{b1}\*\mathrm{b2}}{8}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00062000000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>spinor_rotation</B>, <B>spinor_rotation_trig</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H2>
+<A NAME="5090"></A><A NAME="5092"></A>
+<A NAME="3490"></A>
+<B>spinor_rotation</B>(<!-- MATH
+ $phi,theta,gamma$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="173" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img121.png"
+ ALT="$phi,theta,gamma$"></SPAN>) returns the matrix that represents
+the operator that rotates a spinor through an angle <I>gamma</I> about the axis specified by 
+<I>phi</I> (angle about the <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img122.png"
+ ALT="$z$"></SPAN>-axis) and <I>theta</I> (inclination from the <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img122.png"
+ ALT="$z$"></SPAN>-axis). The function <B>spinor_rotation_trig</B>(<!-- MATH
+ $phi,theta,gamma$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="173" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img121.png"
+ ALT="$phi,theta,gamma$"></SPAN>)
+returns the same matrix expressed only with cosines and sines. This is the standard
+axis-angle parameterization.  Explicitly the matrices are
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="304" ALIGN="BOTTOM" BORDER="0"
+ SRC="img123.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) spinor_rotation(phi...
+...}\right)+\cos \left(\frac{\gamma}{2}\right)\cr }\end{dmath}.
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+
+<H2><A NAME="SECTION00063000000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>insert_operator</B> -- insert single qubit operators in <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN>-qubit operator</A>
+</H2>
+ <A NAME="5109"></A>
+<B>insert_operator</B>(<!-- MATH
+ $nbits,[op1,i1,i2,..],[op2,j2,j2,...],...$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="347" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img124.png"
+ ALT="$nbits,[op1,i1,i2,..],[op2,j2,j2,...],...$"></SPAN>) returns
+the operator <!-- MATH
+ $\mathbb{1}_2^{\otimes \mbox{nbits}}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="75" HEIGHT="57" ALIGN="MIDDLE" BORDER="0"
+ SRC="img125.png"
+ ALT="$\mathbb{1}_2^{\otimes \mbox{nbits}}$"></SPAN>, with some of the identity operators
+<SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img126.png"
+ ALT="$\mathbb{1}_2$"></SPAN> substituted by the operators <I>op1,op2,...</I> at the indices specified
+by the indices <!-- MATH
+ $i1,i2,\ldots,j1,j2,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="183" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img127.png"
+ ALT="$i1,i2,\ldots,j1,j2,\ldots$"></SPAN>. Each replacement operator replaces a single
+qubit identity operator <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img126.png"
+ ALT="$\mathbb{1}_2$"></SPAN>, even if the replacement operator has dimension
+other than <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img128.png"
+ ALT="$2$"></SPAN>. 
+ For example
+
+<P>
+<DIV ALIGN="CENTER">
+<code>insert_operator(8,[pauli[1],1,3],[pauli[2],2,5],[pauli[3],8])</code>
+
+</DIV>
+returns
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\sigma_x \otimes \sigma_y \otimes \sigma_x \otimes \mathbb{1}_2 
+  \otimes \sigma_y \otimes  \mathbb{1}_2 \otimes  \mathbb{1}_2   \otimes \sigma_z.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="355" HEIGHT="38" BORDER="0"
+ SRC="img129.png"
+ ALT="\begin{displaymath}
+\sigma_x \otimes \sigma_y \otimes \sigma_x \otimes \mathbb{1...
+..._y \otimes \mathbb{1}_2 \otimes \mathbb{1}_2 \otimes \sigma_z.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+<B>insert_operator</B> is used to build the operators and gates listed below.
+
+<P>
+
+<H2><A NAME="SECTION00064000000000000000"></A>
+<A NAME="3552"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Gates
+</H2>
+
+<H3><A NAME="SECTION00064100000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>hadamard</B> operator<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="5115"></A>
+<I>qinf</I> defines both a variable and a function named <B>hadamard</B>.
+The value of the  variable <B>hadamard</B> is as follows,
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="146" ALIGN="BOTTOM" BORDER="0"
+ SRC="img130.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) hadamard;
+\end{verb...
+...1}{\sqrt{2}}&amp;\linebreak[0]-\frac{1}{\sqrt{2}}\cr }\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+The function <B>hadamard</B>(<!-- MATH
+ $nbits,i1,i2,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="141" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img131.png"
+ ALT="$nbits,i1,i2,\ldots$"></SPAN>)  returns the tensor product
+of <I>nbits</I> one-qubit operators each of which is <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img126.png"
+ ALT="$\mathbb{1}_2$"></SPAN> except
+for the operators in positions <I>i1,i2,...</I> which are the hadamard
+operator given by the variable <B>hadamard</B>. The function is defined
+by <code>hadamard(nbits,[t]) := insert_operator(nbits,cons(hadamard,t))</code>,
+which is an idiom that will work for similar user defined functions as well.
+The dummy argument <code>[t]</code> causes all arguments after <code>nbits</code> to
+be collected in a single list. The <I>Maxima</I> function 
+<A NAME="tex2html39"
+  HREF="maxima_html/maxima_37.html#IDX1223"><B>cons</B></A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP><A NAME="5148"></A>, invoked as <B>cons</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="88" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img132.png"
+ ALT="$expr,list$"></SPAN>),
+returns the list given by  prepending 
+ <code>expr</code> to the list <code>list</code>. 
+
+<P>
+
+<H3><A NAME="SECTION00064200000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>controlled_gate</B> -- gate with <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN> control qubits</A>
+</H3>
+<A NAME="5155"></A>
+A controlled gate applies an operator <SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img133.png"
+ ALT="$m$"></SPAN> to a single qubit (the target) in a register only if
+each of a set of control qubits is set. Otherwise the operator is equivalent to
+the identity operator. In any case, the operator is the identity on every
+qubit other than the target.
+The function <B>controlled_gate</B>(<!-- MATH
+ $nbits,qop,t,clst$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="152" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img134.png"
+ ALT="$nbits,qop,t,clst$"></SPAN>)
+creates a controlled gate with one or more control qubits embedded in
+a <code>nbits</code>-qubit operator. The target qubit is at the index <code>t</code>,
+while the control qubits are at the indices listed in the list <code>clst</code>.
+In the returned operator, the <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img126.png"
+ ALT="$\mathbb{1}_2$"></SPAN> operator is at the remaining positions.
+The controlled gate operator applies <code>qop</code> at qubit <code>t</code> if all of
+the control qubits are set (ie are <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$1$"></SPAN>) and is equivalent to the identity operator
+otherwise.
+For instance a <B>cnot</B><A NAME="3588"></A> operator on <!-- MATH
+ $H_2\otimes H_2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="84" HEIGHT="39" ALIGN="MIDDLE" BORDER="0"
+ SRC="img135.png"
+ ALT="$H_2\otimes H_2$"></SPAN> is given by
+<code>controlled_gate(2,pauli[1],2,[1])</code>.
+The controlled gate in an <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN>-qubit space with <SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img136.png"
+ ALT="$n-1$"></SPAN> control bits and
+the <SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$1$"></SPAN>-qubit target operator <SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img133.png"
+ ALT="$m$"></SPAN> is implemented in <I>qinf</I> as
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\mathbb{1}_{2^n} + \left({\lvert 1 \rangle}{\langle 1 \rvert}\right)^{\otimes{n-1}}
+    \otimes (m-\mathbb{1}_2).
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="279" HEIGHT="38" BORDER="0"
+ SRC="img137.png"
+ ALT="\begin{displaymath}
+\mathbb{1}_{2^n} + \left({\lvert 1 \rangle}{\langle 1 \rvert}\right)^{\otimes{n-1}}
+\otimes (m-\mathbb{1}_2).
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+In the case that this  controlled gate operator is embedded in an operator in a larger space,
+the same formula is used, with additional factors of <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img126.png"
+ ALT="$\mathbb{1}_2$"></SPAN> inserted at the 
+appropriate places. Also the target qubit may occupy any index. This is implemented
+via the <B>insert_operator</B> function described above.
+
+<P>
+
+<H3><A NAME="SECTION00064300000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>cnot</B>, <B>cphase</B>, <B>crot</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="5166"></A><A NAME="5168"></A><A NAME="5170"></A>
+ <B>cnot</B>(<!-- MATH
+ $nbits,t,c1,c2,\ldots$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="161" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img138.png"
+ ALT="$nbits,t,c1,c2,\ldots$"></SPAN>) returns a cnot gate on an <code>nbits</code>-qubit
+register with the target at index <code>t</code> and control qubits at indices
+<code>c1,c2,...</code>. The definition of this function is
+<code>cnot(nbits,t,[c]) := controlled_gate(nbits,pauli[1],t,c)</code>.
+The functions <B>cphase</B> and <B>crot</B> are defined in the same way except
+that operators <code>pauli[3]</code> and  <code>%i*pauli[2]</code> respectively are
+substituted for <code>pauli[1]</code>. For example, the elementary cnot gate
+is given by <code>cnot(2,2,1)</code>.
+
+<H3><A NAME="SECTION00064400000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>swap</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="5176"></A>
+<B>swap</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="107" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img139.png"
+ ALT="$nbits,t1,t2$"></SPAN>) returns the operator that swaps qubits <code>t1</code>
+and <code>t2</code> in an  <code>nbits</code>-qubit register. It is defined by
+<code>swap(nbits,t1,t2) := cnot(nbits,t1,t2) . cnot(nbits,t2,t1) . cnot(nbits,t1,t2)</code>.
+
+<H3><A NAME="SECTION00064500000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>toffoli</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="5180"></A>
+This function is provided for convenience. It is defined by
+<code>toffoli(nbits,t,c1,c2) := cnot(nbits,t,c1,c2)</code>. Note that there
+are exactly two control qubits.
+
+<H3><A NAME="SECTION00064600000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>fredkin</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H3>
+<A NAME="5183"></A>
+<B>fredkin</B>(<SPAN CLASS="MATH"><IMG
+ WIDTH="126" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img140.png"
+ ALT="$nbits,t1,t2,c$"></SPAN>) is controlled swap operator. The qubits at indices
+<code>t1</code> and <code>t2</code> are swapped if the control qubit at index <code>c</code> is set.
+<BR CLEAR="ALL">
+<HR>
+<BR><HR>
+<ADDRESS>
+John Lapeyre
+2008-09-02
+</ADDRESS>
+</BODY>
+</HTML>

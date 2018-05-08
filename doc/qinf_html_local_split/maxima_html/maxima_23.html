@@ -1,0 +1,1069 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html401/loose.dtd">
+<html>
+<!-- Created on July, 31 2008 by texi2html 1.76 -->
+<!--
+Written by: Lionel Cons <Lionel.Cons@cern.ch> (original author)
+            Karl Berry  <karl@freefriends.org>
+            Olaf Bachmann <obachman@mathematik.uni-kl.de>
+            and many others.
+Maintained by: Many creative people <dev@texi2html.cvshome.org>
+Send bugs and suggestions to <users@texi2html.cvshome.org>
+
+-->
+<head>
+<title>Maxima Manual: 23. Numerical</title>
+
+<meta name="description" content="Maxima Manual: 23. Numerical">
+<meta name="keywords" content="Maxima Manual: 23. Numerical">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2html 1.76">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+pre.display {font-family: serif}
+pre.format {font-family: serif}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: serif; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: serif; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.sansserif {font-family:sans-serif; font-weight:normal;}
+ul.toc {list-style: none}
+body
+{
+    color: black;
+    background: white; 
+    margin-left: 8%;
+    margin-right: 13%;
+}
+
+h1
+{
+    margin-left: +8%;
+    font-size: 150%;
+    font-family: sans-serif
+}
+
+h2
+{
+    font-size: 125%;
+    font-family: sans-serif
+}
+
+h3
+{
+    font-size: 100%;
+    font-family: sans-serif
+}
+
+h2,h3,h4,h5,h6 { margin-left: +4%; }
+
+div.textbox
+{
+    border: solid;
+    border-width: thin;
+    /* width: 100%; */
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em
+}
+
+div.titlebox
+{
+    border: none;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+    background: rgb(200,255,255);
+    font-family: sans-serif
+}
+
+div.synopsisbox
+{
+    border: none;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
+     background: rgb(255,220,255);
+    /*background: rgb(200,255,255); */
+    /* font-family: fixed */
+}
+
+pre.example
+{
+    border: 1px solid gray;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    /* background: rgb(247,242,180); */ /* kind of sandy */
+    /* background: rgb(200,255,255); */ /* sky blue */
+    background-color: #F1F5F9; /* light blue-gray */
+    /* font-family: "Lucida Console", monospace */
+}
+
+div.spacerbox
+{
+    border: none;
+    padding-top: 2em;
+    padding-bottom: 2em
+}
+
+div.image
+{
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+}
+
+div.categorybox
+{
+    border: 1px solid gray;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: rgb(247,242,220);
+}
+
+
+-->
+</style>
+
+<link rel="icon" href="http://maxima.sourceforge.net/favicon.ico"/>
+</head>
+
+<body lang="en" bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#800080" alink="#FF0000">
+
+<a name="Numerical"></a>
+<a name="SEC74"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="maxima_22.html#SEC73" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC75" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima_22.html#SEC71" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h1 class="chapter"> 23. Numerical </h1>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top"><a href="#SEC75">23.1 Introduction to fast Fourier transform</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">                     
+</td></tr>
+<tr><td align="left" valign="top"><a href="#SEC76">23.2 Functions and Variables for fast Fourier transform</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#SEC77">23.3 Introduction to Fourier series</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top"><a href="#SEC78">23.4 Functions and Variables for Fourier series</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<p><a name="Item_003a-Introduction-to-fast-Fourier-transform"></a>
+</p><hr size="6">
+<a name="Introduction-to-fast-Fourier-transform"></a>
+<a name="SEC75"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC74" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC76" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 23.1 Introduction to fast Fourier transform </h2>
+
+<p>The <code>fft</code> package comprises functions for the numerical (not symbolic) computation
+of the fast Fourier transform.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Fourier transform}
+ &middot;
+@ref{Category: Numerical methods}
+ &middot;
+@ref{Category: Share packages}
+ &middot;
+@ref{Category: Package fft}
+</p>
+</div>
+
+
+
+
+<p><a name="Item_003a-Functions-and-Variables-for-fast-Fourier-transform"></a>
+</p><hr size="6">
+<a name="Functions-and-Variables-for-fast-Fourier-transform"></a>
+<a name="SEC76"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC75" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC77" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 23.2 Functions and Variables for fast Fourier transform </h2>
+
+<p><a name="Item_003a-polartorect"></a>
+</p><dl>
+<dt><u>Function:</u> <b>polartorect</b><i> (<var>magnitude_array</var>, <var>phase_array</var>)</i>
+<a name="IDX717"></a>
+</dt>
+<dd><p>Translates complex values of the form <code>r %e^(%i t)</code> to the form <code>a + b %i</code>.
+<code>load (&quot;fft&quot;)</code> loads this function into Maxima. See also <code>fft</code>.
+</p>
+<p>The magnitude and phase, <code>r</code> and <code>t</code>, are taken from <var>magnitude_array</var> and
+<var>phase_array</var>, respectively. The original values of the input arrays are
+replaced by the real and imaginary parts, <code>a</code> and <code>b</code>, on return. The outputs are
+calculated as
+</p>
+<pre class="example">a: r cos (t)
+b: r sin (t)
+</pre>
+<p>The input arrays must be the same size and 1-dimensional.
+The array size need not be a power of 2.
+</p>
+<p><code>polartorect</code> is the inverse function of <code>recttopolar</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fft}
+ &middot;
+@ref{Category: Complex variables}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-recttopolar"></a>
+</p><dl>
+<dt><u>Function:</u> <b>recttopolar</b><i> (<var>real_array</var>, <var>imaginary_array</var>)</i>
+<a name="IDX718"></a>
+</dt>
+<dd><p>Translates complex values of the form <code>a + b %i</code> to the form <code>r %e^(%i t)</code>.
+<code>load (&quot;fft&quot;)</code> loads this function into Maxima. See also <code>fft</code>.
+</p>
+<p>The real and imaginary parts, <code>a</code> and <code>b</code>, are taken from <var>real_array</var> and
+<var>imaginary_array</var>, respectively. The original values of the input arrays
+are replaced by the magnitude and angle, <code>r</code> and <code>t</code>, on return. The outputs are
+calculated as
+</p>
+<pre class="example">r: sqrt (a^2 + b^2)
+t: atan2 (b, a)
+</pre>
+<p>The computed angle is in the range <code>-%pi</code> to <code>%pi</code>. 
+</p>
+<p>The input arrays must be the same size and 1-dimensional.
+The array size need not be a power of 2.
+</p>
+<p><code>recttopolar</code> is the inverse function of <code>polartorect</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fft}
+ &middot;
+@ref{Category: Complex variables}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-ift"></a>
+</p><dl>
+<dt><u>Function:</u> <b>ift</b><i> (<var>real_array</var>, <var>imaginary_array</var>)</i>
+<a name="IDX719"></a>
+</dt>
+<dd><p>Fast inverse discrete Fourier transform. <code>load (&quot;fft&quot;)</code> loads this function
+into Maxima.
+</p>
+<p><code>ift</code> carries out the inverse complex fast Fourier transform on
+1-dimensional floating point arrays. The inverse transform is defined as
+</p>
+<pre class="example">x[j]: sum (y[j] exp (+2 %i %pi j k / n), k, 0, n-1)
+</pre>
+<p>See <code>fft</code> for more details.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fft}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-fft"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fft</b><i> (<var>real_array</var>, <var>imaginary_array</var>)</i>
+<a name="IDX720"></a>
+</dt>
+<dt><u>Function:</u> <b>ift</b><i> (<var>real_array</var>, <var>imaginary_array</var>)</i>
+<a name="IDX721"></a>
+</dt>
+<dt><u>Function:</u> <b>recttopolar</b><i> (<var>real_array</var>, <var>imaginary_array</var>)</i>
+<a name="IDX722"></a>
+</dt>
+<dt><u>Function:</u> <b>polartorect</b><i> (<var>magnitude_array</var>, <var>phase_array</var>)</i>
+<a name="IDX723"></a>
+</dt>
+<dd><p>Fast Fourier transform and related functions. <code>load (&quot;fft&quot;)</code>
+loads these functions into Maxima.
+</p>
+<p><code>fft</code> and <code>ift</code> carry out the complex fast Fourier transform and
+inverse transform, respectively, on 1-dimensional floating
+point arrays. The size of <var>imaginary_array</var> must equal the size of <var>real_array</var>.
+</p>
+<p><code>fft</code> and <code>ift</code> operate in-place. That is, on return from <code>fft</code> or <code>ift</code>,
+the original content of the input arrays is replaced by the output.
+The <code>fillarray</code> function can make a copy of an array, should it
+be necessary.
+</p>
+<p>The discrete Fourier transform and inverse transform are defined
+as follows. Let <code>x</code> be the original data, with
+</p>
+<pre class="example">x[i]: real_array[i] + %i imaginary_array[i]
+</pre>  
+<p>Let <code>y</code> be the transformed data. The forward and inverse transforms are
+</p>
+<pre class="example">y[k]: (1/n) sum (x[j] exp (-2 %i %pi j k / n), j, 0, n-1)
+
+x[j]:       sum (y[j] exp (+2 %i %pi j k / n), k, 0, n-1)
+</pre>
+<p>Suitable arrays can be allocated by the <code>array</code> function. For example:
+</p>
+<pre class="example">array (my_array, float, n-1)$
+</pre>
+<p>declares a 1-dimensional array with n elements, indexed from 0 through
+n-1 inclusive. The number of elements n must be equal to 2^m for some m.
+</p>
+<p><code>fft</code> can be applied to real data (imaginary array all zeros) to obtain
+sine and cosine coefficients. After calling <code>fft</code>, the sine and cosine
+coefficients, say <code>a</code> and <code>b</code>, can be calculated as
+</p>
+<pre class="example">a[0]: real_array[0]
+b[0]: 0
+</pre>
+<p>and
+</p>
+<pre class="example">a[j]: real_array[j] + real_array[n-j]
+b[j]: imaginary_array[j] - imaginary_array[n-j]
+</pre>
+<p>for j equal to 1 through n/2-1, and
+</p>
+<pre class="example">a[n/2]: real_array[n/2]
+b[n/2]: 0
+</pre>
+<p><code>recttopolar</code> translates complex values of the form <code>a + b %i</code> to
+the form <code>r %e^(%i t)</code>. See <code>recttopolar</code>.
+</p>
+<p><code>polartorect</code> translates complex values of the form <code>r %e^(%i t)</code>
+to the form <code>a + b %i</code>. See <code>polartorect</code>.
+</p>
+<p><code>demo (&quot;fft&quot;)</code> displays a demonstration of the <code>fft</code> package.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fft}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-fortindent"></a>
+</p><dl>
+<dt><u>Option variable:</u> <b>fortindent</b>
+<a name="IDX724"></a>
+</dt>
+<dd><p>Default value: 0
+</p>
+<p><code>fortindent</code> controls the left margin indentation of
+expressions printed out by the <code>fortran</code> command.  0 gives normal
+printout (i.e., 6 spaces), and positive values will causes the
+expressions to be printed farther to the right.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Translation and compilation}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-fortran"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fortran</b><i> (<var>expr</var>)</i>
+<a name="IDX725"></a>
+</dt>
+<dd><p>Prints <var>expr</var> as a Fortran statement.
+The output line is indented with spaces.
+If the line is too long, <code>fortran</code> prints continuation lines.
+<code>fortran</code> prints the exponentiation operator <code>^</code> as <code>**</code>,
+and prints a complex number <code>a + b %i</code> in the form <code>(a,b)</code>.
+</p>
+<p><var>expr</var> may be an equation. If so, <code>fortran</code> prints an assignment
+statement, assigning the right-hand side of the equation to the left-hand side.
+In particular, if the right-hand side of <var>expr</var> is the name of a matrix,
+then <code>fortran</code> prints an assignment statement for each element of the matrix.
+</p>
+<p>If <var>expr</var> is not something recognized by <code>fortran</code>,
+the expression is printed in <code>grind</code> format without complaint.
+<code>fortran</code> does not know about lists, arrays, or functions.
+</p>
+<p><code>fortindent</code> controls the left margin of the printed lines.
+0 is the normal margin (i.e., indented 6 spaces). Increasing <code>fortindent</code>
+causes expressions to be printed further to the right.
+</p>
+<p>When <code>fortspaces</code> is <code>true</code>, <code>fortran</code> fills out
+each printed line with spaces to 80 columns.
+</p>
+<p><code>fortran</code> evaluates its arguments;
+quoting an argument defeats evaluation.
+<code>fortran</code> always returns <code>done</code>.
+</p>
+<p>Examples:
+</p>
+<pre class="verbatim">(%i1) expr: (a + b)^12$
+(%i2) fortran (expr);
+      (b+a)**12                                                                 
+(%o2)                         done
+(%i3) fortran ('x=expr);
+      x = (b+a)**12                                                             
+(%o3)                         done
+(%i4) fortran ('x=expand (expr));
+      x = b**12+12*a*b**11+66*a**2*b**10+220*a**3*b**9+495*a**4*b**8+792
+     1   *a**5*b**7+924*a**6*b**6+792*a**7*b**5+495*a**8*b**4+220*a**9*b
+     2   **3+66*a**10*b**2+12*a**11*b+a**12
+(%o4)                         done
+(%i5) fortran ('x=7+5*%i);
+      x = (7,5)                                                                 
+(%o5)                         done
+(%i6) fortran ('x=[1,2,3,4]);
+      x = [1,2,3,4]                                                             
+(%o6)                         done
+(%i7) f(x) := x^2$
+(%i8) fortran (f);
+      f                                                                         
+(%o8)                         done
+</pre>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Translation and compilation}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-fortspaces"></a>
+</p><dl>
+<dt><u>Option variable:</u> <b>fortspaces</b>
+<a name="IDX726"></a>
+</dt>
+<dd><p>Default value: <code>false</code>
+</p>
+<p>When <code>fortspaces</code> is <code>true</code>, <code>fortran</code> fills out
+each printed line with spaces to 80 columns.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Translation and compilation}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-horner"></a>
+</p><dl>
+<dt><u>Function:</u> <b>horner</b><i> (<var>expr</var>, <var>x</var>)</i>
+<a name="IDX727"></a>
+</dt>
+<dt><u>Function:</u> <b>horner</b><i> (<var>expr</var>)</i>
+<a name="IDX728"></a>
+</dt>
+<dd><p>Returns a rearranged representation of <var>expr</var> as
+in Horner's rule, using <var>x</var> as the main variable if it is specified.
+<code>x</code> may be omitted in which case the main variable of the canonical rational expression
+form of <var>expr</var> is used.
+</p>
+<p><code>horner</code> sometimes improves stability if <code>expr</code> is
+to be numerically evaluated.  It is also useful if Maxima is used to
+generate programs to be run in Fortran. See also <code>stringout</code>.
+</p>
+<pre class="example">(%i1) expr: 1e-155*x^2 - 5.5*x + 5.2e155;
+                           2
+(%o1)            1.0E-155 x  - 5.5 x + 5.2E+155
+(%i2) expr2: horner (%, x), keepfloat: true;
+(%o2)            (1.0E-155 x - 5.5) x + 5.2E+155
+(%i3) ev (expr, x=1e155);
+Maxima encountered a Lisp error:
+
+ floating point overflow
+
+Automatically continuing.
+To reenable the Lisp debugger set *debugger-hook* to nil.
+(%i4) ev (expr2, x=1e155);
+(%o4)                       7.0E+154
+</pre>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Numerical methods}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-find_005froot"></a>
+</p><dl>
+<dt><u>Function:</u> <b>find_root</b><i> (<var>expr</var>, <var>x</var>, <var>a</var>, <var>b</var>)</i>
+<a name="IDX729"></a>
+</dt>
+<dt><u>Function:</u> <b>find_root</b><i> (<var>f</var>, <var>a</var>, <var>b</var>)</i>
+<a name="IDX730"></a>
+</dt>
+<dt><u>Option variable:</u> <b>find_root_error</b>
+<a name="IDX731"></a>
+</dt>
+<dt><u>Option variable:</u> <b>find_root_abs</b>
+<a name="IDX732"></a>
+</dt>
+<dt><u>Option variable:</u> <b>find_root_rel</b>
+<a name="IDX733"></a>
+</dt>
+<dd><p>Finds a root of the expression <var>expr</var> or the function <var>f</var>
+over the closed interval <em>[<var>a</var>, <var>b</var>]</em>.
+The expression <var>expr</var> may be an equation,
+in which case <code>find_root</code> seeks a root of <code>lhs(<var>expr</var>) - rhs(<var>expr</var>)</code>.
+</p>
+<p>Given that Maxima can evaluate <var>expr</var> or <var>f</var> over <em>[<var>a</var>, <var>b</var>]</em>
+and that <var>expr</var> or <var>f</var> is continuous,
+<code>find_root</code> is guaranteed to find the root,
+or one of the roots if there is more than one.
+</p>
+<p><code>find_root</code> initially applies binary search.
+If the function in question appears to be smooth enough,
+<code>find_root</code> applies linear interpolation instead.
+</p>
+<p>The accuracy of <code>find_root</code> is governed by <code>find_root_abs</code> and <code>find_root_rel</code>.
+<code>find_root</code> stops when the function in question
+evaluates to something less than or equal to <code>find_root_abs</code>,
+or if successive approximants <var>x_0</var>, <var>x_1</var> differ by no more than
+<code>find_root_rel * max(abs(x_0), abs(x_1))</code>.
+The default values of <code>find_root_abs</code> and <code>find_root_rel</code> are both zero.
+</p>
+<p><code>find_root</code> expects the function in question to have a different sign at the endpoints
+of the search interval.
+If this condition is not met,
+the behavior of <code>find_root</code> is governed by <code>find_root_error</code>.
+When <code>find_root_error</code> is <code>true</code>,
+<code>find_root</code> prints an error message.
+Otherwise <code>find_root</code> returns the value of <code>find_root_error</code>.
+The default value of <code>find_root_error</code> is <code>true</code>.
+</p>
+<p>If <var>f</var> evaluates to something other than a number at any step in the search algorithm,
+<code>find_root</code> returns a partially-evaluated <code>find_root</code> expression.
+</p>
+<p>The order of <var>a</var> and <var>b</var> is ignored;
+the region in which a root is sought is <em>[min(<var>a</var>, <var>b</var>), max(<var>a</var>, <var>b</var>)]</em>.
+</p>
+<p>Examples:
+</p>
+<pre class="example">(%i1) f(x) := sin(x) - x/2;
+                                        x
+(%o1)                  f(x) := sin(x) - -
+                                        2
+(%i2) find_root (sin(x) - x/2, x, 0.1, %pi);
+(%o2)                   1.895494267033981
+(%i3) find_root (sin(x) = x/2, x, 0.1, %pi);
+(%o3)                   1.895494267033981
+(%i4) find_root (f(x), x, 0.1, %pi);
+(%o4)                   1.895494267033981
+(%i5) find_root (f, 0.1, %pi);
+(%o5)                   1.895494267033981
+(%i6) find_root (exp(x) = y, x, 0, 100);
+                            x
+(%o6)           find_root(%e  = y, x, 0.0, 100.0)
+(%i7) find_root (exp(x) = y, x, 0, 100), y = 10;
+(%o7)                   2.302585092994046
+(%i8) log (10.0);
+(%o8)                   2.302585092994046
+</pre>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Algebraic equations}
+ &middot;
+@ref{Category: Numerical methods}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-newton"></a>
+</p><dl>
+<dt><u>Function:</u> <b>newton</b><i> (<var>expr</var>, <var>x</var>, <var>x_0</var>, <var>eps</var>)</i>
+<a name="IDX734"></a>
+</dt>
+<dd><p>Returns an approximate solution of <code><var>expr</var> = 0</code> by Newton's method,
+considering <var>expr</var> to be a function of one variable, <var>x</var>.
+The search begins with <code><var>x</var> = <var>x_0</var></code>
+and proceeds until <code>abs(<var>expr</var>) &lt; <var>eps</var></code>
+(with <var>expr</var> evaluated at the current value of <var>x</var>).
+</p>
+<p><code>newton</code> allows undefined variables to appear in <var>expr</var>,
+so long as the termination test <code>abs(<var>expr</var>) &lt; <var>eps</var></code> evaluates
+to <code>true</code> or <code>false</code>.
+Thus it is not necessary that <var>expr</var> evaluate to a number.
+</p>
+<p><code>load(newton1)</code> loads this function.
+</p>
+<p>See also <code>realroots</code>, <code>allroots</code>, <code>find_root</code>, and <code>mnewton</code>.
+</p>
+<p>Examples:
+</p>
+<pre class="example">(%i1) load (newton1);
+(%o1) /usr/share/maxima/5.10.0cvs/share/numeric/newton1.mac
+(%i2) newton (cos (u), u, 1, 1/100);
+(%o2)                   1.570675277161251
+(%i3) ev (cos (u), u = %);
+(%o3)                 1.2104963335033528E-4
+(%i4) assume (a &gt; 0);
+(%o4)                        [a &gt; 0]
+(%i5) newton (x^2 - a^2, x, a/2, a^2/100);
+(%o5)                  1.00030487804878 a
+(%i6) ev (x^2 - a^2, x = %);
+                                           2
+(%o6)                6.098490481853958E-4 a
+</pre>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Algebraic equations}
+ &middot;
+@ref{Category: Numerical methods}
+</p>
+</div>
+
+
+</dd></dl>
+
+
+<p><a name="Item_003a-Introduction-to-Fourier-series"></a>
+</p><hr size="6">
+<a name="Introduction-to-Fourier-series"></a>
+<a name="SEC77"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC76" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC78" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 23.3 Introduction to Fourier series </h2>
+
+<p>The <code>fourie</code> package comprises functions for the symbolic computation
+of Fourier series.
+There are functions in the <code>fourie</code> package to calculate Fourier integral
+coefficients and some functions for manipulation of expressions.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Fourier transform}
+ &middot;
+@ref{Category: Share packages}
+ &middot;
+@ref{Category: Package fourie}
+</p>
+</div>
+
+
+
+<p><a name="Item_003a-Functions-and-Variables-for-Fourier-series"></a>
+</p><hr size="6">
+<a name="Functions-and-Variables-for-Fourier-series"></a>
+<a name="SEC78"></a>
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC77" title="Previous section in reading order"> &lt; </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next section in reading order"> &gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="#SEC74" title="Up section"> Up </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<h2 class="section"> 23.4 Functions and Variables for Fourier series </h2>
+
+<p><a name="Item_003a-equalp"></a>
+</p><dl>
+<dt><u>Function:</u> <b>equalp</b><i> (<var>x</var>, <var>y</var>)</i>
+<a name="IDX735"></a>
+</dt>
+<dd><p>Returns <code>true</code> if <code>equal (<var>x</var>, <var>y</var>)</code> otherwise <code>false</code> (doesn't give an
+error message like <code>equal (x, y)</code> would do in this case).
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-remfun"></a>
+</p><dl>
+<dt><u>Function:</u> <b>remfun</b><i> (<var>f</var>, <var>expr</var>)</i>
+<a name="IDX736"></a>
+</dt>
+<dt><u>Function:</u> <b>remfun</b><i> (<var>f</var>, <var>expr</var>, <var>x</var>)</i>
+<a name="IDX737"></a>
+</dt>
+<dd><p><code>remfun (<var>f</var>, <var>expr</var>)</code>
+replaces all occurrences of <code><var>f</var> (<var>arg</var>)</code> by <var>arg</var> in <var>expr</var>.
+</p>
+<p><code>remfun (<var>f</var>, <var>expr</var>, <var>x</var>)</code>
+replaces all occurrences of <code><var>f</var> (<var>arg</var>)</code> by <var>arg</var> in <var>expr</var>
+only if <var>arg</var> contains the variable <var>x</var>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-funp"></a>
+</p><dl>
+<dt><u>Function:</u> <b>funp</b><i> (<var>f</var>, <var>expr</var>)</i>
+<a name="IDX738"></a>
+</dt>
+<dt><u>Function:</u> <b>funp</b><i> (<var>f</var>, <var>expr</var>, <var>x</var>)</i>
+<a name="IDX739"></a>
+</dt>
+<dd><p><code>funp (<var>f</var>, <var>expr</var>)</code>
+returns <code>true</code> if <var>expr</var> contains the function <var>f</var>.
+</p>
+<p><code>funp (<var>f</var>, <var>expr</var>, <var>x</var>)</code>
+returns <code>true</code> if <var>expr</var> contains the function <var>f</var> and the variable
+<var>x</var> is somewhere in the argument of one of the instances of <var>f</var>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-absint"></a>
+</p><dl>
+<dt><u>Function:</u> <b>absint</b><i> (<var>f</var>, <var>x</var>, <var>halfplane</var>)</i>
+<a name="IDX740"></a>
+</dt>
+<dt><u>Function:</u> <b>absint</b><i> (<var>f</var>, <var>x</var>)</i>
+<a name="IDX741"></a>
+</dt>
+<dt><u>Function:</u> <b>absint</b><i> (<var>f</var>, <var>x</var>, <var>a</var>, <var>b</var>)</i>
+<a name="IDX742"></a>
+</dt>
+<dd><p><code>absint (<var>f</var>, <var>x</var>, <var>halfplane</var>)</code>
+returns the indefinite integral of <var>f</var> with respect to
+<var>x</var> in the given halfplane (<code>pos</code>, <code>neg</code>, or <code>both</code>).
+<var>f</var> may contain expressions of the form
+<code>abs (x)</code>, <code>abs (sin (x))</code>, <code>abs (a) * exp (-abs (b) * abs (x))</code>.
+</p>
+<p><code>absint (<var>f</var>, <var>x</var>)</code> is equivalent to <code>absint (<var>f</var>, <var>x</var>, pos)</code>.
+</p>
+<p><code>absint (<var>f</var>, <var>x</var>, <var>a</var>, <var>b</var>)</code>
+returns the definite integral of <var>f</var> with respect to <var>x</var> from <var>a</var> to <var>b</var>.
+<var>f</var> may include absolute values.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+ &middot;
+@ref{Category: Integral calculus}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-fourier"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fourier</b><i> (<var>f</var>, <var>x</var>, <var>p</var>)</i>
+<a name="IDX743"></a>
+</dt>
+<dd><p>Returns a list of the Fourier coefficients of <code><var>f</var>(<var>x</var>)</code> defined
+on the interval <code>[-p, p]</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-foursimp"></a>
+</p><dl>
+<dt><u>Function:</u> <b>foursimp</b><i> (<var>l</var>)</i>
+<a name="IDX744"></a>
+</dt>
+<dd><p>Simplifies <code>sin (n %pi)</code> to 0 if <code>sinnpiflag</code> is <code>true</code> and
+<code>cos (n %pi)</code> to <code>(-1)^n</code> if <code>cosnpiflag</code> is <code>true</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+ &middot;
+@ref{Category: Trigonometric functions}
+ &middot;
+@ref{Category: Simplification functions}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-sinnpiflag"></a>
+</p><dl>
+<dt><u>Option variable:</u> <b>sinnpiflag</b>
+<a name="IDX745"></a>
+</dt>
+<dd><p>Default value: <code>true</code>
+</p>
+<p>See <code>foursimp</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-cosnpiflag"></a>
+</p><dl>
+<dt><u>Option variable:</u> <b>cosnpiflag</b>
+<a name="IDX746"></a>
+</dt>
+<dd><p>Default value: <code>true</code>
+</p>
+<p>See <code>foursimp</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+
+</dd></dl>
+
+<p><a name="Item_003a-fourexpand"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fourexpand</b><i> (<var>l</var>, <var>x</var>, <var>p</var>, <var>limit</var>)</i>
+<a name="IDX747"></a>
+</dt>
+<dd><p>Constructs and returns the Fourier series from the list of
+Fourier coefficients <var>l</var> up through <var>limit</var> terms (<var>limit</var>
+may be <code>inf</code>). <var>x</var> and <var>p</var> have same meaning as in
+<code>fourier</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-fourcos"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fourcos</b><i> (<var>f</var>, <var>x</var>, <var>p</var>)</i>
+<a name="IDX748"></a>
+</dt>
+<dd><p>Returns the Fourier cosine coefficients for <code><var>f</var>(<var>x</var>)</code> defined on <code>[0, <var>p</var>]</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-foursin"></a>
+</p><dl>
+<dt><u>Function:</u> <b>foursin</b><i> (<var>f</var>, <var>x</var>, <var>p</var>)</i>
+<a name="IDX749"></a>
+</dt>
+<dd><p>Returns the Fourier sine coefficients for <code><var>f</var>(<var>x</var>)</code> defined on <code>[0, <var>p</var>]</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-totalfourier"></a>
+</p><dl>
+<dt><u>Function:</u> <b>totalfourier</b><i> (<var>f</var>, <var>x</var>, <var>p</var>)</i>
+<a name="IDX750"></a>
+</dt>
+<dd><p>Returns <code>fourexpand (foursimp (fourier (<var>f</var>, <var>x</var>, <var>p</var>)), <var>x</var>, <var>p</var>, 'inf)</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-fourint"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fourint</b><i> (<var>f</var>, <var>x</var>)</i>
+<a name="IDX751"></a>
+</dt>
+<dd><p>Constructs and returns a list of the Fourier integral coefficients of <code><var>f</var>(<var>x</var>)</code>
+defined on <code>[minf, inf]</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-fourintcos"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fourintcos</b><i> (<var>f</var>, <var>x</var>)</i>
+<a name="IDX752"></a>
+</dt>
+<dd><p>Returns the Fourier cosine integral coefficients for <code><var>f</var>(<var>x</var>)</code> on <code>[0, inf]</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<p><a name="Item_003a-fourintsin"></a>
+</p><dl>
+<dt><u>Function:</u> <b>fourintsin</b><i> (<var>f</var>, <var>x</var>)</i>
+<a name="IDX753"></a>
+</dt>
+<dd><p>Returns the Fourier sine integral coefficients for <code><var>f</var>(<var>x</var>)</code> on <code>[0, inf]</code>.
+</p>
+<div class=categorybox>
+
+&middot;
+<p>@ref{Category: Package fourie}
+</p>
+</div>
+
+</dd></dl>
+
+<hr size="6">
+<table cellpadding="1" cellspacing="1" border="0">
+<tr><td valign="middle" align="left">[<a href="#SEC74" title="Beginning of this chapter or previous chapter"> &lt;&lt; </a>]</td>
+<td valign="middle" align="left">[<a href="maxima_24.html#SEC79" title="Next chapter"> &gt;&gt; </a>]</td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left"> &nbsp; </td>
+<td valign="middle" align="left">[<a href="maxima.html#SEC_Top" title="Cover (top) of document">Top</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_toc.html#SEC_Contents" title="Table of contents">Contents</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_78.html#SEC314" title="Index">Index</a>]</td>
+<td valign="middle" align="left">[<a href="maxima_abt.html#SEC_About" title="About (help)"> ? </a>]</td>
+</tr></table>
+<p>
+ <font size="-1">
+  This document was generated by <em>root</em> on <em>July, 31 2008</em> using <a href="http://texi2html.cvshome.org/"><em>texi2html 1.76</em></a>.
+ </font>
+ <br>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,628 @@
+
+<tex2html_mydb_mark>#1#%\bibliographystyle{apsrev}
+
+<tex2html_mydb_mark>#2#%\bibliographystyle{apsrmp} % makes a little garbage in html not too bad
+
+<tex2html_mydb_mark>#3#%\bibliographystyle{plain}
+
+<tex2html_mydb_mark>#4#%\bibliographystyle{plainnat}
+
+<tex2html_mydb_mark>#5#%\bibliographystyle{plain_ep_doi_ht}
+
+<tex2html_mydb_mark>#6#%\bibliographystyle{naturemag} % eprints, pretty, no links
+
+<tex2html_mydb_mark>#7#%\bibliographystyle{naturemag_ep_doi_hr} % eprints, pretty, no links
+
+<tex2html_mydb_mark>#8#%\bibliographystyle{naturemag_ep_doi_ht} % eprints, pretty, no links
+
+<tex2html_mydb_mark>#9#%\bibliographystyle{plainurl} % no eprint, links to aps
+
+<tex2html_mydb_mark>#10#%\bibliographystyle{plainhtml} % kinda garbage from latex2html
+
+<tex2html_mydb_mark>#11#% when these lines were placed too far below here,
+
+<tex2html_mydb_mark>#12#% makeindex mysteriously produced no entries
+
+<tex2html_mydb_mark>#13#% This is to get the bibliography to work
+
+<tex2html_mydb_mark>#14#% putting #2 in looks like garbage
+
+<tex2html_mydb_mark>#15#%\renewcommand{\href}[2]{\url{#1} {#2}}
+
+<tex2html_mydb_mark>#16#%%%%%%%%%%%%
+
+<tex2html_mydb_mark>#17#% bug: sections only bold function names in TOC if
+
+<tex2html_mydb_mark>#18#% other parts in title also have math in them.
+
+<tex2html_mydb_mark>#19#% kludge: end each section title with $.$
+
+<tex2html_mydb_mark>#20#%%%%%%%%
+
+<tex2html_mydb_mark>#21#% Make boxed minipage  wider for html version
+
+<tex2html_mydb_mark>#22#% links to the maxima manual. this also gives the top directory
+
+<tex2html_mydb_mark>#23#%\def\maxdocdir{/usr/share/doc/maxima-doc/html/}
+
+<tex2html_mydb_mark>#24#%\def\maxdocdir{../maxima_html/}
+
+<tex2html_mydb_mark>#25#% umaxman prints word in bold with dagger. makes index entry. makes link to manual
+
+<tex2html_mydb_mark>#26#% same, no dagger, no bold
+
+<tex2html_mydb_mark>#27#% bizarre bugs if I put two newcommands in one \latex or \html command
+
+<tex2html_mydb_mark>#28#%\usepackage{pdftex} % not there
+
+<tex2html_mydb_mark>#29#%\usepackage{mathpazo}
+
+<tex2html_mydb_mark>#30#%% following is added by imaxima output
+
+<tex2html_mydb_mark>#31#%bbold above conflicts with amssymb \usepackage{amssymb}
+
+<tex2html_mydb_mark>#32#%\usepackage{amssymb} this breaks bbold numeral
+
+<tex2html_mydb_mark>#33#%\usepackage{amsmath}
+
+<tex2html_mydb_mark>#34#%% end lines added by imaxima output
+
+<tex2html_mydb_mark>#35#% refer to a function and add an index entry
+
+<tex2html_mydb_mark>#36#% version with \bf makes html fail to bf on most/not all uses
+
+<tex2html_mydb_mark>#37#% bold index entry plus bold in text
+
+<tex2html_mydb_mark>#38#% version with textbf  makes html fail to bf on all uses
+
+<tex2html_mydb_mark>#39#%\newcommand{\ifs}[1]{ \textbf{#1} \index{#1@{\bf #1}}} % bold index entry plus bold in text
+
+<tex2html_mydb_mark>#40#% index entry plus text
+
+<tex2html_mydb_mark>#41#% bold index entry
+
+<tex2html_mydb_mark>#42#% following doesnt work because tex sucks
+
+<tex2html_mydb_mark>#43#% italic index entry
+
+<tex2html_mydb_mark>#44#% package or software proper name, with an index entry
+
+<tex2html_mydb_mark>#45#% software name 
+
+<tex2html_mydb_mark>#46#% \marray with index entry
+
+<tex2html_mydb_mark>#47#% \func with index entry
+
+<tex2html_mydb_mark>#48#% the name of this package
+
+<tex2html_mydb_mark>#49#% use at end of sentece for period
+
+<tex2html_mydb_mark>#50#% an argument
+
+<tex2html_mydb_mark>#51#%  \begin{item}
+  
+<tex2html_mydb_mark>#52#%  \end{item}
+
+<tex2html_mydb_mark>#53#%  \begin{item}
+   
+<tex2html_mydb_mark>#54#%  \end{item}
+
+<tex2html_mydb_mark>#55#%  \begin{item}
+   
+<tex2html_mydb_mark>#56#%  \end{item}
+
+<tex2html_mydb_mark>#57#%i1) load(;SPMquot;qinf.mac;SPMquot;);
+
+<tex2html_mydb_mark>#58#%i1) 1 + 1;
+
+<tex2html_mydb_mark>#59#% fix below. := cant be used in macro. but perl can change them to
+
+<tex2html_mydb_mark>#60#% 'colon' and 'equal'
+
+<tex2html_mydb_mark>#61#%\verb|:=|  broken by some package cant remember.
+
+<tex2html_mydb_mark>#62#%i2) a : 2 * 2;
+
+<tex2html_mydb_mark>#63#%i3) a;
+
+<tex2html_mydb_mark>#64#%i4) b : expand( (x+y)^4 );
+
+<tex2html_mydb_mark>#65#%i5) b : expand( (x+y)^50 )$
+
+<tex2html_mydb_mark>#66#%i6) length(b);
+
+<tex2html_mydb_mark>#67#%i7)  1  + sqrt(2);
+
+<tex2html_mydb_mark>#68#%i8)  1  + sqrt(2), float;
+
+<tex2html_mydb_mark>#69#%i9) f(x) := 3 * cos(x);
+
+<tex2html_mydb_mark>#70#%i10) f(a);
+
+<tex2html_mydb_mark>#71#%i11) f(0);
+
+<tex2html_mydb_mark>#72#% \verb|%i|
+
+<tex2html_mydb_mark>#73#%i12) expand ( (1 + 2 * %i)^2 );
+
+<tex2html_mydb_mark>#74#%\verb|%pi|
+
+<tex2html_mydb_mark>#75#% \verb|%e|.
+
+<tex2html_mydb_mark>#76#%i13) cos(%pi/2);
+
+<tex2html_mydb_mark>#77#%i14) %e^(%i * %pi/2);
+
+<tex2html_mydb_mark>#78#% can't get this to work
+
+<tex2html_mydb_mark>#79#% there has to be a way to write the following with one argument and
+
+<tex2html_mydb_mark>#80#% one macro instead of three arguments and four macros
+
+<tex2html_mydb_mark>#81#%\maxman{\fs{ctranspose}}{\maximactranspose}\maxcom\ibd{ctranspose}
+
+<tex2html_mydb_mark>#82#% That is, there is no facility to 
+
+<tex2html_mydb_mark>#83#%distinguish between a vector in the product space of 
+
+<tex2html_mydb_mark>#84#%two qubits ${\cal H}_1 \otimes {\cal H}_2 $ and the space of
+
+<tex2html_mydb_mark>#85#%a single four state qudit.
+
+<tex2html_mydb_mark>#86#%\func{ketz}{i_1,\ldots,i_n} creates an eigenstate (ket) of $\sigma_z^{\otimes n}$
+
+<tex2html_mydb_mark>#87#%i3) ketz(1)
+
+<tex2html_mydb_mark>#88#%i4) braz(1)
+
+<tex2html_mydb_mark>#89#%i5) braz(0)
+
+<tex2html_mydb_mark>#90#%i6) braz(0,0)
+
+<tex2html_mydb_mark>#91#%i7) braz(1,1)
+
+<tex2html_mydb_mark>#92#%i8) alpha[1]*braz(1,1)+alpha[0]*braz(0,0)
+
+<tex2html_mydb_mark>#93#%i9) brax(1)
+
+<tex2html_mydb_mark>#94#%i10) bray(1,0,1)
+
+<tex2html_mydb_mark>#95#%i19) ketx(1) . brax(1);
+
+<tex2html_mydb_mark>#96#%i20) brax(1) . ketx(1);
+
+<tex2html_mydb_mark>#97#%i21) is ( ketz(0,0,0) . braz(0,0,0) =  ketz(0,0,0) . ctranspose(ketz(0,0,0)) );
+
+<tex2html_mydb_mark>#98#%i22) is ( ketz(1,0,1) . braz(1,0,1) =  proj(ketz(1,0,1)) );
+
+<tex2html_mydb_mark>#99#%i17) is ( tovect( proj(schmidt_ket(alpha))) = schmidt_ket(alpha));
+
+<tex2html_mydb_mark>#100#% here, we have to make a separate bold index entry with \ibd, otherwise the link is broken
+
+<tex2html_mydb_mark>#101#%i12) is (ketz(0,1) = ketz(0) otimes ketz(1))
+
+<tex2html_mydb_mark>#102#%i13) is (ketz(0,1) = tensor_product(ketz(0),ketz(1)))
+
+<tex2html_mydb_mark>#103#%i14) is (ketx(0,1,0) otimes kety(1,0,1)
+            
+<tex2html_mydb_mark>#104#%i2) f[x,y] := belln[x] . belln[y];
+
+<tex2html_mydb_mark>#105#%i3) genmatrix( f , 3,3,0,0);
+
+<tex2html_mydb_mark>#106#%i4) genmatrix( lambda( [x,y], belln[x] . belln[y]) , 3,3,0,0);
+
+<tex2html_mydb_mark>#107#%\verb|%| 
+
+<tex2html_mydb_mark>#108#%i5) identitymatrixp(%);
+
+<tex2html_mydb_mark>#109#%i6) identitymatrixp(genmatrix( lambda( [x,y], belln[x] . belln[y]) , 3,3,0,0));
+
+<tex2html_mydb_mark>#110#%i2) identitymatrixp(apply(;SPMquot;+;SPMquot;,map(lambda([i],proj(belln[i])),[0,1,2,3])));
+
+<tex2html_mydb_mark>#111#%i2) wxplot2d(entropy(werner(a,1,0)), [a,0,1]);
+
+<tex2html_mydb_mark>#112#%i12) [ pauli[0], pauli[1], pauli[2], pauli[3] ];
+
+<tex2html_mydb_mark>#113#%i8) is (  pauli[1] . ket_n(1,1) = -1 * ket_n(1,1) );
+
+<tex2html_mydb_mark>#114#%i9) mapapply( lambda([i,j], is (pauli[i] . ket_n(i,j) = (-1)^j * ket_n(i,j))),
+         
+<tex2html_mydb_mark>#115#%i3) genmatrix(lambda([i,j],  anticommutator(pauli[i],pauli[j])/2 ), 3,3,1,1);
+
+<tex2html_mydb_mark>#116#%i4) identitymatrixp( mat_unblocker (genmatrix(lambda([i,j],  
+         
+<tex2html_mydb_mark>#117#%i5) load(;SPMquot;itensor;SPMquot;);
+
+<tex2html_mydb_mark>#118#%i6) mapapply(lambda([i,j,k],zeromatrixp(commutator(pauli[i],pauli[j]) 
+     
+<tex2html_mydb_mark>#119#%i*levi_civita([i,j,k])*pauli[k])), listify(permutations([1,2,3])));
+
+<tex2html_mydb_mark>#120#%i2) m1 : matrix([a1,b1],[c1,d1]);
+
+<tex2html_mydb_mark>#121#%i3) m2 : matrix([a2,b2],[c2,d2]) $
+
+<tex2html_mydb_mark>#122#%i4) m3 : matrix([a3,b3],[c3,d3]) $
+
+<tex2html_mydb_mark>#123#%i5) mp : m1 otimes m2 otimes  m3 ;
+
+<tex2html_mydb_mark>#124#%i6) pe : pauliexp(mp) $
+
+<tex2html_mydb_mark>#125#%i7) length(pe);
+
+<tex2html_mydb_mark>#126#%i8) part(pe,10);
+
+<tex2html_mydb_mark>#127#%i9) is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
+
+<tex2html_mydb_mark>#128#%i10) correlation_tensor(pe,1,2,3);
+
+<tex2html_mydb_mark>#129#%i2) spinor_rotation(phi,theta,gamma);
+
+<tex2html_mydb_mark>#130#%i3) spinor_rotation_trig(phi,theta,gamma);
+
+<tex2html_mydb_mark>#131#%i2) hadamard;
+
+<tex2html_mydb_mark>#132#%i*pauli[2]| respectively are
+
+<tex2html_mydb_mark>#133#%\section{Entanglement-- \func{ptrace}{\rho,i_1,\ldots}, \func{entropy}{\rho}, \func{purity}{\rho}$.$}
+
+<tex2html_mydb_mark>#134#% namely the partial trace \fs{ptrace}, the von Neumann entropy
+
+<tex2html_mydb_mark>#135#%\fs{entropy} and \fs{purity}.
+
+<tex2html_mydb_mark>#136#%i1) m1 : matrix([a1,b1,c1],[d1,e1,f1],[g1,h1,i1])$
+
+<tex2html_mydb_mark>#137#%i2) m2 : matrix([a2,b2,c2],[d2,e2,f2],[g2,h2,i2])$
+
+<tex2html_mydb_mark>#138#%i3) m3 : matrix([a3,b3,c3],[d3,e3,f3],[g3,h3,i3])$
+
+<tex2html_mydb_mark>#139#%i4) is ( ratsimp( ptracen(3, m1 otimes m2 otimes m3 , 1,2) = 
+            
+<tex2html_mydb_mark>#140#%i5) is ( ratsimp( ptracen(3, m1 otimes m2 otimes m3 ,3) = mat_trace(m3)* m1 otimes m2));
+
+<tex2html_mydb_mark>#141#%i10) factor( ptracen(3,ptracen(3,ptracen(3,m1 otimes m2 otimes m3,1),1),1));
+
+<tex2html_mydb_mark>#142#%i2)  pr : proj(schmidt_ket(alpha));
+
+<tex2html_mydb_mark>#143#%i3) assume(alpha;SPMgt;0, 1-alpha;SPMgt;0);
+
+<tex2html_mydb_mark>#144#%i5)  pr : proj(schmidt_ket(alpha));
+
+<tex2html_mydb_mark>#145#%i6)  entropy(pr);
+
+<tex2html_mydb_mark>#146#%i8) purity(pr);
+
+<tex2html_mydb_mark>#147#%i9) ratsimp(%);
+
+<tex2html_mydb_mark>#148#%i10)  pr2 : ptrace(pr,1);
+
+<tex2html_mydb_mark>#149#%i11) ptrace(pr,2);
+
+<tex2html_mydb_mark>#150#%i12) entropy(pr2);
+
+<tex2html_mydb_mark>#151#%i13) purity(pr2);
+
+<tex2html_mydb_mark>#152#%i14)  wxplot2d([entropy(pr2), purity(pr2)],[alpha,0,1]);
+
+<tex2html_mydb_mark>#153#%i2) assume(alpha;SPMgt;0,1-alpha;SPMgt;0,beta;SPMgt;0,1-beta;SPMgt;0);
+
+<tex2html_mydb_mark>#154#%i3) a : schmidt_ket(alpha);
+
+<tex2html_mydb_mark>#155#%i4) b : schmidt_ket(beta);
+
+<tex2html_mydb_mark>#156#%i5)  declare([u00,u01,u10,u11], complex);
+
+<tex2html_mydb_mark>#157#%i6) u : ket(u00,u01,u10,u11);
+
+<tex2html_mydb_mark>#158#%i7) rho : conjsimp((ident(2) otimes proj(u) otimes ident(2)) . proj(a otimes b))$,
+
+<tex2html_mydb_mark>#159#%\everymath{\scriptscriptstyle}
+
+<tex2html_mydb_mark>#160#%\newcommand{\myrm}[1]{\scriptscriptstyle{#1}}
+
+<tex2html_mydb_mark>#161#%\newcommand{\mylineb}{\scriptscriptstyle \linebreak[0] \scriptscriptstyle }
+
+<tex2html_mydb_mark>#162#%\newcommand{\myalpha}{\scriptscriptstyle \alpha }
+
+<tex2html_mydb_mark>#163#%\newcommand{\myisqrt}[1]{\scriptscriptstyle\sqrt{#1}}
+
+<tex2html_mydb_mark>#164#%i8) rho_14 : ptrace(rho,2,3);
+
+<tex2html_mydb_mark>#165#%i9) rho_4 : ptrace(rho,1,2,3);
+
+<tex2html_mydb_mark>#166#%i10) ket_to_mat(iket) := matrix([iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]])$
+
+<tex2html_mydb_mark>#167#%i11) mu : ket_to_mat(u)$
+
+<tex2html_mydb_mark>#168#%i12) X :  ket_to_mat(a) . mu . ket_to_mat(b);
+
+<tex2html_mydb_mark>#169#%i13) rho_4a : conjsimp( ctranspose(X) . X );
+
+<tex2html_mydb_mark>#170#%o9)| and  \verb|(%o13)|, to see that the two methods of calculating
+
+<tex2html_mydb_mark>#171#%i14) is ( ratsimp(rho_4a) = ratsimp(rho_4) );
+
+<tex2html_mydb_mark>#172#%i15) P1 : conjsimp( mat_trace(rho));
+
+<tex2html_mydb_mark>#173#%i16) av : [alpha,1-alpha]$
+
+<tex2html_mydb_mark>#174#%i17) bv : [beta,1-beta] $
+
+<tex2html_mydb_mark>#175#%i18) P2 : apply( ;SPMquot;+;SPMquot;, create_list( av[i] * abs(mu[i,j])^2 * bv[j], i,[1,2],j,[1,2]));
+
+<tex2html_mydb_mark>#176#%i19) is (ratsimp(P1) = ratsimp(P2));
+
+<tex2html_mydb_mark>#177#%\section*{Index}
+
+<tex2html_mydb_mark>#178#%\addcontentsline{toc}{section}{Index}
+
+<tex2html_mydb_mark>#179#
+         Copyright (c)  2008  Gerald John Lapeyre Jr.
+         Permission is granted to copy, distribute and/or modify this document
+         under the terms of the GNU Free Documentation License, Version 1.2
+         or any later version published by the Free Software Foundation;
+         with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+         A copy of the license is included in the distribution of the source
+         code of the software accompanying this manual in the file fdl.txt.
+<tex2html_mydb_mark>#180#
+(%i1) load(;SPMquot;qinf.mac;SPMquot;);
+
+<tex2html_mydb_mark>#181#
+(%i1) 1 + 1;
+
+<tex2html_mydb_mark>#182#
+(%i2) a : 2 * 2;
+
+<tex2html_mydb_mark>#183#
+(%i3) a;
+
+<tex2html_mydb_mark>#184#
+(%i4) b : expand( (x+y)^4 );
+
+<tex2html_mydb_mark>#185#
+(%i5) b : expand( (x+y)^50 )$
+(%i6) length(b);
+
+<tex2html_mydb_mark>#186#
+(%i7)  1  + sqrt(2);
+
+<tex2html_mydb_mark>#187#
+(%i8)  1  + sqrt(2), float;
+
+<tex2html_mydb_mark>#188#
+(%i9) f(x) := 3 * cos(x);
+
+<tex2html_mydb_mark>#189#
+(%i10) f(a);
+
+<tex2html_mydb_mark>#190#
+(%i11) f(0);
+
+<tex2html_mydb_mark>#191#
+(%i12) expand ( (1 + 2 * %i)^2 );
+
+<tex2html_mydb_mark>#192#
+(%i13) cos(%pi/2);
+
+<tex2html_mydb_mark>#193#
+(%i14) %e^(%i * %pi/2);
+
+<tex2html_mydb_mark>#194#
+(%i3) ketz(1)
+
+<tex2html_mydb_mark>#195#
+(%i4) braz(1)
+
+<tex2html_mydb_mark>#196#
+(%i5) braz(0)
+
+<tex2html_mydb_mark>#197#
+(%i6) braz(0,0)
+
+<tex2html_mydb_mark>#198#
+(%i7) braz(1,1)
+
+<tex2html_mydb_mark>#199#
+(%i8) alpha[1]*braz(1,1)+alpha[0]*braz(0,0)
+
+<tex2html_mydb_mark>#200#
+(%i9) brax(1)
+
+<tex2html_mydb_mark>#201#
+(%i10) bray(1,0,1)
+
+<tex2html_mydb_mark>#202#
+(%i19) ketx(1) . brax(1);
+
+<tex2html_mydb_mark>#203#
+(%i20) brax(1) . ketx(1);
+
+<tex2html_mydb_mark>#204#
+(%i21) is ( ketz(0,0,0) . braz(0,0,0) =  ketz(0,0,0) . ctranspose(ketz(0,0,0)) );
+
+<tex2html_mydb_mark>#205#
+(%i22) is ( ketz(1,0,1) . braz(1,0,1) =  proj(ketz(1,0,1)) );
+
+<tex2html_mydb_mark>#206#
+(%i17) is ( tovect( proj(schmidt_ket(alpha))) = schmidt_ket(alpha));
+
+<tex2html_mydb_mark>#207#
+(%i12) is (ketz(0,1) = ketz(0) otimes ketz(1))
+
+<tex2html_mydb_mark>#208#
+(%i13) is (ketz(0,1) = tensor_product(ketz(0),ketz(1)))
+
+<tex2html_mydb_mark>#209#
+(%i14) is (ketx(0,1,0) otimes kety(1,0,1)
+            = tensor_product(ketx(0),ketx(1),ketx(0),kety(1),kety(0),kety(1)))
+<tex2html_mydb_mark>#210#
+(%i2) f[x,y] := belln[x] . belln[y];
+
+<tex2html_mydb_mark>#211#
+(%i3) genmatrix( f , 3,3,0,0);
+
+<tex2html_mydb_mark>#212#
+(%i4) genmatrix( lambda( [x,y], belln[x] . belln[y]) , 3,3,0,0);
+
+<tex2html_mydb_mark>#213#
+(%i5) identitymatrixp(%);
+
+<tex2html_mydb_mark>#214#
+(%i6) identitymatrixp(genmatrix( lambda( [x,y], belln[x] . belln[y]) , 3,3,0,0));
+
+<tex2html_mydb_mark>#215#
+(%i2) identitymatrixp(apply(;SPMquot;+;SPMquot;,map(lambda([i],proj(belln[i])),[0,1,2,3])));
+
+<tex2html_mydb_mark>#216#
+(%i2) wxplot2d(entropy(werner(a,1,0)), [a,0,1]);
+
+<tex2html_mydb_mark>#217#
+(%i12) [ pauli[0], pauli[1], pauli[2], pauli[3] ];
+
+<tex2html_mydb_mark>#218#
+(%i8) is (  pauli[1] . ket_n(1,1) = -1 * ket_n(1,1) );
+
+<tex2html_mydb_mark>#219#
+(%i9) mapapply( lambda([i,j], is (pauli[i] . ket_n(i,j) = (-1)^j * ket_n(i,j))),
+         [[1,0],[1,1],[2,0],[2,1],[3,0],[3,1]  ]);
+<tex2html_mydb_mark>#220#
+(%i3) genmatrix(lambda([i,j],  anticommutator(pauli[i],pauli[j])/2 ), 3,3,1,1);
+
+<tex2html_mydb_mark>#221#
+(%i4) identitymatrixp( mat_unblocker (genmatrix(lambda([i,j],  
+         anticommutator(pauli[i],pauli[j])/2 ), 3,3,1,1)));
+<tex2html_mydb_mark>#222#
+(%i5) load(;SPMquot;itensor;SPMquot;);
+
+<tex2html_mydb_mark>#223#
+(%i6) mapapply(lambda([i,j,k],zeromatrixp(commutator(pauli[i],pauli[j]) 
+     - 2*%i*levi_civita([i,j,k])*pauli[k])), listify(permutations([1,2,3])));
+
+<tex2html_mydb_mark>#224#
+(%i2) m1 : matrix([a1,b1],[c1,d1]);
+
+<tex2html_mydb_mark>#225#
+(%i3) m2 : matrix([a2,b2],[c2,d2]) $
+(%i4) m3 : matrix([a3,b3],[c3,d3]) $
+
+<tex2html_mydb_mark>#226#
+(%i5) mp : m1 otimes m2 otimes  m3 ;
+
+<tex2html_mydb_mark>#227#
+(%i6) pe : pauliexp(mp) $
+
+<tex2html_mydb_mark>#228#
+(%i7) length(pe);
+
+<tex2html_mydb_mark>#229#
+(%i8) part(pe,10);
+
+<tex2html_mydb_mark>#230#
+(%i9) is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
+
+<tex2html_mydb_mark>#231#
+(%i10) correlation_tensor(pe,1,2,3);
+
+<tex2html_mydb_mark>#232#
+(%i2) spinor_rotation(phi,theta,gamma);
+
+<tex2html_mydb_mark>#233#
+(%i3) spinor_rotation_trig(phi,theta,gamma);
+
+<tex2html_mydb_mark>#234#
+(%i2) hadamard;
+
+<tex2html_mydb_mark>#235#
+(%i1) m1 : matrix([a1,b1,c1],[d1,e1,f1],[g1,h1,i1])$
+
+(%i2) m2 : matrix([a2,b2,c2],[d2,e2,f2],[g2,h2,i2])$
+
+(%i3) m3 : matrix([a3,b3,c3],[d3,e3,f3],[g3,h3,i3])$
+
+(%i4) is ( ratsimp( ptracen(3, m1 otimes m2 otimes m3 , 1,2) = 
+            mat_trace(m1)*mat_trace(m2)*m3));
+<tex2html_mydb_mark>#236#
+(%i5) is ( ratsimp( ptracen(3, m1 otimes m2 otimes m3 ,3) = mat_trace(m3)* m1 otimes m2));
+
+<tex2html_mydb_mark>#237#
+(%i10) factor( ptracen(3,ptracen(3,ptracen(3,m1 otimes m2 otimes m3,1),1),1));
+
+<tex2html_mydb_mark>#238#
+(%i2)  pr : proj(schmidt_ket(alpha));
+
+<tex2html_mydb_mark>#239#
+(%i3) assume(alpha;SPMgt;0, 1-alpha;SPMgt;0);
+
+<tex2html_mydb_mark>#240#
+(%i5)  pr : proj(schmidt_ket(alpha));
+
+<tex2html_mydb_mark>#241#
+(%i6)  entropy(pr);
+
+<tex2html_mydb_mark>#242#
+(%i8) purity(pr);
+
+<tex2html_mydb_mark>#243#
+(%i9) ratsimp(%);
+
+<tex2html_mydb_mark>#244#
+(%i10)  pr2 : ptrace(pr,1);
+
+<tex2html_mydb_mark>#245#
+(%i11) ptrace(pr,2);
+
+<tex2html_mydb_mark>#246#
+(%i12) entropy(pr2);
+
+<tex2html_mydb_mark>#247#
+(%i13) purity(pr2);
+
+<tex2html_mydb_mark>#248#
+(%i14)  wxplot2d([entropy(pr2), purity(pr2)],[alpha,0,1]);
+
+<tex2html_mydb_mark>#249#
+(%i2) assume(alpha;SPMgt;0,1-alpha;SPMgt;0,beta;SPMgt;0,1-beta;SPMgt;0);
+
+<tex2html_mydb_mark>#250#
+(%i3) a : schmidt_ket(alpha);
+
+<tex2html_mydb_mark>#251#
+(%i4) b : schmidt_ket(beta);
+
+<tex2html_mydb_mark>#252#
+(%i5)  declare([u00,u01,u10,u11], complex);
+
+<tex2html_mydb_mark>#253#
+(%i6) u : ket(u00,u01,u10,u11);
+
+<tex2html_mydb_mark>#254#
+(%i7) rho : conjsimp((ident(2) otimes proj(u) otimes ident(2)) . proj(a otimes b))$,
+
+<tex2html_mydb_mark>#255#
+(%i8) rho_14 : ptrace(rho,2,3);
+
+<tex2html_mydb_mark>#256#
+(%i9) rho_4 : ptrace(rho,1,2,3);
+
+<tex2html_mydb_mark>#257#
+(%i10) ket_to_mat(iket) := matrix([iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]])$
+
+<tex2html_mydb_mark>#258#
+(%i11) mu : ket_to_mat(u)$
+(%i12) X :  ket_to_mat(a) . mu . ket_to_mat(b);
+
+<tex2html_mydb_mark>#259#
+(%i13) rho_4a : conjsimp( ctranspose(X) . X );
+
+<tex2html_mydb_mark>#260#
+(%i14) is ( ratsimp(rho_4a) = ratsimp(rho_4) );
+
+<tex2html_mydb_mark>#261#
+(%i15) P1 : conjsimp( mat_trace(rho));
+
+<tex2html_mydb_mark>#262#
+(%i16) av : [alpha,1-alpha]$
+(%i17) bv : [beta,1-beta] $
+(%i18) P2 : apply( ;SPMquot;+;SPMquot;, create_list( av[i] * abs(mu[i,j])^2 * bv[j], i,[1,2],j,[1,2]));
+
+<tex2html_mydb_mark>#263#
+(%i19) is (ratsimp(P1) = ratsimp(P2));

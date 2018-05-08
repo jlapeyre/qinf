@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>User's Manual for qinf Quantum Information and Entanglement Package v. 0.11 For The Maxima Computer Algebra System</TITLE>
+<META NAME="description" CONTENT="User's Manual for qinf Quantum Information and Entanglement Package v. 0.11 For The Maxima Computer Algebra System">
+<META NAME="keywords" CONTENT="qinf">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="qinf.css">
+
+</HEAD>
+
+<BODY text="#000000" bgcolor="#FFFFFF">
+
+<P>
+
+<P>
+
+<P>
+<H1 ALIGN="CENTER">User's Manual for  <I>qinf </I> Quantum Information and Entanglement Package
+ v. 0.11 For The <I>Maxima</I> Computer
+  Algebra System</H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>G. John Lapeyre, Jr.</STRONG></P>
+</DIV>
+
+<P>
+<PRE>
+         Copyright (c)  2008  Gerald John Lapeyre Jr.
+         Permission is granted to copy, distribute and/or modify this document
+         under the terms of the GNU Free Documentation License, Version 1.2
+         or any later version published by the Free Software Foundation;
+         with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+         A copy of the license is included in the distribution of the source
+         code of the software accompanying this manual in the file fdl.txt.
+</PRE>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html54"
+  HREF="node1.html">Contents</A>
+<LI><A NAME="tex2html55"
+  HREF="node2.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A>
+<UL>
+<LI><A NAME="tex2html56"
+  HREF="node2.html#SECTION00021000000000000000"><SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Acknowledgments</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html57"
+  HREF="node3.html"><SPAN CLASS="arabic">2</SPAN> Using <I>Maxima</I>. features important for  <I>qinf </I> <SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html58"
+  HREF="node4.html"><SPAN CLASS="arabic">3</SPAN> Representation of states and operators</A>
+<LI><A NAME="tex2html59"
+  HREF="node5.html"><SPAN CLASS="arabic">4</SPAN> Creating instances of states</A>
+<UL>
+<LI><A NAME="tex2html60"
+  HREF="node5.html#SECTION00051000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ketz</B>, <B>braz</B>,<B>ketx</B>, <B>brax</B>,
+  <B>kety</B>, <B>bray</B> -- multipartite eigenstate kets and bras of 
+ <!-- MATH
+ $\sigma_x,\sigma_y,\sigma_z$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="87" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img26.png"
+ ALT="$\sigma_x,\sigma_y,\sigma_z$"></SPAN></A>
+<LI><A NAME="tex2html61"
+  HREF="node5.html#SECTION00052000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>ket_n</B>, <B>bra_n</B> --  alternate form of <B>ketz</B>, etc<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html62"
+  HREF="node5.html#SECTION00053000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>proj</B> -- Density matrix representation of a pure state (projection operator)<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html63"
+  HREF="node5.html#SECTION00054000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>otimes</B>, <B>tensor_product</B>, <B>tensor_power</B>
+   -- Creating state vectors with the tensor product<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html64"
+  HREF="node5.html#SECTION00055000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>schmidt_ket</B> -- bipartite ket in Schmidt basis<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html65"
+  HREF="node5.html#SECTION00056000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>bell</B> and  <B>belln</B> -- Bell state kets in computational basis<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html66"
+  HREF="node5.html#SECTION00057000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">7</SPAN> <B>ghz</B> and  <B>ghzn</B> -- GHZ state kets<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html67"
+  HREF="node5.html#SECTION00058000000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> <B>werner</B> -- Werner state density matrix<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</UL>
+<BR>
+<LI><A NAME="tex2html68"
+  HREF="node6.html"><SPAN CLASS="arabic">5</SPAN> Creating and using operators</A>
+<UL>
+<LI><A NAME="tex2html69"
+  HREF="node6.html#SECTION00061000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> Pauli matrices</A>
+<UL>
+<LI><A NAME="tex2html70"
+  HREF="node6.html#SECTION00061100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>pauli</B> -- pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html71"
+  HREF="node6.html#SECTION00061200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>pauli_product</B> --  tensor product of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html72"
+  HREF="node6.html#SECTION00061300000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>pauliexp</B> -- expansion of operator in terms of tensor products of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html73"
+  HREF="node6.html#SECTION00061400000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>invpauliexp</B> -- inverse of expansion in terms of tensor products of pauli matrices<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html74"
+  HREF="node6.html#SECTION00061500000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>correlation_tensor</B> -- retrieve component of correlation tensor by index<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html75"
+  HREF="node6.html#SECTION00061600000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> Using <B>pauliexp</B> and <B>invpauliexp</B>; an example<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</UL>
+<LI><A NAME="tex2html76"
+  HREF="node6.html#SECTION00062000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>spinor_rotation</B>, <B>spinor_rotation_trig</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html77"
+  HREF="node6.html#SECTION00063000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>insert_operator</B> -- insert single qubit operators in <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN>-qubit operator</A>
+<LI><A NAME="tex2html78"
+  HREF="node6.html#SECTION00064000000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Gates</A>
+<UL>
+<LI><A NAME="tex2html79"
+  HREF="node6.html#SECTION00064100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>hadamard</B> operator<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html80"
+  HREF="node6.html#SECTION00064200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>controlled_gate</B> -- gate with <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$n$"></SPAN> control qubits</A>
+<LI><A NAME="tex2html81"
+  HREF="node6.html#SECTION00064300000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>cnot</B>, <B>cphase</B>, <B>crot</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html82"
+  HREF="node6.html#SECTION00064400000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>swap</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html83"
+  HREF="node6.html#SECTION00064500000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>toffoli</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html84"
+  HREF="node6.html#SECTION00064600000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>fredkin</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html85"
+  HREF="node7.html"><SPAN CLASS="arabic">6</SPAN> Entanglement</A>
+<UL>
+<LI><A NAME="tex2html86"
+  HREF="node7.html#SECTION00071000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>ptrace</B>, <B>ptracen</B> -- partial trace<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html87"
+  HREF="node7.html#SECTION00072000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>entropy</B> -- von Neumann entropy<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html88"
+  HREF="node7.html#SECTION00073000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>renyi_entropy</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html89"
+  HREF="node7.html#SECTION00074000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">4</SPAN> <B>tsallis_entropy</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html90"
+  HREF="node7.html#SECTION00075000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">5</SPAN> <B>purity</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html91"
+  HREF="node7.html#SECTION00076000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">6</SPAN> <B>fidelity</B><SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html92"
+  HREF="node7.html#SECTION00077000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">7</SPAN> <B>concurrence</B> -- Wootter's  concurrence<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html93"
+  HREF="node7.html#SECTION00078000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">8</SPAN> <B>separable</B> -- test for separability<SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+<LI><A NAME="tex2html94"
+  HREF="node7.html#SECTION00079000000000000000"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">9</SPAN> An entangled pure global state has mixed reduced states</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html95"
+  HREF="node8.html"><SPAN CLASS="arabic">7</SPAN> More operators and functions</A>
+<UL>
+<LI><A NAME="tex2html96"
+  HREF="node8.html#SECTION00081000000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> Predicate functions -- testing for properties</A>
+<UL>
+<LI><A NAME="tex2html97"
+  HREF="node8.html#SECTION00081100000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>identitymatrixp</B> </A>
+<LI><A NAME="tex2html98"
+  HREF="node8.html#SECTION00081200000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>ketp</B>, <B>brap</B>, <B>braketp</B></A>
+<LI><A NAME="tex2html99"
+  HREF="node8.html#SECTION00081300000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> <B>square_matp</B></A>
+</UL>
+<LI><A NAME="tex2html100"
+  HREF="node8.html#SECTION00082000000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> Miscellaneous</A>
+<UL>
+<LI><A NAME="tex2html101"
+  HREF="node8.html#SECTION00082100000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> <B>normalize_vector</B></A>
+<LI><A NAME="tex2html102"
+  HREF="node8.html#SECTION00082200000000000000"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> <B>normalize_matrix</B></A>
+</UL>
+</UL>
+<BR>
+<LI><A NAME="tex2html103"
+  HREF="node9.html"><SPAN CLASS="arabic">8</SPAN> Entanglement.  longer examples</A>
+<UL>
+<LI><A NAME="tex2html104"
+  HREF="node9.html#SECTION00091000000000000000"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> Entanglement swapping</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html105"
+  HREF="node10.html">Bibliography</A>
+<LI><A NAME="tex2html106"
+  HREF="node11.html">Index</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+John Lapeyre
+2008-09-02
+</ADDRESS>
+</BODY>
+</HTML>

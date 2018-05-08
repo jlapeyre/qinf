@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2 Using Maxima. features important for qinf </TITLE>
+<META NAME="description" CONTENT="2 Using Maxima. features important for qinf ">
+<META NAME="keywords" CONTENT="qinf">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="qinf.css">
+
+</HEAD>
+
+<BODY text="#000000" bgcolor="#FFFFFF">
+
+<H1><A NAME="SECTION00030000000000000000">
+<SPAN CLASS="arabic">2</SPAN> Using <I>Maxima</I>. features important for  <I>qinf </I> <SPAN CLASS="MATH"><IMG
+ WIDTH="11" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.png"
+ ALT="$.$"></SPAN></A>
+</H1>
+The package is loaded <A NAME="2579"></A>
+using the <A NAME="tex2html15"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_9.html#IDX313">load</A><SUP><SPAN CLASS="MATH"><IMG
+ WIDTH="15" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\dagger$"></SPAN></SUP>function like this
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="117" ALIGN="BOTTOM" BORDER="0"
+ SRC="img5.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}\index{ {\bf load} \index{load@{\bf load}}}
+...
+...in{dmath}[number={\%o1}]
+\verb\vert qinf.mac\vert\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+There are several tutorials and manuals available for
+<I>Maxima</I>. Here is a very brief one focused on aiding the
+introduction to the  <I>qinf </I> package.  We will not give examples
+of matrices until later, but point out that the notation for
+<A NAME="2589"></A> matrix multiplication in
+<I>Maxima</I> is a <A NAME="tex2html16"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_25.html#SEC83">dot</A>
+<A NAME="2593"></A>,
+ eg. <code>A . B</code>.  If
+<SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img6.png"
+ ALT="$A$"></SPAN> is a <SPAN CLASS="MATH"><IMG
+ WIDTH="63" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img7.png"
+ ALT="$m\times n$"></SPAN> matix and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$B$"></SPAN> a <SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.png"
+ ALT="$p\times q$"></SPAN> matrix, then 
+<code> A . B </code>  is a <SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img10.png"
+ ALT="$n\times p$"></SPAN> matrix.  The inner
+product<A NAME="2594"></A> of quantum state vectors, the
+outer product <A NAME="2595"></A> (dyad<A NAME="2596"></A>)
+ of quantum state vectors, the composition of
+operators, and the mapping of one vector to another by an
+operator are all special cases of matrix multiplication and
+are all represented by the dot (along with conjugation in the case
+ of the inner and outer products.)  The remaining product, the
+tensor product<A NAME="2597"></A>, becomes the 
+Kronecker product in the matrix
+representation of a finite dimensional Hilbert space. To
+agree with standard terminology, we introduce the
+<A NAME="tex2html17"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_6.html#IDX156">infix</A><A NAME="4474"></A>
+operator  <B>otimes</B> <A NAME="4477"></A> and the function  <B>tensor_product</B> <A NAME="4480"></A>
+that eventually call the <I>Maxima</I> function
+ <B>kronecker_product</B> <A NAME="4484"></A>.  See the 
+<A NAME="tex2html18"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_25.html#SEC81">section on matrices</A>
+in the <I>Maxima</I>
+manual.
+
+<P>
+<I>Maxima</I> can use exact real and 
+<A NAME="tex2html19"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_6.html#SEC22">complex numbers</A>
+or the standard 
+<A NAME="tex2html20"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_10.html#SEC38">floating point</A>
+approximations, or 
+arbitrary precision floating point  numbers.  Numerical expressions are
+<A NAME="tex2html21"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_70.html#SEC278">simplified</A><A NAME="4499"></A> upon entry. Each input line must be terminated by
+a semicolon (some interfaces do this automatically) or by a
+dollar sign, which suppresses the output.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="112" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i1) 1 + 1;
+\end{verbatim}
+\begin{dmath}[number={\%o1}]
+2\end{dmath}
+\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<A NAME="tex2html22"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_5.html#IDX71">Assignment</A>
+is denoted by a colon <A NAME="2621"></A> while
+<A NAME="tex2html23"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_5.html#IDX74">function definitions</A>
+are denoted by 
+:=
+<A NAME="2624"></A>
+For example, <code> a : b+c ;</code> evaluates <code>b+c</code> and assigns the result to <code>a</code>.
+On the other hand <code> a(x,y) := x^y ;</code> defines the function <SPAN CLASS="MATH"><IMG
+ WIDTH="65" HEIGHT="42" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.png"
+ ALT="$a(x,y)$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="367" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i2) a : 2 * 2;
+\end{ver...
+...^{4}+4\*x\*y^{3}+6\*x^{2}\*y^{2}+4\*x^{3}\*y+x^{4}\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<A NAME="2646"></A>
+We suppress the output here with a dollar sign because it's big- <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img14.png"
+ ALT="$51$"></SPAN> terms.
+<A NAME="4517"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="138" ALIGN="BOTTOM" BORDER="0"
+ SRC="img15.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i5) b : expand( (x+y)^5...
+...);
+\end{verbatim}
+\begin{dmath}[number={\%o6}]
+51\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Some exact numbers and  <A NAME="tex2html24"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_66.html#SEC265">floating point</A>
+approximations.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="237" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i7) 1 + sqrt(2);
+\end{v...
+...}
+\begin{dmath}[number={\%o8}]
+2.4142135623730949\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<A NAME="tex2html25"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_39.html#SEC160">Defining</A>
+and using a function.
+<A NAME="2669"></A>
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="362" ALIGN="BOTTOM" BORDER="0"
+ SRC="img17.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i9) f(x) := 3 * cos(x);...
+...);
+\end{verbatim}
+\begin{dmath}[number={\%o11}]
+3\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<A NAME="2685"></A>
+<A NAME="tex2html26"
+  HREF="http://maxima.sourceforge.net/docs/manual/en/maxima_6.html#SEC22">Complex numbers</A>.
+%i
+ is the identifier for 
+<A NAME="2688"></A> <SPAN CLASS="MATH"><IMG
+ WIDTH="86" HEIGHT="47" ALIGN="MIDDLE" BORDER="0"
+ SRC="img19.png"
+ ALT="$i=\sqrt{-1}$"></SPAN>.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="114" ALIGN="BOTTOM" BORDER="0"
+ SRC="img20.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i12) expand ( (1 + 2 * ...
+...nd{verbatim}
+\begin{dmath}[number={\%o12}]
+4\*i-3\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+Some special numbers are defined, such as 
+%pi
+ <A NAME="2695"></A>
+and <A NAME="2696"></A>
+%e.
+<BR>
+<BR>
+<P>
+<BR>
+<IMG
+ WIDTH="1257" HEIGHT="237" ALIGN="BOTTOM" BORDER="0"
+ SRC="img23.png"
+ ALT="\begin{boxedminipage}{2.0\linewidth}
+\begin{verbatim}(%i13) cos(%pi/2);
+\end{v...
+...);
+\end{verbatim}
+\begin{dmath}[number={\%o14}]
+i\end{dmath}\end{boxedminipage}">
+<BR>
+<BR>
+<BR>
+<P>
+
+<P>
+<BR CLEAR="ALL">
+<HR>
+<BR><HR>
+<ADDRESS>
+John Lapeyre
+2008-09-02
+</ADDRESS>
+</BODY>
+</HTML>

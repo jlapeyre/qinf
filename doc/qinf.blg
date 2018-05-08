@@ -3,45 +3,45 @@ The top-level auxiliary file: qinf.aux
 The style file: plain_ep_doi_hr.bst
 Database file #1: qperc.bib
 Warning--empty title in HHH08
-You've used 2 entries,
+You've used 5 entries,
             2760 wiz_defined-function locations,
-            661 strings with 5595 characters,
-and the built_in function-call counts, 865 in all, are:
-= -- 90
-> -- 30
+            679 strings with 5936 characters,
+and the built_in function-call counts, 1840 in all, are:
+= -- 193
+> -- 57
 < -- 0
-+ -- 12
-- -- 10
-* -- 58
-:= -- 156
-add.period$ -- 8
-call.type$ -- 2
-change.case$ -- 10
++ -- 23
+- -- 18
+* -- 91
+:= -- 300
+add.period$ -- 18
+call.type$ -- 5
+change.case$ -- 21
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 21
-empty$ -- 71
-format.name$ -- 10
-if$ -- 199
+cite$ -- 6
+duplicate$ -- 56
+empty$ -- 177
+format.name$ -- 18
+if$ -- 456
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 2
-newline$ -- 15
-num.names$ -- 4
-pop$ -- 16
+int.to.str$ -- 5
+missing$ -- 6
+newline$ -- 31
+num.names$ -- 10
+pop$ -- 51
 preamble$ -- 1
-purify$ -- 9
+purify$ -- 19
 quote$ -- 0
-skip$ -- 49
+skip$ -- 123
 stack$ -- 0
-substring$ -- 37
-swap$ -- 6
+substring$ -- 52
+swap$ -- 9
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
+type$ -- 16
 warning$ -- 1
-while$ -- 5
-width$ -- 3
-write$ -- 27
+while$ -- 11
+width$ -- 6
+write$ -- 60
 (There was 1 warning)

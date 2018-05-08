@@ -99,6 +99,7 @@
 
 \newcommand{\ket}[1]{{\lvert#1 \rangle}}
 \newcommand{\bra}[1]{{\langle#1 \rvert}}
+\newcommand{\bracket}[2]{{\langle#1|#2\rangle}}
 \newcommand{\func}[2]{{\bf #1}($#2$)}
 \newcommand{\marray}[2]{{\bf #1}[$#2$]}
 \newcommand{\fs}[1]{{\bf #1}}
@@ -126,14 +127,13 @@
 
 \newcommand{\maximalink}{\htmladdnormallink{ \pname{Maxima} }{http://maxima.sourceforge.net/}}
 
-% probably not used
 \newcommand{\maxcom}{\textsuperscript{$\dagger$}}
 
 \begin{document}
 
 
 \title{User's Manual for \qinf Quantum Information and Entanglement Package
- v. 0.10 For The \pname{Maxima} Computer
+ v. 0.11 For The \pname{Maxima} Computer
   Algebra System}
 
 \author{G. John Lapeyre, Jr.}
@@ -166,14 +166,18 @@ classes) or algebraic expressions. This software occupies a
 niche distinct from high performance numerical linear
 algebra software as well as software such as the \maximalink
 tensor packages that manipulate abstract mathematical
-objects.  This document describes the functions and data in
+objects. The package is intended for research and teaching in the
+theory of entanglement and quantum information and related
+fields.
+
+This document describes the functions and data in
 the package and how to use them with \maximalink, assuming
 that you do not know much about \maximalink, but do know
 quantum information theory. However, most of the examples
-are also found in introductory texts on quantum information.
-The package is intended for research and teaching in the
-theory of entanglement and quantum information and related
-fields.
+here are elementary. Popular introductory sources on quantum information
+include the book by Nielsen and Chuang\cite{Nielsen}, 
+the notes (a book) by Preskill\cite{Preskill}, and the notes and book by
+Mermin\cite{Mermin}. There are many other sources available online as well.
 
 
 Examples of the facilities of the
@@ -290,7 +294,7 @@ agree with standard terminology, we introduce the
 operator \ifs{otimes} and the function \ifs{tensor\_product}
 that eventually call the \pname{Maxima} function
 \ifs{kronecker\_product}.  See the 
-\maxman{section on matrices}{maxima_25.html#SEC81} in the \pname{Maxima}
+\maxman{section on matrices}{\maximaMatricesandLinearAlgebra} in the \pname{Maxima}
 manual.
 
 \pname{Maxima} can use exact real and 
@@ -344,7 +348,7 @@ We suppress the output here with a dollar sign because it's big-- $51$ terms.
 \begin{dmath}[number={\%o6}]
  51\end{dmath}
 \ebm
-Some exact numbers and  \maxman{floating point}{maxima_10.html#SEC38} approximations.
+Some exact numbers and  \maxman{floating point}{\maximaFloatingpointEvaluation} approximations.
 \bbm
 \begin{verbatim}
 (%i7)  1  + sqrt(2);
@@ -358,7 +362,7 @@ Some exact numbers and  \maxman{floating point}{maxima_10.html#SEC38} approximat
 \begin{dmath}[number={\%o8}]
  2.4142135623730949\end{dmath}
 \ebm
-\maxman{Defining}{maxima_39.html#SEC160} and using a function.
+\maxman{Defining}{\maximaFunctionDefinition} and using a function.
 \index{functions!user defined}
 \bbm
 \begin{verbatim}
@@ -636,7 +640,8 @@ create vector bell states. \fs{bell[a,b]} creates the state
 where $a,b\in\{0,1\}$. The array \fs{belln[i]} creates the same states
 where $i$ is the decimal representation of the binary numeration
 $(a,b)$. That is, $(0,1,2,3)$ corresponds to $( (0,0), (0,1), (1,0), (1,1) )$.
-Note that \fs{belln[i]} is a \pname{Maxima} array as indicated by the square
+Note that \fs{belln[i]} is a \pname{Maxima} 
+\umaxman{array}{\maximaArrays} as indicated by the square
 brackets.
 
 As an exercise, we will check our definitions of the Bell
@@ -680,7 +685,8 @@ It is obviously the $4 \times 4$ identity matrix.  The
 function \ifunc{identitymatrixp}{mat} \index{identity matrix!testing for}
  is a predicate defined in the
 quantum information package in analogy to the \pname{Maxima}
-function \ifs{zeromatrixp}.  It returns \fs{true} only if its
+function \umaxman{zeromatrixp}{\maximazeromatrixp}.
+ It returns \fs{true} only if its
 argument is an identity matrix. (The symbol 
 %\verb|%| 
 \%
@@ -807,7 +813,9 @@ the pauli matrices: $\{\sigma_i,\sigma_j\}= 2\delta_{i,j}$ for $i,j \in\{1,2,3\}
     }&\linebreak[0]\pmatrix{1&\linebreak[0]0\cr
       0&\linebreak[0]1\cr }\cr }\end{dmath}
 \ebm 
-The \pname{Maxima} function \ifs{mat\_unblocker}, flattens the
+The \pname{Maxima} function 
+\umaxman{mat\_unblocker}{\maximamatUunblocker},
+ flattens the
 blocks in the above expression, so we can write \bbm
 \begin{verbatim}
 (%i4) identitymatrixp( mat_unblocker (genmatrix(lambda([i,j],  
@@ -817,14 +825,17 @@ blocks in the above expression, so we can write \bbm
   \mathbf{true}\end{dmath} \ebm Now we load the
 \ifs{itensor} package, which provides the \index{levi-civita
   tensor} levi-civita tensor, and make use of the
-\pname{Maxima} functions \ifs{permutations} (which returns
+\pname{Maxima} functions 
+\umaxman{permutations}{\maximapermutations}
+(which returns
 the \maxman{set}{\maximaSets} of all permutations of a list)
 and \ifs{listify} (which converts the set data type into the (ordered) list data type).
 The \qinf package provides \ibd{mapapply}
 \func{mapapply}{func,[list1, list2,\ldots]}, which
 \ifs{apply}s \farg{func} to each of the \farg{list}s and
 returns a list of the results.  (see the \pname{Maxima}
-documentation for \fs{apply}.)  With all these, we can test
+documentation for
+ \umaxman{apply}{\maximaapply}.)  With all these, we can test
 the commutation relations \index{commutator} of the pauli
 matrices. (In reality, the matrix definitions are not
 complicated, we are actually testing the other functions.):
@@ -1003,7 +1014,8 @@ operator given by the variable \fs{hadamard}. The function is defined
 by \verb|hadamard(nbits,[t]) := insert_operator(nbits,cons(hadamard,t))|,
 which is an idiom that will work for similar user defined functions as well.
 The dummy argument \verb|[t]| causes all arguments after \verb|nbits| to
-be collected in a single list. The \pname{Maxima} function \func{cons}{expr,list}
+be collected in a single list. The \pname{Maxima} function 
+\umaxman{cons}{\maximacons}, invoked as \func{cons}{expr,list},
 returns the list given by  prepending 
  \verb|expr| to the list \verb|list|. 
 
@@ -1091,10 +1103,14 @@ and that
 $$
 \mbox{Tr}_{3}\left(m_1\otimes m_2\otimes m_3 \right) = \mbox{Tr}(m_3)(m_1\otimes m_2).
 $$
- Notice that we use the \pname{Maxima} function \ifs{ratsimp} to put both sides of the
+ Notice that we use the \pname{Maxima} function 
+\umaxman{ratsimp}{\maximaratsimp} to put both sides of the
 equation in the same canonical form.  We also make
-use of \pname{Maxima}'s \ifs{mat\_trace}\index{trace!of matrix} function ( so named to avoid conflicting
-with the code-execution trace function) and \pname{Maxima}'s \ifs{matrix} function, which creates a matrix
+use of \pname{Maxima}'s
+ \umaxman{mat\_trace}{\maximamatUtrace}\index{trace!of matrix}
+ function ( so named to avoid conflicting
+with the code-execution trace function) and \pname{Maxima}'s 
+\umaxman{matrix}{\maximamatrix} function, which creates a matrix
 from a list of rows. \index{matrix!trace} \index{matrix!creating}
 \bbm
 \begin{verbatim}
@@ -1321,6 +1337,11 @@ returns \verb|(ketp(e) or brap(e))|, ie returns true if \farg{e} is either a ket
 a bra.
 \subsubsection{\fs{square\_matp}}\ibd{square\_matp}
 \func{square\_matp}{e} returns true if \farg{e} is a square matrix.
+\subsection{Miscellaneous}
+\subsubsection{\fs{normalize\_vector}}\ibd{normalize\_vector}
+  \func{normalize\_vector}{v} returns $v/\bracket{v}{v}$.
+\subsubsection{\fs{normalize\_matrix}}\ibd{normalize\_matrix}
+  \func{normalize\_matrix}{m} returns $m/\mbox{Tr}(m)$.
 
 \htmlrule
 \section{Entanglement.  longer examples}
@@ -1379,7 +1400,8 @@ of the kets are real.\ibd{assume}
 We consider the projective measurement\index{projective measure} $\{E_m\}$, that is $E_m=\ket{u_m}\bra{u_m}$
 and $\sum_m E_m=\mathbb{1}_4$. We consider only a single basis vector
 here, so we don't use the subscript $m$ for \pname{Maxima} vector name.
-We need to use \pname{Maxima}'s \ifs{declare} to declare that 
+We need to use \pname{Maxima}'s 
+\umaxman{declare}{\maximadeclare} to declare that 
 the components are complex. \index{complex numbers!declaring variable complex}
 The state $\ket{u_m}$ is normalized, but we don't need to impose that condition in
 \pname{Maxima} at this point.
@@ -1507,7 +1529,9 @@ where $\alpha_0=\alpha,\  \alpha_1=1-\alpha, \  \beta_0=\beta, \ \beta_1=1-\beta
 \begin{dmath}[number={\%o18}]
  \left(1-\alpha\right)\*\left(1-\beta\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\alpha\*\left(1-\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}.
 \ebm
-Here we have used \pname{Maxima}'s \ifs{apply} and \ifs{create\_list} functions.
+Here we have used \pname{Maxima}'s
+ \umaxman{apply}{\maximaapply} and 
+\umaxman{create\_list}{\maximacreateUlist} functions.
 Once again we compare the probabilities computed via the two methods
 \bbm
 \begin{verbatim}
