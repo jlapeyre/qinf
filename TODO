@@ -1,8 +1,14 @@
-bell operators
-CHSH operator
-werner states
-GHZ state
-alpha-Renyi entropy
+* following is the line used to write lisp translations of the functions to a file. they
+  are used as a starting point to rewrite the functions in lisp
+
+compfile("tf", entropy, renyi_entropy, ptrace, ptracen, ptrace_one_dimension, tensor_product, "otimes", _ket, ketz,ketx,kety, braz,bray, ket_n,bra_n, listket, matkets, toproj, tovect, pauli_product, invpauliexp, _one_pauli_coeff,  correlation_tensor, entropy, entropyf, renyi_entropy, renyi_entropyf, tsallis_entropy, tsallis_entropyf, fidelity, spinor_rotation_op, spinor_rotation_op_trig);
+
+
+* bell operators
+* CHSH operator
+* werner states
+* GHZ state
+
 majorization relations
 postive partial transpose
 concurrence
@@ -14,3 +20,19 @@ conditional entropy
 augusiak criterion
 
 check matrix rank and schmidt rank
+
+Partially Done
+--------------
+* entropy and other functions that compute eigenvalues
+  do not handle floating point numbers. They convert them
+  to rationals. this is wrong behavior.
+
+Done
+--------------
+* alpha-Renyi entropy
+
+* Change z-axis to 'computational basis'
+
+* In documentation the big measurement line in the
+ entanglement swapping does not appear in latex  form,
+  only qinf form !

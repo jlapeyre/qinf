@@ -56,7 +56,8 @@ rtest_qinf.mac -- run with batch("rtest_qinf.mac", test);
 
 following are original test scripts. These need to be converted to
 be used with batch(*,test). They are run via
-load("test_ptrace.mac"), etc.
+load("test/test_qinf.mac");
+load("test/test_ptrace.mac");
 
 test_ptrace.mac 
 test_qinf.mac

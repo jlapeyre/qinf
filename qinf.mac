@@ -10,22 +10,19 @@
 
 */
 
-/* qinf Version 0.05 */
+/* qinf Version 0.06 */
 
 /*
   currently prints a bunch of garbage
   load("itensor");
 */
 
+load("qinf.lisp");
+load(lapack);
 load("log2.mac");
 load("eigen");
 load("diag");
 load("utils.mac");
-
-/* testing namespaces. 
-in_namespace(qinf);
-export(identitymatrixp);
-*/
 
 qudit_states : 2;
 
@@ -38,10 +35,11 @@ qudit_states : 2;
  * qadjoint(m) := conjugate(transpose(m));
  */
 
-/* Is this defined elsewhere ? */
-identitymatrixp(A) := zeromatrixp(A - ident(length(A)));
+/* to lisp identitymatrixp(A) := zeromatrixp(A - ident(length(A)));*/
 
 
+/* The following three functions are not used and should probably
+  be removed */
 /* this does not work on all matrices */
 diagonalize(A) := block( [uie],
    uie : uniteigenvectors(A),
@@ -67,6 +65,7 @@ matrix_function(A,'fun) := block([S,Si,D,domxexpt:true,i],
 
 
 /* the following use the mat_function defined in package 'diag' */
+/* these are probably not useful */
 matrix_exp(A) := mat_function(exp,A);
 matrix_cos(A) := mat_function(cos,A);
 matrix_sin(A) := mat_function(sin,A);
@@ -74,7 +73,7 @@ matrix_exp_trig(A) := matrix_cos(%i*A)-%i*matrix_sin(%i*A);
 matrix_log(A) := mat_function(log,A);
 matrix_sqrt(A) := mat_function(sqrt,A);
 
-/* doesnt do conjugate */
+/* doesnt do conjugate (?)  */
 normalize_vector(v) :=  v/sqrt(v . conjugate(v));
 
 
@@ -89,24 +88,26 @@ normalize_vector(v) :=  v/sqrt(v . conjugate(v));
    left to right.
    */
 
+/* to lisp
 ptrace_numeration_to_int( vec, b) := block( [i,res:0],
   for i:0 thru length(vec)-1 do
   ( res : res + vec[i+1]*b^i ), res);
+*/
 
 /* increment numeration given by vec base b. modulo
    b^length(vec).
    vec -- list of numeration numerals
    b -- base
 */
+
+/* to lisp
 ptrace_increment_numeration(vec, b) := block ( [i:1,j],
   for i:1 thru length(vec) do
   (vec[i] : vec[i] + 1,
     if vec[i] = b then 
     for j:1 thru i do vec[j] : 0
-    else i : length(vec) + 1),
-  vec);
-
-
+    else i : length(vec) + 1));
+*/
 
 /* Partial trace over one or more components.
    computes partial trace one component at a time.
@@ -282,7 +283,7 @@ toproj(v) := block( [],
  does not check if matrix is actually a projection operator.
  Sometimes the zero eigenvalues are listed first, sometimes second.
  It can change because phases are lost in computing the projection operator */
-tostate(A) :=  block ( [t,pos],
+tovect(A) :=  block ( [t,pos],
   t : simtran(A),
   if  sublist_indices(part(t,1,1), lambda([x],x=0)) = [2] then (
     return(transpose(second(t))) )
@@ -332,7 +333,7 @@ invpauliexp(t) := block([n,i,m,nb],
   v : create_list(0,i,1,nb),
   m : t[1]*apply(pauli_product,v),
   for i thru n-1 do (
-    v : ptrace_increment_numeration(v,4),
+    ptrace_increment_numeration(v,4),
     m : m + t[i+1]*apply(pauli_product,v)),
   m);
 
@@ -346,7 +347,7 @@ pauliexp(m) := block([nbits,v,i, c:[] ],
   v : create_list(0,i,1,nbits),
   for i thru length(m)^2 do (
     c : append(c, [ _one_pauli_coeff(m,v) ] ),
-    v : ptrace_increment_numeration(v,4)),
+    ptrace_increment_numeration(v,4)),
     c);
 
 /* return one element of tensor stored in linear array output by linvpaulexp */
@@ -358,7 +359,7 @@ correlation_tensor(t,[v]) :=  block([n:length(t)],
 
 
 /* flip the bit */
-flip(x) := ( mod(x+1,2));
+/* flip(x) := ( mod(x+1,2)); */
 
 /* bell states */
 bell[i,j] := (ketz(0,j) + (-1)^i * ketz(1,flip(j)))/sqrt(2);
@@ -370,9 +371,10 @@ belln[2] : bell[1,0];
 belln[3] : bell[1,1];
 
 /* two bit schmidt ket */
-schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1);
+/* schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1); */
 
 
+/* von Neumann entropy */
 entropy(rho) :=  block( [x,evs,sum:0],
   evs : eivals(rho),
   /* following is kludged transpose */
@@ -382,14 +384,64 @@ entropy(rho) :=  block( [x,evs,sum:0],
       sum : sum - x[2]*x[1]*log2(x[1]))),
   sum);
 
-purity(rho) :=  mat_trace(rho . rho);
+/* float von Neumann entropy */
+entropyf(rho) :=  block( [x,evs,sum:0],
+  evs : dgeev(rho),
+  evs : part(evs,1),
+  for x in evs do (
+    if not(x = 0.0) then (
+      sum : sum - x*log2(x))),
+  sum);
+
+/* Reny entropy */
+renyi_entropy(a,rho) := block([x,evs,sum:0],
+  evs : eivals(rho),
+  /* following is kludged transpose */
+  evs : map( lambda([i,j], [i,j]), evs[1], evs[2]),
+  for x in evs do (
+    if not(x[1] = 0) then (
+      sum : sum + x[2]*(x[1])^a)),
+  log2(sum)/(1-a));
+
+/* float renyi entropy */
+renyi_entropyf(a,rho) :=  block( [x,evs,sum:0],
+  evs : dgeev(rho),
+  evs : part(evs,1),
+  for x in evs do (
+    if not(x = 0.0) then (
+      sum : sum + x^a)),
+  log2(sum)/(1-a));
+  
+/* tsallis entropy */
+tsallis_entropy(q,rho) := block([x,evs,sum:0],
+  evs : eivals(rho),
+  /* following is kludged transpose */
+  evs : map( lambda([i,j], [i,j]), evs[1], evs[2]),
+  for x in evs do (
+    if not(x[1] = 0) then (
+      sum : sum + x[2]*(x[1])^q)),
+  (1-sum)/(q-1));
+
+/* float tsallis entropy */
+tsallis_entropyf(q,rho) :=  block( [x,evs,sum:0],
+  evs : dgeev(rho),
+  evs : part(evs,1),
+  for x in evs do (
+    if not(x = 0.0) then (
+      sum : sum + x^q)),
+  (1-sum)/(q-1));
+
+
+/* purity(rho) :=  mat_trace(rho . rho);  in lisp */
 
 fidelity(rho1,rho2) := block( [sr2],
   sr2 : mat_function(sqrt,rho2),
   mat_trace(mat_function(sqrt, sr2 . rho1 .sr2)));
 
+/* to lisp
 commutator(A,B):= A . B - B . A;
 anticommutator(A,B):= A . B + B . A;
+*/
 
 /* Rotate through angle 2*gamma about direction
    (theta,phi) w.r.t z-axis. Note we use 2*gamma rather

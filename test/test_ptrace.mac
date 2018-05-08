@@ -14,7 +14,7 @@
 kill(all);
 
 load("qinf.mac");
-load("qtest.mac");
+load("test/qtest.mac");
 qtest_count : 0;
 qtest_scount : 0;
 
@@ -101,12 +101,12 @@ ab : a otimes b;
 abm : toproj(ab);
 
 qtest(
-  is ( tostate( ptrace(abm,1,2)) = b ),
+  is ( tovect( ptrace(abm,1,2)) = b ),
   true
   );
 
 qtest(
-  is ( tostate( ptrace(abm,3,4)) = a ),
+  is ( tovect( ptrace(abm,3,4)) = a ),
   true
   );
 

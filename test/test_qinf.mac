@@ -11,7 +11,7 @@
 */
 
 load("qinf.mac");
-load("qtest.mac");
+load("test/qtest.mac");
 qtest_count : 0;
 qtest_scount : 0;
 
@@ -90,7 +90,7 @@ qtest(
 
 
 qtest (
-  is ( tostate( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha)),
+  is ( tovect( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha)),
   true
   );
 
@@ -138,7 +138,7 @@ qtest(
 
 block([c0,c1,c2,c3],
   qtest(
-    is (ratsimp(invpauliexp(pauliexp(c0,c1,c2,c3))) = [c0,c1,c2,c3]),
+    is (ratsimp(pauliexp(invpauliexp([c0,c1,c2,c3]))) = [c0,c1,c2,c3]),
     true
     )
   );

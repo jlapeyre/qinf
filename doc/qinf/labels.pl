@@ -18,11 +18,11 @@ $noresave{$key} = "$nosave";
 
 
 $key = q/pauliexp/;
-$external_latex_labels{$key} = q|4|; 
+$external_latex_labels{$key} = q|6|; 
 $noresave{$key} = "$nosave";
 
 $key = q/ket_to_mat/;
-$external_latex_labels{$key} = q|5|; 
+$external_latex_labels{$key} = q|8|; 
 $noresave{$key} = "$nosave";
 
 1;

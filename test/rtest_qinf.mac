@@ -63,7 +63,7 @@ true;
 is ( spinor_rotation_op_trig(%pi/2,%pi/2,-%pi/2) . ketz(0) = ketx(1));
 false;
 
-is ( tostate( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha));
+is ( tovect( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha));
 true;
 
 (
@@ -96,3 +96,6 @@ block([c0,c1,c2,c3],
   );
 true;
 
+block([c0,c1,c2,c3],
+   is (ratsimp(pauliexp(invpauliexp([c0,c1,c2,c3]))) = [c0,c1,c2,c3]));
+true;

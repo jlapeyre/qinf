@@ -1,0 +1,12 @@
+qinf.tex is the latex documentation source. It can be
+processed into pdf, ps, or html.
+
+* For html try this file for the initializattion file
+dot.latex2html-init.  See NOTES-latex2html.
+
+* several tex packages, extra fonts, etc. are needed for
+building the docs.
+
+hhktotex.pl is used to make man_index.tex. Then the first
+entries full of illegal symbols man_index.tex are removed
+by hand.

@@ -28,6 +28,6 @@ TD.eqno			{ }	/* equation-number cells */
 
 
 /* document-specific styles come next */
-DIV.navigation		{   }
 PRE.preform		{   }
+DIV.navigation		{   }
 SPAN.arabic		{   }

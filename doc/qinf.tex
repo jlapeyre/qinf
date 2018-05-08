@@ -1,8 +1,14 @@
 \documentclass[leqno,10pt]{article}
 \usepackage{boxedminipage}
 
+% when these lines were placed too far below here,
+% makeindex mysteriously produced no entries
+\usepackage{makeidx} 
+\makeindex
+
 \usepackage{html}
 
+% Make boxed minipage  wider for html version
 \html{ \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{2.0\linewidth}} }
 \latex{ \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.05\linewidth}} }
 
@@ -17,6 +23,8 @@
 
 \newcommand{\hlink}[2]{\htmladdnormallink{#1}{#2}}
 
+%\def\man_abasep{maxima_29.html\#IDX1037}
+\input{man_index.tex}
 
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -34,8 +42,6 @@
 \def\supertiny{ \font\supertinyfont = cmr6 at 4pt \relax
 \supertinyfont}
 
-\usepackage{makeidx} 
-\makeindex
 
 %\usepackage{amssymb} this breaks bbold numeral
 %\usepackage{amsmath}
@@ -66,7 +72,7 @@
 \newcommand{\fs}[1]{{\bf #1}}
 
 % refer to a function and add an index entry
-\newcommand{\ifs}[1]{{\bf #1}\index{#1@{\bf #1}}} % bold index entry plus bold in text
+\newcommand{\ifs}[1]{{{\bf #1}}\index{#1@{\bf #1}}} % bold index entry plus bold in text
 \newcommand{\ibd}[1]{\index{#1@{\bf #1}}} % bold index entry
 \newcommand{\iit}[1]{\index{#1@{\it #1}}} % italic index entry
 % package or software proper name, with an index entry
@@ -88,7 +94,7 @@
 
 
 \title{User's Manual for \qinf Quantum Information and Entanglement Package
- v. 0.05 For The \pname{Maxima} Computer
+ v. 0.06 For The \pname{Maxima} Computer
   Algebra System}
 \author{G. John Lapeyre, Jr.}
 
@@ -183,7 +189,8 @@ Some suggestions and things to be aware of in the following sections.
     examples here are generated using the 
     \htmladdnormallink{\ipname{imaxima}}{http://members3.jcom.home.ne.jp/imaxima/Site/Welcome.html} package
     for the \ipname{emacs} editor/environment, but the results are
-    similar to other graphical frontends to \maximalink.
+    similar to other graphical frontends to \maximalink. Another popular graphical
+    frontend is \hlink{\ipname{wxmaxima}}{http://wxmaxima.sourceforge.net}.
    \item
     Most functions currently work only with qubits, others for variable number of
     states.
@@ -232,7 +239,8 @@ tensor product\index{tensor product}, becomes the
 Kronecker product in the matrix
 representation of a finite dimensional Hilbert space. To
 agree with standard terminology, we introduce the
-\maxman{infix}{maxima_6.html#IDX156}
+%\maxman{infix}{maxima_6.html#IDX156}
+\maxman{infix}{\maximainfix}
 operator \ifs{otimes} and the function \ifs{tensor\_product}
 that eventually call the \pname{Maxima} function
 \ifs{kronecker\_product}.  See the 
@@ -360,9 +368,9 @@ and \index{$e$ base of natural log}
 \section{Representation of states and operators}
 Kets are represented by $n \times 1$ matrices, bras by $1
 \times n$ matrices.\index{kets!representation} The objects
-are represented in the $z$ basis.  Bras and kets
+are represented in the computational basis.  Bras and kets
 representing the same states are related by \pname{Maxima}'s conjugate
-transpose function \maxman{\ifs{ctranspose}}{maxima_60.html#IDX2119}.
+transpose function \maxman{\ifs{ctranspose}}{\maximactranspose}.
 Density operators and other operators
 are represented by matrices.  The tensor product is
 represented by the Kronecker product.  There is no strong
@@ -379,14 +387,18 @@ Here are some methods for creating instances of states, from scratch or
 from other states. Although all operators  `create' states in this
 sense, we omit most of them here, because they are better described as manipulating
 states.
-
-\subsection{\func{ketz}{i_1,\ldots,i_n}, \func{braz}{i_1,\ldots,i_n},
-\func{ketx}{.}, \func{brax}{.},
-  \func{kety}{.}, \func{bray}{.}, multipartite eigenstates of 
-  $\sigma_x,\sigma_y,\sigma_z$}  \index{states!creating a ket}
+%\subsection{\func{ketz}{i_1,\ldots,i_n}, \func{braz}{i_1,\ldots,i_n},
+%\func{ketx}{.}, \func{brax}{.},
+%  \func{kety}{.}, \func{bray}{.}, multipartite eigenstates of 
+%  $\sigma_x,\sigma_y,\sigma_z$}
+\subsection{\ifs{ketz}, \ifs{braz},\ifs{ketx}, \ifs{brax},
+  \ifs{kety}, \ifs{bray} --- multipartite eigenstates of  $\sigma_x,\sigma_y,\sigma_z$}
+  \index{states!creating a ket}
 \index{kets!creating a ket|see{states}}
-create normalized $n$-partite states in the z-basis. In all cases
-the indices are $0$ or $1$. The pair \ifs{ketz} and \ifs{braz} produce
+create normalized $n$-partite states in the computational basis.
+%\func{ketz}{i_1,\ldots,i_n} creates an eigenstate (ket) of $\sigma_z^{\otimes n}$
+In all cases the indices are $0$ or $1$. The pair 
+\func{ketz}{{i_1,\ldots,i_n}} and \func{braz}{{i_1,\ldots,i_n}} produce
 eigenstates of $\sigma_z^{(1)} \otimes \cdots \otimes \sigma_z^{(n)}$,
 with the index $i=0$ selecting the state with eigenvalue $1$ and
 $i=1$ selecting the state with eigenvalue $-1$.
@@ -448,13 +460,14 @@ $i=1$ selecting the state with eigenvalue $-1$.
  \pmatrix{\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{i}{2\*\isqrt{2}}&\linebreak[0]-\ifracd{i}{2\*\isqrt{2}}&\linebreak[0]\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{i}{2\*\isqrt{2}}&\linebreak[0]-\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{1}{2\*\isqrt{2}}&\linebreak[0]\ifracd{i}{2\*\isqrt{2}}\cr }\end{dmath}
 \ebm
 
-\subsection{\func{ket\_n}{j,i_1,\ldots,i_m}, \func{bra\_n}{j,i_1,\ldots,i_m},
- alternate form of \fs{ketz}, etc.}\index{ket\_n@{\bf ket\_n}}
-These are an alternate way to call \fs{ketx}, \fs{kety}, etc. The index $j\in(1,2,3)$
+
+\subsection{\ifs{ket\_n}, \ifs{bra\_n} ---  alternate form of \ifs{ketz}, etc.}
+\func{ket\_n}{j,i_1,\ldots,i_m} and \func{bra\_n}{j,i_1,\ldots,i_m}
+ are an alternate way to call \fs{ketx}, \fs{kety}, etc. The index $j\in(1,2,3)$
 is mapped to $(x,y,z)$ and the appropriate function, eg. \fs{ketx} is called with
 the remaining arguments.
 
-\subsection{Density matrix representation of a pure state (projection operator)}
+\subsection{\ifs{toproj} --- Density matrix representation of a pure state (projection operator)}
 The projection operator \index{projection operator}
 \index{density operator!of a pure state} (or equivalently, the density
 matrix) corresponding to a state vector is generated via the
@@ -493,20 +506,20 @@ Here are different ways to make $\ket{000}\bra{000}$ and $\ket{101}\bra{101}$.
  \mathbf{true}\end{dmath}
 \ebm
 
-There is also a function \ifs{tostate} (needs a better name) that
+There is also a function \ifs{tovect} that
 is the inverse (up to a phase) of \ifs{toproj}--- it returns the ket corresponding to a
 projection operator. If the input matrix is not a projection operator,
 the result is undefined.
 \bbm
 \begin{verbatim}
-(%i17) is ( tostate( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha));
+(%i17) is ( tovect( toproj(schmidt_ket(alpha))) = schmidt_ket(alpha));
 \end{verbatim}
 \begin{dmath}[number={\%o17}]
  \mathbf{true}\end{dmath}
 \ebm
 
-\subsection{Creating state vectors with the tensor product.
- \ifs{otimes} and \ifs{tensor\_product} \index{tensor product}}
+\subsection{\ifs{otimes} and \ifs{tensor\_product} \index{tensor product}
+--- Creating state vectors with the tensor product.}
 The function \func{tensor\_product}{v_1,\ldots,v_n}, returns
 $v_1\otimes v_2\cdots\otimes v_n$, where $v_i$ are vectors
 or matrices. The \fs{otimes} operator
@@ -537,13 +550,13 @@ compared elementwise.
  \mathbf{true}\end{dmath}
 \ebm
 
-\subsection{\ifunc{schmidt\_ket}{a}. bipartite state in Schmidt basis}
-creates a ket in the schmidt form. \index{Schmidt basis} This is
+\subsection{\ifs{schmidt\_ket} --- bipartite state in Schmidt basis}
+\func{schmidt\_ket}{a}creates a ket in the schmidt form. \index{Schmidt basis} This is
 equivalent to \verb|sqrt(a)*ket(0,0)+ sqrt(1-a)*ket(1,1)|. This
 only works for qubits ($d=2$). Note that you may need to
 enter \pname{Maxima}'s \verb|assume(a>0,1-a>0)| \ibd{assume} when manipulating this state.
 
-\subsection{\ifs{bell[a,b]} and  \ifs{belln[i]} Bell vectors in computational basis }
+\subsection{\ifs{bell} and  \ifs{belln} --- Bell vectors in computational basis }
 \index{Bell states}
 create vector bell states. \fs{bell[a,b]} creates the state
 \begin{equation}
@@ -629,7 +642,8 @@ We can also check that
 
 \htmlrule
 \section{Creating and using operators}
-\subsection{\imarray{pauli}{i}}
+\subsection{\ifs{pauli}}
+\marray{pauli}{i}
 creates the pauli matrices $(\sigma_0,\sigma_1,\sigma_2,\sigma_3)
 =(\mathbb{1}_2,\sigma_x,\sigma_y,\sigma_z).$
 \bbm
@@ -716,28 +730,30 @@ $[\sigma_i,\sigma_j] = 2i\epsilon_{i,j,k}\sigma_k$.
 \ebm
 
 \htmlrule
-\section{Entanglement-- \func{ptrace}{\rho,i_1,\ldots}, \func{entropy}{\rho}, \func{purity}{\rho}}
+%\section{Entanglement-- \func{ptrace}{\rho,i_1,\ldots}, \func{entropy}{\rho}, \func{purity}{\rho}}
+\section{Entanglement}
 
 Now we are ready to introduce features that are more
 specific to the study quantum entanglement, namely the
 partial trace \fs{ptrace}, the von Neumann entropy
 \fs{entropy} and \fs{purity}.
 
-\subsection{\func{ptrace}{\rho,i_1,\ldots}, \func{ptracen}{n,\rho,i_1,\ldots} partial trace }
-computes the partial trace of the  density 
+
+\subsection{\fs{ptrace}, \fs{ptracen} --- partial trace }
+compute the partial trace of the  density 
 operator $\rho$ over the component spaces given by the indices.
-For \ifs{ptrace} the density matrix $\rho$ is assumed to be in
+For \ifunc{ptrace}{\rho,i_1,\ldots} the density matrix $\rho$ is assumed to be in
 $(\mathbb{C}^n)^{\otimes m}$, with $n=2$, that is
-a tensor product of qubit spaces. For \ifs{ptracen} the component
+a tensor product of qubit spaces. For \ifunc{ptracen}{n,\rho,i_1,\ldots} the component
 spaces are all $n$-state qudits.
 
 In this example we create three arbitrary $3\times3$ matrices, and check that
 $$
-\mbox{Tr}_{1,2}(m_1\otimes m_2\otimes m_3) = \left(\mbox{Tr}(m_1)\mbox{Tr}(m_2)\right) m_3
+\mbox{Tr}_{1,2}\left(m_1\otimes m_2\otimes m_3\right) = \left(\mbox{Tr}(m_1)\mbox{Tr}(m_2)\right) m_3
 $$
 and that
 $$
-\mbox{Tr}_{3}(m_1\otimes m_2\otimes m_3) = \left(\mbox{Tr}(m_3\right)(m_1\otimes m_2).
+\mbox{Tr}_{3}\left(m_1\otimes m_2\otimes m_3 \right) = \mbox{Tr}(m_3)(m_1\otimes m_2).
 $$
  Notice that we use the \pname{Maxima} function \ifs{ratsimp} to put both sides of the
 equation in the same form because \ifs{=} checks only that two expressions are lexically
@@ -781,11 +797,26 @@ the density matrix $\rho$  defined by
 \begin{equation}
  S(\rho) = -\mbox{Tr}\left(\rho \log_2 \rho\right).
 \end{equation}
+\ifs{entropyf} is the floating point version of \fs{entropy}.
 
 \subsection{\ifs{purity}}
  \func{purity}{\rho} returns the purity of the 
 density matrix $\rho$ defined by $\mbox{Tr}(\rho^2)$. The purity
 is $1$ for a pure state and is less than $1$ for a mixed state.
+
+\subsection{\ifs{renyi\_entropy}}
+ \func{renyi\_entropy}{\rho} gives the R\'enyi entropy, defined by
+\begin{equation}
+ S_{\mbox{renyi}}(\alpha,\rho) = \frac{1}{1-\alpha}\log_2\left(\mbox{Tr}(\rho^\alpha)\right).
+\end{equation}
+\ifs{renyi\_entropyf} is the floating point version of \fs{renyi\_entropy}.
+
+\subsection{\ifs{tsallis\_entropy}}
+ \func{tsallis\_entropy}{\rho} gives the Tsallis entropy, defined by
+\begin{equation}
+ S_{\mbox{tsallis}}(q,\rho) = \frac{1}{q-1}\left(1-\mbox{Tr}(\rho^q)\right).
+\end{equation}
+\ifs{tsallis\_entropyf} is the floating point version of \fs{tsallis\_entropy}.
 
 
 \subsection{An entangled pure global state has mixed reduced states}
@@ -899,30 +930,30 @@ The next four functions \func{pauli\_product}{i_1,\ldots,i_n},
 \func{pauliexp}{\rho}, \func{invpauliexp}{c}, and \func{correlation\_tensor}{c,i_1,\ldots,i_n}
 are related. An example using them follows their definitions.
 
-\subsection{\ifs{pauli\_product} \ tensor product of pauli matrices }
+\subsection{\ifs{pauli\_product} ---  tensor product of pauli matrices }
 \func{pauli\_product}{i_1,\ldots,i_n} returns the tensor product
 $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$, where the indices
 $i_j$ are in $\{0,1,2,3\}$. 
 
-\subsection{\ifs{pauliexp}\ expansion in terms of tensor products of pauli matrices  }
+\subsection{\ifs{pauliexp} --- expansion in terms of tensor products of pauli matrices  }
 \func{pauliexp}{\rho} returns the correlation tensor, that
 is, the coefficients in the expansion of the matrix $\rho$
 in tensor products of pauli matrices. Explicitly, \fs{pauliexp}
 returns the coefficents $c_{i_1,\ldots,i_n}$ in
 \begin{equation}\label{pauliexp}
- \rho = \sum_{i_1,\ldots,i_n=0}^1 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
+ \rho = \sum_{i_1,\ldots,i_n=0}^3 c_{i_1,\ldots,i_n} \ \sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}.
 \end{equation}
 $\rho$ must be a $2^n\times 2^n$ matrix. The coefficients are returned as a list
 of $2^n\times 2^n$ elements. The place of $c_{i_1,\ldots,i_n}$ in the returned list is determined
 by taking ${i_1,\ldots,i_n}$ to be the  binary representation of an integer. For convenience,
 the coefficient can be retrieved by index with the function \fs{correlation\_tensor}.
 
-\subsection{\ifs{invpauliexp} inverse of expansion in terms of tensor products of pauli matrices}
+\subsection{\ifs{invpauliexp} --- inverse of expansion in terms of tensor products of pauli matrices}
 \func{invpauliexp}{c} is the inverse of \fs{pauiexp}. Given a list $c$ representing
 the correlation tensor ({\it i.e.} expansion coefficients),
  \fs{invpauliexp} returns the matrix $\rho$ given by (\ref{pauliexp}).
 
-\subsection{\fs{correlation\_tensor} retrieve component of correlation tensor by index}
+\subsection{\fs{correlation\_tensor} --- retrieve component of correlation tensor by index}
 \func{correlation\_tensor}{c,i_1,\ldots,i_n} returns the expansion coefficient for
 the term $\sigma_{i_1} \otimes \cdots \otimes \sigma_{i_n}$ in the expansion of
 $\rho$, where $c$ is the list of coefficients in the expansion of $\rho$ as given,
@@ -1004,6 +1035,8 @@ $$
 
 \subsection{Entanglement swapping\index{entanglement swapping}}
 
+In this subsection, we check a calculation that would
+be relativley difficult to check by hand
 Consider a pair of entangled qubits $A$ and $B$, and another
 entangled pair $C$ and $D$. By performing a joint
 measurement on, say $B$ and $C$, we can put $A$ and $B$ in
@@ -1017,13 +1050,8 @@ formulas taking advantage of the particulars of this
 problem. To do the first calculation by hand would be
 extremely upleasant, as it involves multiplying $16\times16$
 matrices with several factors in a single element. Carrying
-it out below with \pname{Maxima} is a concise exercise. This
-may appear to be an empty exercise only because all the
-calculations agree. In fact, in taking this example from a
-journal article, the author easily found a typographical
-error leading to an inconsistent result in one of the
-formulas below that would have been difficult to track down
-by hand. At present this example does not continue by discussing
+it out below with \pname{Maxima} is a concise exercise.
+ At present this example does not continue by discussing
 the measurements that maximize the resulting entanglement
 of $A$ and $D$.
 
@@ -1078,7 +1106,12 @@ The state $\ket{u_m}$ is normalized, but we don't need to impose that condition 
 The inital joint state $\ket{\alpha\beta}\bra{\alpha\beta}$ is pure and remains
 so after the measurment applying $\ket{u_m}\bra{u_m}$ to qubits $B$ and $C$.
 But we write the density operator
-because we will examine the reduced states, which are mixed.
+because we will examine the reduced states, which are mixed. We compute
+\begin{equation}
+  \rho = \left( (\mathbb{1}_2 \otimes \ket{u_m}\bra{u_m} \otimes \mathbb{1}_2 )
+     \ket{\alpha\beta}\bra{\alpha\beta}\right),   
+\end{equation}
+with
 \bbm
 \begin{verbatim}
 (%i7) rho : conjsimp((ident(2) otimes toproj(u) otimes ident(2)) . toproj(a otimes b))$,
@@ -1175,8 +1208,8 @@ which is given by
 \end{verbatim}
 \begin{dmath}[number={\%o15}]
  \left(\left(\alpha-1\right)\*\beta-\alpha+1\right)\*\left| \mathrm{u11}\right| ^{2}+\left(1-\alpha\right)\*\beta\*\left| \mathrm{u10}\right| ^{2}+\left(\alpha-\alpha\*\beta\right)\*\left| \mathrm{u01}\right| ^{2}+\alpha\*\beta\*\left| \mathrm{u00}\right| ^{2}\end{dmath}
-and see that $p_m$ is the same as above--- verifying this last formula was well. 
 \ebm
+and see that $p_m$ is the same as above--- verifying this last formula was well. 
 %\section*{Index}
 \htmlrule
 \printindex

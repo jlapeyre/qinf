@@ -1,4 +1,9 @@
+Here is one line to produce the html manual
 latex2html -info 0 -scalable_fonts  -no_navigation -show_section_numbers -antialias -image_type gif  -font_size 12pt -split 0 qinf.tex
+
+This line is on the quad machine with no gif package
+
+latex2html -info 0 -scalable_fonts  -no_navigation -show_section_numbers -antialias  -font_size 12pt -split 0 -tmp /home/lapeyre/quantum_information/doc/tmp  qinf.tex
 
 #  some options to try -white -antialias -image_type gif
 
