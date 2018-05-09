@@ -7,7 +7,7 @@ verifying calculations in a paper is included.
 
 qinf implements objects from quantum information theory--- operators,
 vectors, tensors, etc. These objects are typically represented in this
-package in a particular basis as row and column vectors and matrices, whose
+package  as row and column vectors and matrices, whose
 entries may be explicit numbers or algebraic expressions. This software
 occupies a niche distinct from high performance numerical linear algebra
 software as well as software such as the Maxima tensor packages that
@@ -15,7 +15,7 @@ manipulate abstract mathematical objects.
 
 ## Installation
 
-To use this package copy all of the files in the `./src` directory to you
+To use this package, copy all of the files in the  [./src/](./src/) directory to your
 `.maxima/` directory, or other directory in Maxima's search path. For
 unix/linux, there is a script `./install.sh` that does this for you.
 
@@ -23,7 +23,7 @@ unix/linux, there is a script `./install.sh` that does this for you.
 
 At the Maxima prompt give the following command.
 ```
-load("qinf.mac")
+load("qinf.mac");
 ```
 
 ## Testing
