@@ -37,10 +37,3 @@ bv : [beta,1-beta] $
 P2 : apply( "+", create_list( av[i] * abs(mu[i,j])^2 * bv[j], i,[1,2],j,[1,2]));
 
 is (ratsimp(P1) = ratsimp(P2));
-
-
-
-
-
-
-

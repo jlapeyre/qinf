@@ -6,6 +6,7 @@ BIBTEX = bibtex
 
 all : qinf.pdf
 
+# TODO: Try xetex or luatex
 %.pdf : %.tex
 	$(TEX) $<
 	$(BIBTEX) $*

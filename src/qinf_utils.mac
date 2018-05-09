@@ -2,6 +2,7 @@
 Code supplied by  Barton Willis.
 Modified slightly by John Lapeyre.
 */
+
 /* These do not appear to be used
 conjsimp (e) := block([args],
   if mapatom(e) then e

@@ -17,16 +17,13 @@
 
 %\bibliographystyle{naturemag} % eprints, pretty, no links
 %\bibliographystyle{naturemag_ep_doi_hr} % eprints, pretty, no links
-%\bibliographystyle{naturemag_ep_doi_ht} % eprints, pretty, no links
 %\bibliographystyle{plainurl} % no eprint, links to aps
 %\bibliographystyle{plainhtml} % kinda garbage from latex2html
 
 \usepackage{html}
 
-% This is to get the bibliography to work
+%% This is to get the bibliography to work
 \html{ \renewcommand{\href}[2]{\url{#1}} } % putting #2 in looks like garbage
-
-%\renewcommand{\href}[2]{\url{#1} {#2}}
 
 %%%%%%%%%%%%
 % bug: sections only bold function names in TOC if
@@ -40,9 +37,9 @@
 %%\latex{ \newcommand{\bbm}{\vspace{5pt}\par\noindent\begin{boxedminipage}{1.5\linewidth}} }
 
 %% We do not include the html maxima manual  
-% links to the maxima manual. this also gives the top directory
-%\def\maxdocdir{/usr/share/doc/maxima-doc/html/}
-%\def\maxdocdir{../maxima_html/}
+%% links to the maxima manual. this also gives the top directory
+%%\def\maxdocdir{/usr/share/doc/maxima-doc/html/}
+%T%\def\maxdocdir{../maxima_html/}
 \def\maxdocdir{http://maxima.sourceforge.net/docs/manual/en/}
 \newcommand{\maxlink}[1]{{\maxdocdir}#1}
 \html{\newcommand{\maxman}[2]{\hlink{#1}{\maxlink{#2}}}}

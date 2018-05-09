@@ -4,4 +4,3 @@ state : proj(schmidt_ket(alpha));
 concurrence_vals(state);
 factor(concurrence(state));
 wxplot2d(concurrence(state),[alpha,0,1]);
-

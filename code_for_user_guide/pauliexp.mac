@@ -5,5 +5,6 @@ mp : m1 otimes m2 otimes  m3 ;
 pe : pauliexp(mp) $
 length(pe);
 part(pe,10);
+
 is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
 correlation_tensor(pe,1,2,3);

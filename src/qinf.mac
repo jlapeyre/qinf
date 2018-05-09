@@ -20,8 +20,7 @@ load("diag");
   currently prints a bunch of garbage
   load("itensor");
 */
-/* load(lapack);   Add this back later.  loading lapack causes error */
-/* load("qinf_utils.mac"); No longer used */
+/* load(lapack);   Add this later. */
 
 qudit_states : 2;
 
@@ -55,7 +54,6 @@ ktolist(ket) := inpart(transpose(ket),1);
 /* kets -- a list of kets
    returns -- matrix each of whose rows is the elements of one ket */
 ketstomat(kets) := apply('matrix,map(ktolist,kets));
-
 
 /* Partial trace over one or more components.
    This computes partial trace one component at a time.
@@ -113,9 +111,10 @@ ptrace_one_dimension(b,A,q) := block ( [nA,nbitsA,nbitsB, B,x,y,x1,x2,y1,y2,
    B);
 
 /*
-a is a list of things to take kronecker product of.
-Takes advantage of associative prop. of kron. prod.
-*/
+ * tensor_product
+ * a is a list of things to take kronecker product of.
+ * Takes advantage of associative prop. of kron. prod.
+ */
 tensor_product([a]) := block([n,c,i],
   n : length(a),
   c : a[1],

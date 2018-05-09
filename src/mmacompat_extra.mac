@@ -1,20 +1,20 @@
 /*
-* Mathematica-like compatibility functions for Maxima.
-*
-* These functions are not used by the qinf package. The functions in file
-* mmacompat.mac *are* used by qinf. If you are interested in these
-* compatibility functions, see the mixima repo. It is a much more thoroughly
-* developed set of compatibility functions together with translation tools.
-*/
+ * Mathematica-like compatibility functions for Maxima.
+ *
+ * These functions are not used by the qinf package. The functions in file
+ * mmacompat.mac *are* used by qinf. If you are interested in these
+ * compatibility functions, see the mixima repo. It is a much more thoroughly
+ * developed set of compatibility functions together with translation tools.
+ */
 
 load("eigen");
 
 /*============== Chop ===============*/
 /*
-*  Remove tellsimp stuff again. There are probably no useful
-*  situations where chop(arg) should remain unevaluated.
-*  This also is based on contributition from Stavros Macrakis.
-*/
+ *  Remove tellsimp stuff again. There are probably no useful
+ *  situations where chop(arg) should remain unevaluated.
+ *  This also is based on contributition from Stavros Macrakis.
+ */
 chop_epsilon : 1e-10;  /* new global variable */
 
 /*
@@ -33,9 +33,9 @@ Chop(ex,[arg]) :=  block( [chop_epsilon:chop_epsilon],
 
 /*============== Table  ===============*/
 /*
- There are two functions here, Table and %Table which is called
- by Table.
-*/
+ * There are two functions here, Table and %Table which is called
+ * by Table.
+ */
 
 lcreate_list(expr,v) := apply('create_list,cons(expr,v));
 
@@ -62,13 +62,14 @@ Table(expr,[v]) := block([res:[]],
 /************** end Table  **************/
 
 /*============== Dimensions  ===============*/
-/* return Dimensions of nested list. ie number of elements in list
-  at each level in nested lists. This one checks the first element
-  at each level, so it will not detect irregularities in the array.
-  It only works for lists, ie with operator type "[". Needs more
-  work to duplicate Mma functionality. But it will work on a regular
-  array whose elements are not lists (they need not be atomic)
-  */
+/*
+ * Return Dimensions of nested list. ie number of elements in list
+ * at each level in nested lists. This one checks the first element
+ * at each level, so it will not detect irregularities in the array.
+ * It only works for lists, ie with operator type "[". Needs more
+ * work to duplicate Mma functionality. But it will work on a regular
+ * array whose elements are not lists (they need not be atomic)
+ */
 Dimensions(m) := block([res:[]],
   if mapatom(m) then res else
   res:cons(length(m),Dimensions(inpart(m,1))),res);
@@ -149,9 +150,6 @@ block ([simp : false],
     tellsimp( Fold(aa,bb,cc), dofold(aa,bb,cc)),
     tellsimp( Fold(aa,bb,dd), throw("fold: third argument must be a list")),
     tellsimp( FoldList(aa,bb,cc), dofoldlist(aa,bb,cc)));
-
-/***   fold(f,x,[a,b,c]) --> f(f(f(x,a),b),c)
-*/
 
 /*
    Using (+f) works here when applying some functions,

@@ -1,7 +1,7 @@
 /*
-  quantum_information package for the Maxima computer algebra system.
+  qinf quantum_information package for the Maxima computer algebra system.
 
-  Copyright 2008, John Lapeyre  All rights reserved.
+  Copyright 2008--2018, John Lapeyre  All rights reserved.
 
   This program is free software; you can redistribute it
   and/or modify it only under the terms of the GNU General
@@ -11,7 +11,6 @@
 */
 
 /* Testing ptrace function */
-
 
 block(
   kill(all),

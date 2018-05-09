@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # This will install files in your home directory in
-# Maxima's search path.
+# Maxima's search path. It would be a good idea to
+# store them in a subdirectory
 
 FILES=' qinf.mac qinf.lisp qinf_utils.mac log2.mac  mmacompat.mac mmacompat_lisp.lisp '
 

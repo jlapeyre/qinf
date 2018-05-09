@@ -37,7 +37,6 @@
 (defun $anticommutator (a b)
   (add* (ncmul2 a b) (ncmul2 b a)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Following are functions for playing around
 ;;
 ;; transpose lisp matrix [ that is ( ( a b ) ( c d ) )

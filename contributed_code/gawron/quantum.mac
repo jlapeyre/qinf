@@ -25,7 +25,7 @@ k[0]:matrix([1],[0])$
 k[1]:matrix([0],[1])$
 
 /* Kraus operators for well known quanum channels */
-/* ref: Nielsen Chuang "Quantum Information and Compuation", Cambridge Press 2000, p. 397 */ 
+/* ref: Nielsen Chuang "Quantum Information and Compuation", Cambridge Press 2000, p. 397 */
 /* Depolarizing channel */
 D[1]:sqrt(1-(3*p/4))*Id$
 D[2]:sqrt(p/4)*Sx$
@@ -52,7 +52,7 @@ BF[2]:sqrt(p)*Sx$
 BPF[1]:sqrt(1-p)*Id$
 BPF[2]:sqrt(p)*Sy$
 
-/* Rotation matrices */ 
+/* Rotation matrices */
 RotX(th):=matrix([cos(th/2),-%i*sin(th/2)],[-%i*sin(th/2),cos(th/2)])$
 RotY(th):=matrix([cos(th/2),-sin(th/2)],[sin(th/2),cos(th/2)])$
 RotZ(th):=matrix([exp(-%i*th/2),0],[0,exp(%i*th/2)])$
@@ -146,7 +146,7 @@ ket(l):=block(
 	[t,i],
 	t:matrix([1]),
 	for i:1 thru length(l) do
-	(	
+	(
 		t:kronecker_product(t,k[l[i]])
 	),
 	return(t)
@@ -173,9 +173,9 @@ evolve(state,gate):=gate.state.ctranspose(gate)$
 */
 kron(l):= block(
 	[t,i],
-	t:matrix([1]), 
+	t:matrix([1]),
 	for i:1 step 1 thru length(l) do
-	( 
+	(
 		t:kronecker_product(t,l[i])
 	),
 	return(t)
@@ -202,7 +202,7 @@ dec2base(n,base,size):=block(
 dec2bin(n,size):=dec2base(n,2,size)$
 
 /* Input: list of single qubit kraus operators and size (in qubits) of output channel
-*  Output: list of kraus operators E_k=\bigotimes_i e_\sigma(i) where e_n is input 
+*  Output: list of kraus operators E_k=\bigotimes_i e_\sigma(i) where e_n is input
    operator and \sigma ranges over all possible tuples of inidces
 */
 nqubit_channel(opl,size):=block(
@@ -212,9 +212,9 @@ nqubit_channel(opl,size):=block(
 	for i:1 thru len do
 	(
 		tuple:dec2base(i-1,length(opl),size),
-		t:matrix([1]), 
+		t:matrix([1]),
 		for j:1 thru size do
-		(	
+		(
 			x:tuple[j]+1,
 			t:kronecker_product(t,opl[x])
 		),
@@ -223,7 +223,7 @@ nqubit_channel(opl,size):=block(
 	return(ret)
 )$
 
-/* Input: density matrix and list of Kraus operators - density matrix and operators must have appropriate sizes 
+/* Input: density matrix and list of Kraus operators - density matrix and operators must have appropriate sizes
 *  Output: density operator after application of the channel
 ex. kraus
 */
@@ -231,7 +231,7 @@ apply_channel(st,opl):=sum(
 	opl[i].st.ctranspose(opl[i]),
 	i,1,length(opl))$
 
-/* Input: density matrix and list of one-qubit Kraus operators 
+/* Input: density matrix and list of one-qubit Kraus operators
 *  Output: density operator after application of the n-qubit channel - see nqubit_channel()
 */
 apply_nqubit_channel(st,opl):=block(
@@ -241,7 +241,7 @@ apply_nqubit_channel(st,opl):=block(
 	return(apply_channel(st,c))
 )$
 
-/* Input: density matrix 
+/* Input: density matrix
 *  Output: list of diagonal elements of the matrix
 */
 probability_distribution(st):=block(
@@ -310,7 +310,7 @@ mat(V,cols,rows):=block(
 	[M,len,c,r,i],
 	len:first(matrix_size(V)),
 	M:zeromatrix(cols,rows),
-	for r:1 thru rows do(	
+	for r:1 thru rows do(
 		for c:1 thru cols do(
 			M[c,r]:V[(r-1)*(cols)+c,1]
 		)
@@ -325,7 +325,7 @@ superoperator_matrix(lst):=sum(kronecker_product(conjugate(lst[i]),lst[i]),i,1,l
 
 /* Input: one qubit gate, index of source qubit, index of target qubit, size of the gate in qubits - i.e
 *  Output: unitary matrix implementing appropriate unitary operation
-*  Example: 
+*  Example:
 *  controled_gate(Sx,1,2,2);
 *	 matrix([1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0])
 */
@@ -401,7 +401,7 @@ TrX(p,sys,dim):=block(
 	  dim1:dim[1],
 		dim2:1,
 	  dim3:dim[2],
-		if (sys=2) then sys:3		
+		if (sys=2) then sys:3
 	)
 	elseif (l=3) then (
 		dim1:dim[1],

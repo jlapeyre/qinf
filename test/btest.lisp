@@ -1,4 +1,3 @@
-;;
 ;; define batchtest, a quieter version of batch
 
 (in-package :maxima)

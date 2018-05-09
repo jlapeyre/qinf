@@ -1,3 +1,5 @@
+* MOVE THESE TO github
+
 * in R Griffiths doc. pg 4, line should read 'product of sums' not
   'sum of products'.
 
@@ -97,7 +99,7 @@ Partially Done
 Done
 ------------------------------------------
 * provide ZIP archive format
-* Just linked quantiki list. list other computer algebra quantum inf sites. 
+* Just linked quantiki list. list other computer algebra quantum inf sites.
 * check for separability of pure bipartite state of system AB,
   by doing purity( ptrace(rho,1)) , ie Tr((rho_A)^2)
 * change instances of 'commmand' to 'function'.

@@ -1,3 +1,4 @@
+
 Ughz : cnot(3,2,1) . cnot(3,3,1) . insert_operator(3,[hadamard,1]);
 /* test that our definitions of Ughz agree with generating them with the operator above.
 map( lambda( [x], is ( Ughz . apply(ketz,x) = arrayapply(ghz,x))), create_list([i,j,k],i,0,1,j,0,1,k,0,1));

@@ -3,6 +3,7 @@
 load("qinf.mac");
 load("qtest.mac");
 
+
 assume(alpha>0,1-alpha>0,beta>0,1-beta>0);
 
 a : schmidt_ket(alpha);

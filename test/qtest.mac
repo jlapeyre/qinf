@@ -1,19 +1,11 @@
 /*
-  quantum_information package for the Maxima computer algebra system.
-
-  Copyright 2008, John Lapeyre  All rights reserved.
-
-  This program is free software; you can redistribute it
-  and/or modify it only under the terms of the GNU General
-  Public License version 2 as published by the Free Software
-  Foundation.
-
+  qtest. A very simple testing framework. We usually use
+  the stock Maxima test framework. But, this is useful sometimes.
 */
 
 /* reset these counters when running a set of tests */
 qtest_count : 0;
 qtest_scount : 0;
-
 
 qtest('expr,val) := block([display2d:display2d,savedis,rval],
   qtest_count :   qtest_count + 1, 

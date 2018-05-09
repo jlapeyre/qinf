@@ -2,14 +2,14 @@ load("qinf.mac");
 load("qtest.mac");
 
 /*
-  Reproduce some calculations in
-
-  Perseguers, et. al.
-  "Entanglement Distribution in Pure-State Quantum Networks"
-  Phys Rev A 77 pg 022308 (2008)
-
-  Perseguers2008
-*/
+ *  Reproduce some calculations in
+ *
+ * Perseguers, et. al.
+ * "Entanglement Distribution in Pure-State Quantum Networks"
+ * Phys Rev A 77 pg 022308 (2008)
+ *
+ * Perseguers2008
+ */
 
 /*
   Equation (3) in Perseguers2008

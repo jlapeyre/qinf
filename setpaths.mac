@@ -4,5 +4,5 @@
  * Not for use after installation.
 */
 
-file_search_maxima: append (["./test/###.{lisp,mac}","./src/###.{lisp,mac}", "./examples/###.{lisp,mac}"], file_search_maxima) $
-file_search_lisp: append (["./test/###.{lisp,mac}", "./src/###.{lisp,mac}"], file_search_lisp) $
+file_search_maxima: append (["./test/###.{lisp,mac}","./src/###.{lisp,mac}", "./examples/###.{lisp,mac}"], file_search_maxima)$
+file_search_lisp: append (["./test/###.{lisp,mac}", "./src/###.{lisp,mac}"], file_search_lisp)$

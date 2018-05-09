@@ -1,7 +1,8 @@
 load("setpaths.mac");
 
 /* Load a modified, quieter version of 'batch' called 'batchtest' */
-loadfile("./test/btest.lisp")$ /* fails if we omitting the "./test/", despite change of file_search_lisp */
+/* Following fails if we omit the "./test/", despite change of file_search_lisp */
+loadfile("./test/btest.lisp")$
 
 /* Run the quieter test */
 batchtest("rtest_qinf.mac")$
