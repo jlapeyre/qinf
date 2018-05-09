@@ -8,7 +8,7 @@
   Public License version 2 as published by the Free Software
   Foundation.
 
-  This code is based on log10.mac by Robert Dodier which is used here 
+  This code is based on log10.mac by Robert Dodier which is used here
   under the following license
 
 ***
@@ -58,4 +58,3 @@ block ([simp : false],
     defrule (contract_log2_rule, log (hh), log2(hh) * log(2)),
     contract_log2 (expr) := apply1 (expr, contract_log2_rule)
 );
-

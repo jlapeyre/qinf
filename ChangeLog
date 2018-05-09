@@ -9,7 +9,7 @@ Version 0.11
 2008-09-01  John Lapeyre  <lapeyre@physics.arizona.edu>
 
 	* added normalize_matrix. documented this and normalize_vector.
-	
+
 
 Version 0.10
 2008-09-01  John Lapeyre  <lapeyre@physics.arizona.edu>
@@ -19,7 +19,7 @@ Version 0.10
 	* add some error detection
 	* add zip distribution form
         * found a few ther QC computer algebra packages to look at.
-	
+
 Version 0.09
 2008-08-28  John Lapeyre  <lapeyre@physics.arizona.edu>
 
@@ -29,7 +29,7 @@ Version 0.09
         * fixed documentation: quirks, inaccuracies, index
 	* add other functions. not documented.
 	* add (crude) install script
-	
+
 Version 0.08
 2008-08-27  John Lapeyre  <lapeyre@physics.arizona.edu>
 
@@ -57,14 +57,14 @@ Version 0.06
 	* added tsallis and renyi entropy
 	* added floating point versions of entropys
         * edited manual
-	
+
 Version 0.05
 2008-08-18  John Lapeyre  <lapeyre@physics.arizona.edu>
 
 	* edits to manual, pdf and html
 	* reorganized pauli expansion functions
 	* added example of pauli expansion functions.
-	
+
 Version 0.04
 2008-08-18  John Lapeyre  <lapeyre@physics.arizona.edu>
 
@@ -80,7 +80,7 @@ Version 0.03
 	* add matcols function
 	* convert figure to pdf so it builds with pdflatex
 	* changed directory structure
-	
+
 Version 0.02
 2008-08-12  John Lapeyre  <lapeyre@physics.arizona.edu>
 
@@ -88,6 +88,5 @@ Version 0.02
 	* started documentation in qinf.tex
 
 Version 0.01
-2008-08-11  John Lapeyre  <lapeyre@physics.arizona.edu>	
+2008-08-11  John Lapeyre  <lapeyre@physics.arizona.edu>
 	* initial release
-	

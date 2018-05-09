@@ -1,5 +1,3 @@
-;; qinf Version VERSIONNUMBER
-
 ;; flip a qubit
 (defun $flip (x) (mod (+ x 1) 2))
 
@@ -13,10 +11,11 @@
 ;; identitiymatrixp
 (defun $identitymatrixp (a) (mfuncall '$zeromatrixp (add* a (*mminus ($ident ($length a))))))
 
-;; this helper function could be elimintated
-;(defun add-digit (val posn base)
-;  (* val (power base posn)))
-
+;; Return integer value from vector (or list) of numeration.
+;; vec -- vector of numerals.
+;; b   --  the base.
+;; bits are arranged here from least to most significant
+;; left to right.
 ;; the same as fromdigits, but the order of digits is reversed. This situation
 ;; should be rationalized and a generically named function should be used
 (defun $ptrace_numeration_to_int (vec b)
@@ -46,21 +45,14 @@
 (defun transpose (x)
    (apply #'mapcar (cons #'list x)))
 
-;;  These two transformations use undocumented lisp fncs from the source
+;; These two transformations use undocumented lisp fncs from the source
 ;; they transform between lisp style matrix and maxima matrix
 (defun mxc1 (x)
   (cons '($matrix) (mxc x)))
 
-; cant overwrite the builtin ones
-;(defun mxc1 (x)
-;  (mapcar #'(lambda (y) (cons '(mlist) y)) x)) ; Matrix to MACSYMA conversion
-
-; macsyma matrix to matrix	
+; macsyma matrix to matrix
 (defun mcx1 (x)
   (mcx (cdr x)))
-
-;(defun mcx1 (x)
-;  (mapcar #'cdr x))
 
 ; lst-to-mx
 (defun  lst-to-mx (x)
@@ -72,20 +64,6 @@
 (defun $mident (x)
   (lst-to-mx ( mx-to-lst x)))
 
-
-
-;; as an example, this will transpose a matrix
-(defun $mymattrans (m) 
+;; As an example, this will transpose a matrix
+(defun $mymattrans (m)
   (mxc1 (transpose ( mcx1 m))))
-
-;(defun $mentropy (rho)
-;  (let ( (x) (evs) (sum 0))
-;    (setf evs (mfunction-call $eivals rho))
-    
-
-; work on this one
-;(defun $myptrace (b A q) 
-;  (let ((nB 2))
-;    ( $zeromatrix 2 2)))
-
-

@@ -1,0 +1,13 @@
+load("qinf.mac");
+ketz(1);
+braz(1);
+braz(0);
+braz(0,0);
+braz(1,1);
+alpha[0] * braz(0,0) + alpha[1] * braz(1,1);
+brax(1);
+bray(1,0,1);
+ketz(0,1);
+is (ketz(0,1) = ketz(0) otimes ketz(1));
+is (ketz(0,1) = tensor_product(ketz(0) otimes ketz(1)));
+is (ketx(0,1,0) otimes kety(1,0,1) = tensor_product(ketx(0),ketx(1),ketx(0),kety(1),kety(0),kety(1)));

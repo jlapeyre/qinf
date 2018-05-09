@@ -1,0 +1,7 @@
+load("qinf.mac");
+assume(alpha>0,alpha<1);
+state : proj(schmidt_ket(alpha));
+concurrence_vals(state);
+factor(concurrence(state));
+wxplot2d(concurrence(state),[alpha,0,1]);
+

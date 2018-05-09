@@ -7,47 +7,46 @@
   and/or modify it only under the terms of the GNU General
   Public License version 2 as published by the Free Software
   Foundation.
-
 */
-/* qinf Version VERSIONNUMBER */
 
+load("qinf.lisp");
+load("mmacompat.mac");
+
+load("log2.mac");
+load("eigen");
+load("diag");
 
 /*
   currently prints a bunch of garbage
   load("itensor");
 */
-load("qinf.lisp");
-load("mmacompat.mac");
 /* load(lapack);   Add this back later.  loading lapack causes error */
-load("log2.mac");
-load("eigen");
-load("diag");
-load("qinf_utils.mac");
+/* load("qinf_utils.mac"); No longer used */
 
 qudit_states : 2;
 
+mapapply(f,lst) := map(lambda([n],apply((+f),n)),lst);
 
 /*******************************************
 * Linear Algebra routines.
 *****************************************/
-/* Functions that have been recoded in lisp are marked 'to lisp' */
-
-
-/* test predicates */
-/* to lisp identitymatrixp(A) := zeromatrixp(A - ident(length(A)));*/
 
 ketp(e) := matrixp(e) and (length(inpart(e,1)) = 1); /* is it a ket */
 brap(e) := matrixp(e) and (length(e) = 1);     /* is it a bra */
 braketp(e):= ketp(e) or brap(e);
 square_matp(e) := matrixp(e) and (length(e) = length(inpart(e,1))); /*square matrix */
-/* this one works only if trigsimp is enough to tell */
+
+/* This one works only if trigsimp is enough to tell.
+   This is wrong. It should check that the result is an identity matrix, rather than 1.
+   There does not appear to exist an identp function.
+*/
 unitary1p(m) := square_matp(m) and ( trigsimp( m . ctranspose(m)) = 1);
 
 /* doesnt do conjugate (?)  */
 normalize_vector(v) :=  v/sqrt(v . conjugate(v));
 
 /* divide m by Tr(m) so that it has trace 1*/
-noramalize_operator(m) := m/mat_trace(m);
+normalize_operator(m) := m/mat_trace(m);
 
 /* ket -- a ket
    returns -- list of elements */
@@ -57,39 +56,9 @@ ktolist(ket) := inpart(transpose(ket),1);
    returns -- matrix each of whose rows is the elements of one ket */
 ketstomat(kets) := apply('matrix,map(ktolist,kets));
 
-/*********
-  Follwing routines are all for partial trace function ptrace */
-/*
-   Return integer value from vector (or list) of numeration.
-   vec -- vector of numerals. 
-   b   --  the base. 
-   bits are arranged here from least to most significant
-   left to right.
-   */
-
-/* to lisp
-ptrace_numeration_to_int( vec, b) := block( [i,res:0],
-  for i:0 thru length(vec)-1 do
-  ( res : res + vec[i+1]*b^i ), res);
-*/
-
-/* increment numeration given by vec base b. modulo
-   b^length(vec).
-   vec -- list of numeration numerals
-   b -- base
-*/
-
-/* to lisp
-ptrace_increment_numeration(vec, b) := block ( [i:1,j],
-  for i:1 thru length(vec) do
-  (vec[i] : vec[i] + 1,
-    if vec[i] = b then 
-    for j:1 thru i do vec[j] : 0
-    else i : length(vec) + 1));
-*/
 
 /* Partial trace over one or more components.
-   computes partial trace one component at a time.
+   This computes partial trace one component at a time.
    The partial trace implementation here assumes that each component space
    is of the same dimension.
    May be a performance penalty for this.
@@ -143,27 +112,21 @@ ptrace_one_dimension(b,A,q) := block ( [nA,nbitsA,nbitsB, B,x,y,x1,x2,y1,y2,
     ptrace_increment_numeration(x,b)),
    B);
 
-
-/* a is a list of things to take kronecker product of. 
-Takes advantage of associative prop. of kron. prod. */
-tensor_product([a]) := block( [n,c,i],
+/*
+a is a list of things to take kronecker product of.
+Takes advantage of associative prop. of kron. prod.
+*/
+tensor_product([a]) := block([n,c,i],
   n : length(a),
   c : a[1],
   for i:2 thru n do (
     c : kronecker_product(c,a[i])),
   c);
 
-
 infix("otimes");
 "otimes"(a,b) := kronecker_product(a,b);
 
 tensor_power(mat,n) := apply('tensor_product,create_list(mat,i,1,n));
-
-/* to lisp
-commutator(A,B):= A . B - B . A;
-anticommutator(A,B):= A . B + B . A;
-*/
-
 
 /*******************************************
 * End of Linear Algebra routines.
@@ -173,14 +136,14 @@ anticommutator(A,B):= A . B + B . A;
 * Quantum information routines
 *****************************************/
 
-
 /* a is list. return correct 'matrix' objects */
 ket([a]) := transpose(matrix(a));
 bra([a]) := matrix(a);
 
 
-/* return product state of qubits in eigenstates
-  of sigma_z, represented in given basis 
+/*
+  return product state of qubits in eigenstates
+  of sigma_z, represented in given basis
   eg. ket(plusx,minusx,0,1,1,0) returns product of
   x eigenkets 0,1,1,0, expressed in z basis.
 
@@ -215,30 +178,30 @@ bra_n([a]) := conjugate(transpose(apply('ket_n,a)));
 /* convert ket to a list */
 listket(k) := inpart( transpose(k),1);
 
-/* should probably just use something like this 
+/*
+ We should probably just use something like this
  mat_unblocker(matrix([bell[0,0],bell[0,1]]));
- converts a list of kets to a matrix
- */
+ Converts a list of kets to a matrix.
+*/
 matkets([k]) := apply('matrix,map(listket,k));
 
 /* Projection operators along z axis */
 Prz[0] : matrix([1,0],[0,0]);
 Prz[1] : matrix([0,0],[0,1]);
 
-/* general projection operator pair for one qubit. This uses a
-  particular parametrization
+/*
+  general projection operator pair for one qubit. This uses a
+  particular parametrization.
   what is that parameterization ?
- */
+*/
 Pr_n(a,phi) := block ( [p1,p2],
-/*  declare(a,real),
-  declare(phi,real), */
   p1 : matrix([      a ,                sqrt(a*(1-a))*exp(-%i*phi)],
               [sqrt(a*(1-a))*exp(%i*phi),          1-a            ]),
   [p1,ident(2)-p1] );
 
-/* Useful ? 
-  convert list v to a matrix (vector) or pass through,
-   if v is already a matrix.
+/*
+  Convert list v to a matrix (vector) or pass through,
+  if v is already a matrix.
 */
 tomatrix(v) := block(
   if listp(v) then
@@ -248,11 +211,12 @@ tomatrix(v) := block(
     return(0)),
   v );
 
-/* compute projection operator (or density matrix) from a vector, both
-   representing the same pure state. The vector can be
-   either a column or row vector or a list.
-   v -- state vector
-   return: density matrix
+/*
+  Compute projection operator (or density matrix) from a vector, both
+  representing the same pure state. The vector can be
+  either a column or row vector or a list.
+  v -- state vector
+  return: density matrix
 */
 proj(v) := block( [],
   v : tomatrix(v),
@@ -261,11 +225,14 @@ proj(v) := block( [],
   else
     return( v . ctranspose(v) ));
 
-/* compute ket corresponding to projection operator.
+/*
+ Compute ket corresponding to projection operator.
  Sometimes the zero eigenvalues are listed first, sometimes second.
  It can change because phases are lost in computing the projection operator.
  implementation: diagonalize matrix and return eivect with eival 1.
- Best not to test for proj op  because of marginal cases
+ Best not to test for proj op  because of marginal cases.
+
+ This function appears to be broken.
 */
 tovect(A) :=  block ( [t,pos],
   t : simtran(A),
@@ -275,7 +242,6 @@ tovect(A) :=  block ( [t,pos],
     return(transpose(second(t))) )
   else
    return(transpose(last(t))));
-    
 
 pauli_0 : ident(2);
 pauli_z : matrix( [1,0], [0,-1]);
@@ -291,17 +257,18 @@ _pauli : [
 pauli[i] := _pauli[i+1];
 
 
-/* expansion of C(2) matrix in pauli matrices.
-   there is a function for converting both ways.
+/*
+  Expansion of C(2) matrix in pauli matrices.
+  There is a function for converting both ways.
 */
 
 /* tensor product of pauli matrices from list of integers indexing pauli matrices */
 pauli_product([a]) := apply('tensor_product,map(lambda([i],pauli[i]), a));
 
-
-/* this can be implemented easily in a maxima idiom, but
+/*
+ This can be implemented easily in a maxima idiom, but
  I wonder if this is more efficient.
- return a matrix in terms of its correlation tensor coefficients
+ Return a matrix in terms of its correlation tensor coefficients.
 */
 invpauliexp(t) := block([n,i,m,nb],
   n : length(t),
@@ -313,9 +280,10 @@ invpauliexp(t) := block([n,i,m,nb],
     m : m + t[i+1]*apply('pauli_product,v)),
   m);
 
-/* return linear list of coefficients in pauli expansion of matrix m,
-   which represents an operator in a  tensor product space.
-   So m is a 2^n by 2^n matrix, in the product space of n qubits.
+/*
+  Return linear list of coefficients in pauli expansion of matrix m,
+  which represents an operator in a  tensor product space.
+  So m is a 2^n by 2^n matrix, in the product space of n qubits.
 */
 _one_pauli_coeff(m,v) :=  mat_trace(apply('tensor_product,map( lambda([i],pauli[i]), v)) . m)/(2^length(v));
 pauliexp(m) := block([nbits,v,i, c:[] ],
@@ -326,22 +294,24 @@ pauliexp(m) := block([nbits,v,i, c:[] ],
     ptrace_increment_numeration(v,4)),
     c);
 
-/* same as pauliexp, but return the tensor as nested lists that can
+/*
+  Same as pauliexp, but return the tensor as nested lists that can
   be accessed via  t[i][j][k]...
- */
+*/
 tpauliexp(m) := ket2kten_n(pauliexp(m),4);
 
-/* this function should be generalized to tensors of different shapes */
-/* return one element of tensor stored in linear array output by invpaulexp */
+/* This function should be generalized to tensors of different shapes */
+/* Return one element of tensor stored in linear array output by invpaulexp */
 correlation_tensor(t,[v]) :=  block([n:length(t)],
   if n = 4^length(v) then
    t[ptrace_numeration_to_int(v,4)+1]
   else
    error("tensor data requires ",radcan(log(n)/log(4)), " indices"));
 
-/* Rotate through angle gamma about direction
-   (theta,phi) w.r.t z-axis.
- */
+/*
+  Rotate through angle gamma about direction
+  (theta,phi) w.r.t z-axis.
+*/
 spinor_rotation_trig(phi,theta,gamma) := block ( [sg],
     sg: sin(gamma/2),
     cg: cos(gamma/2),
@@ -365,12 +335,11 @@ spinor_rotation(phi,theta,gamma) := block ( [sg],
      [ cg -%i*ct*sg,            -%i*st*exp(-%i*phi)*sg],
      [ -%i*st*exp(%i*phi)*sg,   cg +%i*ct*sg          ]));
 
-/* some more operators */
-
 /********************************************************
  * Gates and related code
  ********************************************************/
-/* * insert_operator -- construct an operator that operate on a register of 'nbits' qubits,
+/*
+ * insert_operator -- construct an operator that operate on a register of 'nbits' qubits,
  * ie, an operator on the tensor product space of nbits qubits.
  * the operator for each qubit is the identity, except for those specified by
  * the list 'insargs'.  Each member of insargs is a list 'arg'. The first member
@@ -386,7 +355,7 @@ spinor_rotation(phi,theta,gamma) := block ( [sg],
  * * cnot,etc . -- some gates with a single control qubit indexed with c and target with index t.
  * they operate on a register of nbits qubits.
  * Thus, a 2 qubit cnot gate is given by cnot(2,1,2).
- */
+*/
 
 insert_operator(nbits, [insargs]) := block ( [oplist : create_list(ident(2),i,1,nbits)],
   map( lambda([arg], block( [mop:first(arg),posns:rest(arg,1)],
@@ -401,7 +370,6 @@ cphase(nbits,t,[c]) := controlled_gate(nbits,pauli[3],t,c);
 crot(nbits,t,[c]) := controlled_gate(nbits,%i*pauli[2],t,c);
 swap(nbits,t1,t2) := cnot(nbits,t1,t2) . cnot(nbits,t2,t1) . cnot(nbits,t1,t2);
 toffoli(nbits,t,c1,c2) := cnot(nbits,t,c1,c2);
-/*toffoli(nbits,t,c1,c2) := controlled_gate(nbits,pauli[1],t,[c1,c2]);*/
 
 fredkin(nbits,t1,t2,c) := controlled_gate(nbits,pauli[1],t2,[c,t1]).
                           controlled_gate(nbits,pauli[1],t1,[c,t2]).
@@ -411,11 +379,9 @@ hadamard : (1/sqrt(2) * matrix([1,1],[1,-1]));
 /* following inserts one or more hadamard operators in the identiy operator on nbits qubits */
 hadamard(nbits,[t]) := insert_operator(nbits,cons(hadamard,t));
 
-
 /********************************************************
  * Particular States, Bell GHZ, etc.
  ********************************************************/
-/* to  lisp  flip(x) := ( mod(x+1,2)); */  /* flip the bit */
 
 /* bell states */
 bell[i,j] := (ketz(0,j) + (-1)^i * ketz(1,flip(j)))/sqrt(2);
@@ -428,19 +394,17 @@ ghz[i,j,k] := (ketz(0,j,k) + (-1)^i * ketz(1,flip(j),flip(k)))/sqrt(2);
 array(ghzn,7); /* indices from 0 to 7 */
 fillarray(ghzn, map( lambda( [x],  ghz[x[1],x[2],x[3]]),create_list( [i,j,k], i,0,1,j,0,1,k,0,1)));
 
-/* this one is a function, not an array function.
+/*
+ This one is a function, not an array function.
  This is the parameter often called 'x'.
 */
 werner(a,i,j) := a*(proj(bell[i,j])) + (1-a)*ident(4)/4;
 
-/* two bit schmidt ket */
-/* to lisp schmidt_ket(a) := sqrt(a) * ketz(0,0) + sqrt(1-a)* ketz(1,1); */
-
-
-/********************************************************
+/*
+ *******************************************************
  * Measures of entanglment and mixedness
- ********************************************************/
-
+ *******************************************************
+*/
 /* von Neumann entropy */
 entropy(rho) :=  block( [x,evs,sum:0],
   evs : eivals(rho),
@@ -451,40 +415,43 @@ entropy(rho) :=  block( [x,evs,sum:0],
       sum : sum - x[2]*x[1]*log2(x[1]))),
   sum);
 
-/* take eigenvals from eivals and make flat list of all vals.
-   example: list_eivals([[c,d,e],[2,3,4]]);
-      [c,c,d,d,d,e,e,e,e]
- */
+/*
+  Take eigenvals from eivals and make flat list of all vals.
+  example: list_eivals([[c,d,e],[2,3,4]]);
+  [c,c,d,d,d,e,e,e,e]
+*/
 list_eivals(lst) := apply('append,apply('map, cons(lambda([a,b],  create_list(a,i,1,b)), lst)));
 
+/*
+ Wootters' concurrence
+ This should be separated into more than two functions to allow the user
+ to see intermediate results.
+*/
 
-/* Wootters' concurrence 
- * This should be separated into more than two functions to allow user
- * to see intermediate results.
- */
-
-/* this returns  [sqrt(v1),sqrt(v2),sqrt(v3),sqrt(v4)].
-   This function allows the user to examine the
-  results */
-concurrence_eivals(rho) :=  block([sr], 
-                     sr : mat_function(sqrt,rho),	     
-		      list_eivals(eivals( mat_function(sqrt,(sr . (pauli[2] otimes pauli[2]) . 
+/*
+ This returns  [sqrt(v1),sqrt(v2),sqrt(v3),sqrt(v4)].
+ This function allows the user to examine the
+ results
+*/
+concurrence_eivals(rho) :=  block([sr],
+                     sr : mat_function(sqrt,rho),
+		      list_eivals(eivals( mat_function(sqrt,(sr . (pauli[2] otimes pauli[2]) .
                  conjugate(rho)  . (pauli[2] otimes pauli[2]) . sr)))));
 
-/* Wootters' concurrence 
- * Notice what we do to simplify the eignevalues. This is was done to
- * get concurrence of Werner states. There are polynomials under the a radical.
- * 1) square to remove radical. 2) factor, 3) take square root again. 4)
- * these should be simplified enough to sort. If you assume(x>0,x<=1) then
- * the correct formula for Werner states is given.
- *
- **/
+/*
+  Wootters' concurrence
+  Notice what we do to simplify the eignevalues. This is was done to
+  get concurrence of Werner states. There are polynomials under the a radical.
+  1) square to remove radical. 2) factor, 3) take square root again. 4)
+  these should be simplified enough to sort. If you assume(x>0,x<=1) then
+  the correct formula for Werner states is given.
+ */
 concurrence(rho) := block( [vals],
 		 vals : concurrence_eivals(rho),
 		 vals : sort(sqrt(factor(vals^2)),">"),
 		 ratsimp(max(0,apply("+",cons(inpart(vals,1),-1*rest(vals))))));
 
-/* float von Neumann entropy */
+/* Floating point von Neumann entropy */
 entropyf(rho) :=  block( [x,evs,sum:0],
   evs : dgeev(rho),
   evs : inpart(evs,1),
@@ -496,14 +463,13 @@ entropyf(rho) :=  block( [x,evs,sum:0],
 /* Reny entropy */
 renyi_entropy(a,rho) := block([x,evs,sum:0],
   evs : eivals(rho),
-  /* following is kludged transpose */
   evs : map( lambda([i,j], [i,j]), evs[1], evs[2]),
   for x in evs do (
     if not(x[1] = 0) then (
       sum : sum + x[2]*(x[1])^a)),
   log2(sum)/(1-a));
 
-/* float renyi entropy */
+/* Floating point renyi entropy */
 renyi_entropyf(a,rho) :=  block( [x,evs,sum:0],
   evs : dgeev(rho),
   evs : inpart(evs,1),
@@ -511,11 +477,10 @@ renyi_entropyf(a,rho) :=  block( [x,evs,sum:0],
     if not(x = 0.0) then (
       sum : sum + x^a)),
   log2(sum)/(1-a));
-  
+
 /* tsallis entropy */
 tsallis_entropy(q,rho) := block([x,evs,sum:0],
   evs : eivals(rho),
-  /* following is kludged transpose */
   evs : map( lambda([i,j], [i,j]), evs[1], evs[2]),
   for x in evs do (
     if not(x[1] = 0) then (
@@ -531,19 +496,17 @@ tsallis_entropyf(q,rho) :=  block( [x,evs,sum:0],
       sum : sum + x^q)),
   (1-sum)/(q-1));
 
-
-/* purity(rho) :=  mat_trace(rho . rho);  in lisp */
-
 fidelity(rho1,rho2) := block( [sr2],
   sr2 : mat_function(sqrt,rho2),
   mat_trace(mat_function(sqrt, sr2 . rho1 .sr2)));
 
-/* test for separability
+/*
+  Test for separability.
   The idea now is to add other methods here later.
   Currently works for a pure bipartite state
   state -- input 2-qubit state as ket or bra (four elements)
   returns -- a scalar r. If r=1, the state is separable,
-   if r<1 it is entangled.
+  if r<1 it is entangled.
   The scalar is purity(ptrace(state,1))
   The explicit formula is not to long, so we write it out.
 */
@@ -560,19 +523,16 @@ separable(state) := block( [x1,x2,x3,x4],
                      +2*x1*conjugate(x2)*conjugate(x3)*x4
                      +2*abs(x1)^2*abs(x3)^2+x3^4+2*abs(x1)^2*abs(x2)^2+x2^4
                      +x1^4);
-  
 
-/**********************************/
-
-
-/* This returns the *square* of the Schmidt coefficients.
+/*
+  This returns the *square* of the Schmidt coefficients.
   It does not test that e is a pure state.
-  The argument can be a ket or a bra or density matrix */
+  The argument can be a ket or a bra or density matrix.
+*/
 schmidt_coefficients(e) :=  block( [st],
   if (ketp(e) or brap(e)) then st:proj(e)
   else st : e,
   list_eivals(eivals(ptrace(st,1))));
-
 
 /* convert ket v to bra. if v is a bra, fall through */
 tobra(v) := if ketp(v) then ctranspose(v) else
@@ -586,9 +546,9 @@ state_length(v) := if ketp(v) then length(v) else
          if brap(v) then length(inpart(v,1))
           else error("state_length: neither ket nor bra");
 
-/***************************************
- * More or less translations of Richard Griffith's Code
-****************************************/
+/*
+ More or less translations of Richard Griffiths' code
+*/
 
 /* bellbas . bellket = compbasket */
 bellbas : ketstomat(create_list(belln[i],i,0,3));
@@ -598,17 +558,22 @@ basbell : transpose(bellbas);
 bell2mat(mat) := bellbas . mat . basbell;
 mat2bell(mat) := basbell . mat . bellbas;
 
-/*		mat2nten::usage = "mat2nten[mt,ddl] converts the (possibly
+/*
+mat2nten::usage = "mat2nten[mt,ddl] converts the (possibly
 rectangular) matrix mt to an n-tensor using the double dimension list ddl,
-with, e.g., {2,3,{4,5}} interpreted as {{2,2},{3,3},{4,5}}." */
-/* mat2nten:comment. Dimension list ddl is converted to ddm with every 
-entry a two-component list, e.g.,  ddl={2,{3,4}}->ddm={{2,2},{3,4}}. */
+with, e.g., {2,3,{4,5}} interpreted as {{2,2},{3,3},{4,5}}."
+*/
+
+/*
+  mat2nten:comment. Dimension list ddl is converted to ddm with every
+  entry a two-component list, e.g.,  ddl={2,{3,4}}->ddm={{2,2},{3,4}}.
+*/
 /*
 	mat2nten[mt_,ddl_]:=Module[
 {ddm=ddl,fmt=Flatten[mt],jm,lnd=Length[ddl]},
-		For[jm=1,jm<=lnd,++jm, 
+		For[jm=1,jm<=lnd,++jm,
 If[  0==Length[ ddm[[jm]] ]  , ddm[[jm]]={ddl[[jm]],ddl[[jm]]}  ];  ];
-Fold[ Partition, fmt, Most[Reverse[Flatten[Transpose[ddm]]]] ]] /* END mat2nten */
+Fold[ Partition, fmt, Most[Reverse[Flatten[Transpose[ddm]]]] ]]
 */
 
 /* transpose matrix as nested list, not maxima matrix */
@@ -622,12 +587,14 @@ mat2nten(mt,ddl) := block( [ddm:ddl,fmt:flatten(ensurelist(mt)),jm,lnd:Length(dd
    if 0 = Length(dd[jm]) then ddm[jm]:[ddl[jm],ddl[jm] ],
   Fold(Partition,fmt,Most(reverse(flatten(Transpose(ddm))))));
 
-/* convert bra or ket representation to tensor representation
-   dl is list of dimensions of component spaces */
+/*
+  Convert bra or ket representation to tensor representation.
+  dl is list of dimensions of component spaces.
+*/
 ket2kten(v,dl) := block( [],
   if braketp(v) then v:vec_to_list(v),
   if length(dl) = 1 then v else
-  map(lambda([x],ket2kten(x,rest(dl))),list_partition(v,length(v)/first(dl))));
+  map(lambda([x],ket2kten(x,rest(dl))),Partition(v,length(v)/first(dl))));
 
 /*  convert bra or ket rep to tensor rep, with all component spaces of dim n */
 ket2kten_n(v,n) := block( [],
@@ -644,4 +611,3 @@ matinner(a,b) := block([c:conjugate(a), len:length(b)],
 /* convert tensor rep to ket */
 kten2ket(t) := apply('ket,(flatten(t)));
 kten2bra(t) := ctranspose(apply('ket,(flatten(t))));
-

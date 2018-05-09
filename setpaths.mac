@@ -1,3 +1,8 @@
-/* Set the search paths so the source and test files can be found */
+/*
+ * Set the search paths so the source and test files can be found from
+ * the top level of the repository.
+ * Not for use after installation.
+*/
+
 file_search_maxima: append (["./test/###.{lisp,mac}","./src/###.{lisp,mac}", "./examples/###.{lisp,mac}"], file_search_maxima) $
 file_search_lisp: append (["./test/###.{lisp,mac}", "./src/###.{lisp,mac}"], file_search_lisp) $

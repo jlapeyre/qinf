@@ -1,0 +1,9 @@
+assume(c1>0,c2>0,c3>0,c1<1,c2<1,c3<1);
+
+/*
+ratsimp(conjsimp(schmidt_coefficients( c1 * ketz(0,0) + c2 * ketz(0,1) + c3 * ketz(1,0) + sqrt(1-c1^2-c2^2-c3^2) * ketz(1,1))));
+*/
+
+declare([c1,c2,c3], complex);
+ratsimp(conjsimp(schmidt_coefficients( c1 * ketz(0,0) + c2 * ketz(0,1) + c3 * ketz(1,0) + sqrt(1-abs(c1)^2-abs(c2)^2-abs(c3)^2) * ketz(1,1))));
+

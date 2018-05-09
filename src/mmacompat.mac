@@ -1,78 +1,20 @@
 /*****************
    Mathematica compatibility functions.
-   VERSION VERSIONNUMBER
-   These are intended to duplicate Mma some functions. They are,
-   however, imperfect. Many Mma functions have a number of features,
-   and they are not all implemented here. The most common functionality
-   is implemented first.
+   These reproduce some of the features of some Mma functions.
+   Only the compatibility functions used in qinf.mac are included
+   here. There are additional compatibility functions i mmacompat_extra.mac
 
    rtest_mmacompat.mac gives examples taken from Mma documentation
-   of features that are implmented and mentions some that are not. 
+   of features that are implmented and mentions some that are not.
 
    rtest3_mmacompat.mac has a few efficiency tests
-   
-   Functions implemented (not all are listed here now, and
-   degree of functionality is out of date.)
-
-   1) Good compatibilty. But I don't have Mma
-   Take, Chop, Most, Range , Nest, NestList, Fold, FoldList,
-   IntegerDigits, FromDigits
-
-   2) A few less important(depends on the user!) features need to be implemented:
-   Table, Partition
-   
-   3) Useful, but some common uses are not compatible:
-   Dimensions, ArrayDepth
-
-   4) different names in the two languges for the same function.
-   These need regression tests to find differences in behavior
-   
-   Riffle, Join, Append, Union
-
-   5) Matrices and linear algebra
-   Det, Tr, MatrixRank, Eigenvalues, Transpose
-   
-   6) Others
-   Sinc
 
 ****************/
-
-/* load("mmacompat_lisp.lisp"); */
-load("eigen");
-/* load("lapack");  Put this back later. lapack causes an error now. */
-
-/*============== Chop ===============*/
-/* Remove tellsimp stuff again. There are probably no useful
- * situations where chop(arg) should remain unevaluated.
- * This also is based on contributition from Stavros Macrakis.
- */
-chop_epsilon : 1e-10;  /* new global variable */
-
-/* This one works, but is a bit more complicated */
-/**** not used
-chop1(ex,[arg]) :=  block( [eps:chop_epsilon],
-  if length(arg) = 1 then eps:arg[1],
-  if numberp(ex) and abs(ex) < eps then 0
-  elseif mapatom(ex) then ex
-  else map(lambda([x],chop(x,eps)),ex));
-****/
-
-/* this relies on dynamic scope.
-  Seems a bit faster, but stats fluctutate. Need
-  to time it repeatedly.
-*/
-Chop(ex,[arg]) :=  block( [chop_epsilon:chop_epsilon],
-  if length(arg) = 1 then chop_epsilon:eps:arg[1],
-  if numberp(ex) and abs(ex) < eps then 0
-  elseif mapatom(ex) then ex
-  else map(Chop,ex));
- 
-/************** end chop **************/
 
 /*============== Partition ===============*/
 /* Like Mma's Partition function
    currently treats overhanging differently.
-   Partition(x,n) partitions list x into n lists 
+   Partition(x,n) partitions list x into n lists
    Partition(x,n,d) does the same with offset d
    Partition([a,b,c,d,e,f],2);
     --> [[a,b],[c,d],[e,f]]
@@ -93,62 +35,6 @@ Partition(x,n,[id]) := block([d:0,j,len:length(x),res:[]],
 
 /************** end Partition **************/
 
-
-/*============== Table  ===============*/
-/* There are two functions here, Table and %Table which is called
- by Table
- */
-/* I think this one works, but I am using another version below
-%Table(expr,v) := block( [len:length(v),%%i],
-  if len = 1 then apply('create_list,cons(expr,[%%i,1,v[1]]))
-  else if len = 2 then if listp(v[2]) then apply('create_list,cons(expr,v))
-    else apply('create_list,cons(expr,[v[1],1,v[2] ]))
-  else if len = 3 then apply('create_list,cons(expr,v))
-  else if len = 4 then ( 
-   expr:subst(v[2]+v[4]*v[1],v[1],expr),
-   apply('create_list,cons(expr,[v[1],0,intdiv(v[3]-v[2],v[4])])))
-  else merror("Table: Wrong number of elements in sequence specification"));
-*/
-
-lcreate_list(expr,v) := apply('create_list,cons(expr,v));
-
-/* Current working version */
-%Table(expr,v) := block( [len:length(v),i%%,args,dvar,a,expr1],
-  if len = 1 then create_list(expr,i%%,1,inpart(v,1))
-  else if len = 2 then if listp(inpart(v,2)) then lcreate_list(expr,v)
-    else
-    (  
-     lcreate_list(expr,[first(v),1,second(v)]))  /* fails with IntegerDigits */
-     else if len = 3 then lcreate_list(expr,v)
-  else if len = 4 then ( 
-   expr:subst(v[2]+v[4]*v[1],v[1],expr),
-   lcreate_list(expr,[v[1],0,intdiv(v[3]-v[2],v[4])]))
- else throw("Table: Wrong number of elements in sequence specification"));
-
-/* Don't know how well this version works.
-%Table(expr,v) := block( [len:length(v),i%%,args,dvar],
-  if len = 1 then create_list(expr,i%%,1,inpart(v,1))
-  else if len = 2 then if listp(inpart(v,2)) then lcreate_list(expr,v)
-    else 
-     lcreate_list(expr,[inpart(v,1),1,inpart(v,2)]) 
-/*   create_list(expr, inpart(v,1),1,inpart(v,2)) *//* fails with everything */
-/*  makelist(expr,inpart(v,1),1,inpart(v,2)) */ /* works in other prog, but fails here */
-  else if len = 3 then lcreate_list(expr,v)
-  else if len = 4 then ( 
-   expr:subst(v[2]+v[4]*v[1],v[1],expr),
-   lcreate_list(expr,[v[1],0,intdiv(v[3]-v[2],v[4])]))
- else merror("Table: Wrong number of elements in sequence specification"));
-
-*/
-
-Table(expr,[v]) := block([res:[]],
-  if length(v) = 1 then %Table(expr,v[1]) else (
-    res:%Table(expr,v[1]),
-    v:rest(v,1),
-    res:map(lambda([x],apply('Table,cons(x,v))),res),
-    res));
-
-/************** end Table  **************/
 
 /*============== Take  ===============*/
 
@@ -183,344 +69,14 @@ Take(list,[v]) := block([res:[]],
 
 /************** end Take  **************/
 
-/*============== Dimensions  ===============*/
-/* return Dimensions of nested list. ie number of elements in list
-  at each level in nested lists. This one checks the first element
-  at each level, so it will not detect irregularities in the array.
-  It only works for lists, ie with operator type "[". Needs more
-  work to duplicate Mma functionality. But it will work on a regular
-  array whose elements are not lists (they need not be atomic)
-  */
-Dimensions(m) := block([res:[]],
-  if mapatom(m) then res else
-  res:cons(length(m),Dimensions(inpart(m,1))),res);
-
-/************** end Dimensions  **************/
-
-/*============== ArrayDepth  ===============*/
-
-ArrayDepth(m) := length(Dimensions(m));
-
-/************** end ArrayDepth  **************/
-
-/*============== Range  ===============*/
-/*** Mma range. the name range is already used for another function in Maxima 
- range(n) --> [1,2,...,n]
- range(n1,n2) --> [n1,...,n2]
- range(n1,n2,step) --> [n1,n1+st,n1+2*st,...,n2]
- eg
- range(3) --> [1,2,3],
- range(x,x+4) --> [x,x+1,x+2,x+3,x+4]
- range(4,1,-1) --> [4,3,2,1]
-*/
-
-block ([simp : false],
-    local (aa,bb,cc,ee),
-    matchdeclare ( aa, numberp, [bb,ee], all,
-      cc, lambda([x,y], maybe(x<y) # unknown )(bb)),
-    tellsimp (Range(aa), nlrange(aa)),
-    tellsimp (Range(bb,cc), nlrange(bb,cc)),
-    tellsimp (Range(bb,cc,ee), nlrange(bb,cc,ee))
-    );
-  
-nlrange([v]) := block([imin:1,imax,steps:1,res:[]],
-  if length(v) = 1 then (imax:v[1])
-  else if length(v) = 2 then (imin:v[1],imax:v[2])
-  else if length(v) = 3 then (imin:v[1],imax:v[2],steps:v[3]),
-  if  steps > 0 then (
-    for i:imin while i<=imax step steps do
-    res:cons(i,res),reverse(res))
-  else (
-    for i:imin while i>=imax step steps do
-    res:cons(i,res),reverse(res)));
-
-/************** end Range  **************/
-
-/************ nest and nestlist  **************/
-block ([simp : false],
-    local (aa,bb,cc),
-    matchdeclare ( aa, integerp, [bb,cc], all),
-    tellsimp( Nest(bb,cc,aa), nnest(bb,cc,aa)),
-    tellsimp( NestList(bb,cc,aa), nnestlist(bb,cc,aa))
-    );
-
-/* Can't quote f in arg list, becase interaction with
- tellsimp causes infinite recursion loop.
- Quoting f in apply calls will not stop global f from
- being used. It does seem that using (+f) does work.
-*/
-/* So this one will fail if f is defined globally
-nnest(f,x,n) := block([i,res:apply('f,[x])],
-  for i:2 thru n do res:apply('f,[res]),res);
-*/
-/* this works, but Stavros Macrakis says the compiler won't
- * recognize (+f)
- */
-/* fails for operators like "+" when using simplifier
-nnest(f,x,n) := block([i,res:(+f)(x)],
-  for i:2 thru n do res:(+f)(res),res);
- */
-
-/*============== Nest  ===============*/
-
-/* This one is best */
-nnest(f%%%,x,n) := block([i,res:apply(f%%%,[x])],
-  for i:2 thru n do res:apply(f%%%,[res]),res);
-
-/*============== NestList  ===============*/
-
-/* don't quote arg or simplifier will choke. */
-nnestlist(f,x,n) := block([i,list,res:(+f)(x)],
-  list:[res],
-  for i:2 thru n do (
-    res:(+f)(res), list:cons(res,list) ), reverse(list));
-
-/************** end nest and nestlist  **************/
-
-/************** fold and foldlist  **************/
-block ([simp : false],
-    local (aa,bb,cc,dd),
-    matchdeclare ( [aa,bb], all, cc , lambda([x], not atom(x)),
-       dd, numberp ),
-    tellsimp( Fold(aa,bb,cc), dofold(aa,bb,cc)),
-    tellsimp( Fold(aa,bb,dd), throw("fold: third argument must be a list")),
-    tellsimp( FoldList(aa,bb,cc), dofoldlist(aa,bb,cc)));
-
-/***   fold(f,x,[a,b,c]) --> f(f(f(x,a),b),c)
-*/
-
-/* Using (+f) works here when applying some functions,
-   but fails with some, as in applying "[". So below
-   we use f%%% and hope that works, although it is not
-   a clean bulletproof solution. The problem with "["
-   is an error 'symbol' that arises when using the simplifier
-   as above.
-   */
-/* fails with some   
-dofold(f,x%%%,v) := block([res,a],
-  if length(v) = 0 then return(x%%%),
-  res: (+f)(x%%%,inpart(v,1)),
-  for a in rest(v,1) do
-  res:(+f)(res,a),res);
-*/
-
-
-/*============== Fold  ===============*/
-/* this seems best */
-dofold(f%%%,x%%%,v) := block([res,a],
-  if length(v) = 0 then return(x%%%),
-  res: apply(f%%%,[x%%%,inpart(v,1)]),
-  for a in rest(v,1) do
-  res:apply(f%%%,[res,a]),res);
-
-/*============== FoldList  ===============*/
-/*** foldlist. same as Mma FoldList, ie,
-  foldlist(f,x,[a,b,c]) --> [x, f(x,a), f(f(x,a),b), f(f(f(x,a),b),c)]
- Must be rewritten to avoid recursion  and endcons.
-*/
-dofoldlist(f%%,x,v) := block( [e],
-		 if length(v)=0 then [x]
-	         else ( e : dofoldlist(f%%,x,rest(v,-1)),
-	         endcons(apply('f%%,[last(e),last(v)]),e)));
-
 /***/
 /*============== Most  ===============*/
 Most(v) := rest(v,-1);
-
-/*============== IntegerDigits  ===============*/
-/***
-   IntegerDigits(n) returns list of digits in integer n
-   IntegerDigits(n,b) returned digits are in base b
-   IntegerDigits(n,b,pad) leading zeros appended so list
-            is of total length pad.
-*/
-
-/* simplifier rules for integer digits */
-block ([simp : false],
-    local (aa,bb,cc,dd,ee),
-    matchdeclare ([aa,bb], numberp, cc, listp,
-      dd, lambda([x], not listp(x)), ee, all ),
-    tellsimp (IntegerDigits(aa), nIntegerDigits(aa) ),
-    tellsimp (IntegerDigits(aa,bb), nIntegerDigits(aa,bb) ),
-    tellsimp (IntegerDigits(aa,bb,ee), nIntegerDigits(aa,bb,ee) ),
-    tellsimp (IntegerDigits(cc), map(IntegerDigits,cc) ),
-    tellsimp (IntegerDigits(cc,dd), map(lambda([x],IntegerDigits(x,dd)),cc)),
-    tellsimp (IntegerDigits(dd,cc), map(lambda([x],IntegerDigits(dd,x)),cc)),
-    tellsimp (IntegerDigits(cc,dd,ee), map(lambda([x],IntegerDigits(x,dd,ee)),cc)),
-    tellsimp (IntegerDigits(dd,cc,ee), map(lambda([x],IntegerDigits(dd,x,ee)),cc))    
-    );
-
-nIntegerDigits(n,[ib]) := block([m,r:[],b:10,pad:1,diff,res],
-   n : abs(n),
-   if length(ib)>0 then b:ib[1],
-   if length(ib)>1 then pad:ib[2],
-/*   if listp(n) then 
-    return(map(lambda([x], IntegerDigits(x,b,pad)),n))
-   else if listp(b) then
-    return(map(lambda([x], IntegerDigits(n,x,pad)),b)),*/
-   if n = 0 then return(Table(0,[pad])),
-   while  n > 0 do (
-    m : floor(n/b),
-    r:cons( n-m*b, r),
-    n:m),
-   diff : pad-length(r),
-   if diff > 0 then r:append(create_list(0,i,1,diff),r),
-  r);
-
-/************** end IntegerDigits  **************/
-
-
-/*============== FromDigits  ===============*/
-/*** fromdigits(v) return integer computed from list of digits v
-   fromdigits(v,b) digits are interpreted base b
-*/
-FromDigits(v,[ib]) := block([s:0,b:10,i,m],
-  if length(ib)>0 then b:ib[1],
-  m:length(v),
-  for i thru m do
-      s : s + v[m-i+1]*b^(i-1),
-      s);
-
-/************** end fromdigits  **************/
-
-/* The basic functionality of these functions is the same.
-   More complicated functionality is not in the Maxima equivalent
-*/
-/*==============  Riffle  ===============*/
-Riffle([e]) := apply('join,e);
-
-/*==============  Join  ===============*/
-Join([e]) := apply('append,e);
-
-/*==============  Append  ===============*/
-Append([e]) := endcons(second(e),first(e));
-
-/*==============  Prepend  ===============*/
-Prepend([e]) := cons(second(e),first(e));
-
-
-/*** Keep the un-refactored code around for a bit, because I dont trust passing
-     functions
-
-disabled Union([e]) := block( [u],
-  u:apply('union,map(lambda([x],if setp(x) then x else setify(args(x))) ,e)),
-  if setp(first(e)) then u elseif listp(first(e)) then listify(u) else
-       apply(op(first(e)),listify(u)));
-
-
-disabled Intersection([e]) := block( [u],
-  u:apply('intersection,map(lambda([x],if setp(x) then x else setify(args(x))) ,e)),
-  if setp(first(e)) then u elseif listp(first(e)) then listify(u) else
-       apply(op(first(e)),listify(u)));
-***/
-
-
-/* Set functions. Arguments are any combination of sets and lists. Return type is
-   same as type of first argument. eg
-   Union([1,2],{3,4})-->[1,2,3,4]
-   Union({1,2},[3,4])-->{1,2,3,4}
-
-   Also works with heads other than lists
-*/
-
-mmasetfunc(f%%%,[e]) :=  block( [u],
-  u:apply(f%%%,map(lambda([x],if setp(x) then x else setify(args(x))) ,e)),
-  if setp(first(e)) then u elseif listp(first(e)) then listify(u) else
-       apply(op(first(e)),listify(u)));
-
-/*==============  Union  ===============*/
-Union([e]) := apply(mmasetfunc,cons('union,e));
-Intersection([e]) := apply(mmasetfunc,cons('intersection,e));
-
-/* Subsets --> powerset. Only partially implemented */
-Subsets([e]) := block([res],
-  res:apply(mmasetfunc,cons('powerset,e)),
-  if setp(first(e)) then res else args(map(lambda([x], apply(op(first(e)),listify(x))),res)));
-
-/* Matrix functions
-   These matrix functions take either a Maxima matrix, or
-   a list of lists (Mma matrix) as an argument. If the return
-   type is the same as the input type if the return type
-   is a matrix or list of lists (ie not a scalar)
-
-   Most functions will not work with floats. This could be fixed
-   with tests and branching code perhaps. But I guess that
-   Maxima cannot handle mixed float and  symbolic matrices.
-
-*/
 
 
 /*==============  Transpose   ===============*/
 
 Transpose(m) :=  mma_mat_trans('transpose,m);
-
-/*==============  Inverse   ===============*/
-Inverse(m) :=   mma_mat_trans('invert,m);
-
-/*==============  ConjugateTranspose   ===============*/
-ConjugateTranspose(m) := mma_mat_trans('ctranspose,m);
-
-/*==============  Det  ===============*/
-Det(m) := determinant(ensuremat(m));
-
-/*==============  Tr  ===============*/
-Tr(m) := mat_trace(ensuremat(m));
-
-/*==============  MatrixRank  ===============*/
-MatrixRank(m) := rank(ensuremat(m));
-
-list_eivals(lst) := apply('append,apply('map, cons(lambda([a,b],  create_list(a,i,1,b)), lst)));
-
-/*==============  Eigenvalues  ===============*/
-/* check if the first number is floating point to compute floating
-  point eigenvalues
-*/
-Eigenvalues(m) := if floatnump(inpart(m,1,1)) then
-      inpart(dgeev(ensuremat(m)),1) else list_eivals(eivals(ensuremat(m)));
-
-
-/*==============  DiagonalMatrix  ===============*/
-/* dl is list of diagonal entries. puts them on kth diagonal.
-  k=0 (main diagonal) if not given. Returns list, not matrix.
- */
-DiagonalMatrix(dl,[kl]) := block([len:length(dl), k, n,m],
-  if length(kl) = 1 then k:first(kl) elseif
-  length(kl) = 0 then k:0
-  else throw("DiagonalMatrix: too many arguments"),
-  n:len+abs(k),
-  m:Table(0,[n],[n]),
-  if (k>=0) then 
-  for  i:k thru n-1 do (
-    m[i-k+1][i+1]:dl[i-k+1]
-    )
-  else ( k:-k,
-    for  i:k thru n-1 do (
-      m[i+1][i-k+1]:dl[i-k+1]
-    )),
-  m);
-  
-
-/* Return Kronecker product of a list of matrices or Mma matrices.
-   The list can be mixed. Return type is type of first argument.
-   Maxima kronecker_product takes 2 args; Mma takes indefinite.
-   I had already defined the same thing for quantum information
-   qinf.mac.
-*/
-KroneckerProduct([a]) := block( [n,c,i],
-  n : length(a),
-  c : ensuremat(a[1]),
-  for i:2 thru n do (
-    c : kronecker_product(c,ensuremat(a[i]))),
-  if listp(first(a)) then args(c) else ensuremat(c));
-
-/* This one will take some work 
-NullSpace
-*/
-
-
-/* Real numbers are complex according to this function */
-complexp(x) := (numberp(subst(1,%i,x)));
-
 
 /*==============  Length  ===============*/
 /* This one can probably not be faithful to Mma, because of
@@ -530,32 +86,6 @@ complexp(x) := (numberp(subst(1,%i,x)));
 */
 Length(x) :=   if atom(x) or numberp(x) or complexp(x) then 0   else length(x);
 
-/*==============  AtomQ  ===============*/
-AtomQ(x) := if atom(x) or numberp(x) or complexp(x) then true else atom(x);
-
-/*==============  Sinc  ===============*/
-/* This behaves differently in many ways from Mma function Sinc
-  Eg. msinc evaluates to sin(x)/x, whereas Sinc(x) only does
-  this if asked to speicifially in a variety of ways. 
-*/
-/*
-Sinc(x)  := if x = 0 then 1 else sin(x)/x;
-*/
-
-/* Here are functions that should be the same in the two systems for
-  a large number of cases. 
- */
-Sqrt(x) := sqrt(x);
-Cos(x) := cos(x);
-Sin(x) := cos(x);
-OddQ(x) := oddp(x);
-EvenQ(x) := evenp(x);
-
-
-/* This seems fairly useless as it is, since Maxima cannot
-  compute the integrals */
-FourierTransform(expr,x,t) := block([],
-  (1/sqrt(2*%pi))*integrate(expr*exp(%i*t*x),x,'minf,'inf));
 
 /**********************************************************
  * Following are not Mma functions, but rather helper functions.
@@ -578,7 +108,6 @@ ensurelist(m) := if matrixp(m) then args(m) else m;
 /* For function that takes a matrix and returns a matrix.
    f%%% is the Maxima function name, m the matrix.
    Return same matrix type as input.
-*/   
+*/
 mma_mat_trans(f%%%,m) :=  if matrixp(m) then f%%%(m)
    else  mat_to_list(f%%%(apply('matrix,m)));
-

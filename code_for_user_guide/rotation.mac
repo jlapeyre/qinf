@@ -1,0 +1,11 @@
+/* rotation about x-axis */
+spinor_rotation_op(0,%pi/2,gamma);
+
+/* rotation about y-axis */
+spinor_rotation_op(%pi/2,%pi/2,gamma);
+
+/* rotation about y-axis */
+spinor_rotation_op(0,0,gamma);
+
+/* phase change of %pi after rotation through 2*%pi */
+spinor_rotation_op(phi,theta,2*%pi);

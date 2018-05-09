@@ -1,26 +1,28 @@
-/*
-  quantum_information package for the Maxima computer algebra system.
-
-  Copyright 2008, John Lapeyre  All rights reserved.
-
-  This program is free software; you can redistribute it
-  and/or modify it only under the terms of the GNU General
-  Public License version 2 as published by the Free Software
-  Foundation.
-
-*/
-
 load("qinf.mac");
 load("qtest.mac");
 
-/* testing calculations in Phys Rev A 77 pg 022308 (2008) */
+/*
+  Reproduce some calculations in
 
-/* bipartite state vector to 4x4 matrix,  maps 
-  C^2 otimes C^2 to M(C,2) */
+  Perseguers, et. al.
+  "Entanglement Distribution in Pure-State Quantum Networks"
+  Phys Rev A 77 pg 022308 (2008)
+
+  Perseguers2008
+*/
+
+/*
+  Equation (3) in Perseguers2008
+  Map a bipartite state vector to 4x4 matrix.
+  This is a map from C^2 otimes C^2 to M(C,2).
+*/
 bptom(iket) := matrix([iket[1,1],iket[2,1]],[iket[3,1],iket[4,1]]);
 
-/* Note that this disagrees with statement following eqn 3
- in paper, which has X . ctranspose(X)  */
+/*
+ There appears to be a copying error in Perseguers2008.
+ The following disagrees with statement following Equation (3),
+ which has X . ctranspose(X).
+*/
 swap_reduced_3(alpha,beta,u) := ( block [X],
   X : bptom(alpha) . bptom(u) . bptom(beta),
   ctranspose(X) . X
@@ -37,7 +39,7 @@ am : bptom(a);
 bm : bptom(b);
 um : bptom(u);
 
-rho4 : (ident(2) otimes toproj(u) otimes ident(2)) . toproj(a otimes b);
+rho4 : (ident(2) otimes proj(u) otimes ident(2)) . proj(a otimes b);
 rho_m : ptrace(rho4,2,3);
 rho_mt : ptrace(rho4,1,2,3);
 
@@ -49,7 +51,7 @@ res1 : conjsimp(res1);
 res2 : conjsimp(res2);
 
 
-res3 : braz(0,0).a^2 * braz(0,0).b^2 *abs(u00)^2+ braz(0,0).a^2 * braz(1,1).b^2 * abs(u01)^2 + 
+res3 : braz(0,0).a^2 * braz(0,0).b^2 *abs(u00)^2+ braz(0,0).a^2 * braz(1,1).b^2 * abs(u01)^2 +
     braz(1,1).a^2 * braz(0,0).b^2 * abs(u10)^2 +  braz(1,1).a^2 * braz(1,1).b^2 * abs(u11)^2;
 
 qtest(

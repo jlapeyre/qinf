@@ -1,0 +1,9 @@
+m1 : matrix([a1,b1],[c1,d1]);
+m2 : matrix([a2,b2],[c2,d2]) $
+m3 : matrix([a3,b3],[c3,d3]) $
+mp : m1 otimes m2 otimes  m3 ;
+pe : pauliexp(mp) $
+length(pe);
+part(pe,10);
+is ( ratsimp( invpauliexp( pauliexp(mp) )) = mp);
+correlation_tensor(pe,1,2,3);
