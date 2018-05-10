@@ -3,7 +3,7 @@
 qinf is a quantum information package for the
 [Maxima](http://maxima.sourceforge.net/) computer algebra system. The
 motivation for this package is for reproducible research. An example
-verifying calculations in a paper is included.
+verifying calculations in a paper is included: [doc/qinf.pdf](doc/qinf.pdf).
 
 qinf implements objects used in quantum information theory--- operators,
 vectors, tensors, etc. These objects are typically represented in this
